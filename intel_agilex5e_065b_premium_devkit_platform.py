@@ -95,7 +95,7 @@ class Platform(AlteraPlatform):
     default_clk_period = 1e9/100e6
 
     def __init__(self, toolchain="quartus"):
-        AlteraPlatform.__init__(self, "", _io, _connectors, toolchain=toolchain)
+        AlteraPlatform.__init__(self, "A5ED065BB32AE6SR0", _io, _connectors, toolchain=toolchain)
 
     def do_finalize(self, fragment):
         AlteraPlatform.do_finalize(self, fragment)
