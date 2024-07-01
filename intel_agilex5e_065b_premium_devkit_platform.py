@@ -68,8 +68,8 @@ _io = [
 
     # SGMII Clock (88E2110 SGMII Enet1)
     ("eth_clocks", 0,
-        Subsignal("p", Pins("AT120"), IOStandard("LVDS")),
-        Subsignal("n", Pins("AT115"), IOStandard("LVDS")),
+        Subsignal("p", Pins("AT120"), IOStandard("CURRENT MODE LOGIC (CML)")),
+        Subsignal("n", Pins("AT115"), IOStandard("CURRENT MODE LOGIC (CML)")),
     ),
 
     # SGMII Ethernet (88E2110 SGMII Enet1)
@@ -82,6 +82,18 @@ _io = [
         Subsignal("rx_n",  Pins("AK133")),
         Subsignal("tx_p",  Pins("AL129")),
         Subsignal("tx_n",  Pins("AL126")),
+    ),
+
+    # SGMII Ethernet (88E2110 SGMII Enet2)
+    ("eth", 1,
+        Subsignal("int_n", Pins("F24")),
+        Subsignal("rst_n", Pins("F27")),
+        Subsignal("mdio",  Pins("D24")),
+        Subsignal("mdc",   Pins("D24")),
+        Subsignal("rx_p",  Pins("B70")),
+        Subsignal("rx_n",  Pins("A70")),
+        Subsignal("tx_p",  Pins("B73")),
+        Subsignal("tx_n",  Pins("A73")),
     ),
 
     # SFP
