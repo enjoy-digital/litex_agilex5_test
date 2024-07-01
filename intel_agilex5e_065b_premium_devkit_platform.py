@@ -66,6 +66,24 @@ _io = [
         Subsignal("rzq",     Pins("BH89")),
     ),
 
+    # SGMII Clock (88E2110 SGMII Enet1)
+    ("eth_clocks", 0,
+        Subsignal("p", Pins("AT120"), IOStandard("LVDS")),
+        Subsignal("n", Pins("AT115"), IOStandard("LVDS")),
+    ),
+
+    # SGMII Ethernet (88E2110 SGMII Enet1)
+    ("eth", 0,
+        Subsignal("int_n", Pins("BK118")),
+        Subsignal("rst_n", Pins("BM118")),
+        Subsignal("mdio",  Pins("BM112")),
+        Subsignal("mdc",   Pins("BP112")),
+        Subsignal("rx_p",  Pins("AK135")),
+        Subsignal("rx_n",  Pins("AK133")),
+        Subsignal("tx_p",  Pins("AL129")),
+        Subsignal("tx_n",  Pins("AL126")),
+    ),
+
     # SFP
     ("sfp", 0,
         Subsignal("clk_p", Pins("BC29")),
