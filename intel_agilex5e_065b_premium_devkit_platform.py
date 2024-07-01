@@ -96,6 +96,23 @@ _io = [
         Subsignal("tx_n",  Pins("A73")),
     ),
 
+    # RGMII Ethernet (88E1512 RGMII)
+    # FIXME: IOStandard
+    ("eth_clocks", 2,
+        Subsignal("tx", Pins("B14")),
+        Subsignal("rx", Pins("B23")),
+    ),
+    ("eth", 2,
+        Subsignal("int_n", Pins("B35")),
+        Subsignal("rst_n", Pins("D34")),
+        Subsignal("mdio",  Pins("A39")),
+        Subsignal("mdc",   Pins("B26")),
+        Subsignal("rx_ctl",  Pins("B20")),
+        Subsignal("rx_data", Pins("A30 B30 A33 A35")),
+        Subsignal("tx_ctl",  Pins("A14")),
+        Subsignal("tx_data", Pins("A8 B4 A11 B11")),
+    ),
+
     # SFP
     ("sfp", 0,
         Subsignal("clk_p", Pins("BC29")),
