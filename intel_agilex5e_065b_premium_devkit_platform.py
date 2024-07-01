@@ -42,8 +42,31 @@ _io = [
     ("user_btn", 2, Pins("BK28"), IOStandard("3.3-V LVCMOS")),
     ("user_btn", 3, Pins("BR22"), IOStandard("3.3-V LVCMOS")),
 
-    # SFP
+    # LPDDR4
+    ("lpddr_refclk", 0,
+        Subsignal("p", Pins("BW78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
+        Subsignal("n", Pins("CA78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
+    ),
+    ("lpddr4", 0, # FIXME: IOStandard
+        Subsignal("clk_p",   Pins("BM81")),
+        Subsignal("clk_n",   Pins("BP81")),
+        Subsignal("cke",     Pins("BR81")),
+        Subsignal("reset_n", Pins("BH92")),
+        Subsignal("cs",      Pins("BR78")),
+        Subsignal("ca",      Pins("BR89 BU89 BR92 BU92 BW89 CA89")),
+        Subsignal("dq",      Pins(
+            "CA71 CC71 CH71 CF71 CH62 CF62 CH59 CF59",
+            "BR59 BU59 BW59 CA59 BU71 BU69 BR71 BR69",
+            "CC92 CF92 CA92 CH92 CC81 CF78 CH78 CA81",
+            "CL82 CK80 CK76 CL76 CK97 CL97 CK94 CL91"),
+        ),
+        Subsignal("dqs_p",   Pins("CH69 BW69 CH89 CL88")),
+        Subsignal("dqs_n",   Pins("CF69 CA69 CF89 CK88")),
+        Subsignal("dmi",     Pins("CA62 BU62 CF81 CK85")),
+        Subsignal("rzq",     Pins("BH89")),
+    ),
 
+    # SFP
     ("sfp", 0,
         Subsignal("clk_p", Pins("BC29")),
         Subsignal("clk_n", Pins("BC25")),
