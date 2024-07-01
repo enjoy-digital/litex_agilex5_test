@@ -71,6 +71,9 @@ def main():
     from litex.build.parser import LiteXArgumentParser
     parser = LiteXArgumentParser(platform=Platform, description="LiteX SoC on LiteX SoC on Agilex5E 065B.")
     parser.add_target_argument("--sys-clk-freq", default=100e6, type=float, help="System clock frequency.")
+
+    # soc.json default path
+    parser.set_defaults(soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json")
     args = parser.parse_args()
 
     soc = BaseSoC(
