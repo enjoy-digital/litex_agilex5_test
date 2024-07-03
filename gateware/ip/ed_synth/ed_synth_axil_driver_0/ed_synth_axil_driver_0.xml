@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2024.07.03.17:31:42"
+ outputDirectory="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Agilex 5"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="A5ED065BB32AE6SR0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_BOARD"
+     type="String"
+     defaultValue="default"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_AXIL_DRIVER_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_AXIL_DRIVER_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_AXIL_DRIVER_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_AXIL_DRIVER_AXI4_LITE_ADDRESS_MAP"
+     type="AddressMap"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_AXIL_DRIVER_AXI4_LITE_ADDRESS_WIDTH"
+     type="AddressWidthType"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="axil_driver_clk" kind="clock" start="0">
+   <property name="clockRate" value="0" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="axil_driver_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="axil_driver_rst_n" kind="reset" start="0">
+   <property name="associatedClock" value="axil_driver_clk" />
+   <property name="synchronousEdges" value="DEASSERT" />
+   <port name="axil_driver_rst_n" direction="input" role="reset_n" width="1" />
+  </interface>
+  <interface name="axil_driver_axi4_lite" kind="axi4lite" start="1">
+   <property name="associatedClock" value="axil_driver_clk" />
+   <property name="associatedReset" value="axil_driver_rst_n" />
+   <property name="trustzoneAware" value="true" />
+   <property name="wakeupSignals" value="false" />
+   <property name="uniqueIdSupport" value="false" />
+   <property name="poison" value="false" />
+   <property name="traceSignals" value="false" />
+   <property name="maximumOutstandingReads" value="1" />
+   <property name="maximumOutstandingWrites" value="1" />
+   <property name="maximumOutstandingTransactions" value="1" />
+   <property name="readIssuingCapability" value="1" />
+   <property name="writeIssuingCapability" value="1" />
+   <property name="combinedIssuingCapability" value="1" />
+   <port name="axil_driver_awaddr" direction="output" role="awaddr" width="32" />
+   <port
+       name="axil_driver_awvalid"
+       direction="output"
+       role="awvalid"
+       width="1" />
+   <port name="axil_driver_awready" direction="input" role="awready" width="1" />
+   <port name="axil_driver_wdata" direction="output" role="wdata" width="32" />
+   <port name="axil_driver_wstrb" direction="output" role="wstrb" width="4" />
+   <port name="axil_driver_wvalid" direction="output" role="wvalid" width="1" />
+   <port name="axil_driver_wready" direction="input" role="wready" width="1" />
+   <port name="axil_driver_bresp" direction="input" role="bresp" width="2" />
+   <port name="axil_driver_bvalid" direction="input" role="bvalid" width="1" />
+   <port name="axil_driver_bready" direction="output" role="bready" width="1" />
+   <port name="axil_driver_araddr" direction="output" role="araddr" width="32" />
+   <port
+       name="axil_driver_arvalid"
+       direction="output"
+       role="arvalid"
+       width="1" />
+   <port name="axil_driver_arready" direction="input" role="arready" width="1" />
+   <port name="axil_driver_rdata" direction="input" role="rdata" width="32" />
+   <port name="axil_driver_rresp" direction="input" role="rresp" width="2" />
+   <port name="axil_driver_rvalid" direction="input" role="rvalid" width="1" />
+   <port name="axil_driver_rready" direction="output" role="rready" width="1" />
+   <port name="axil_driver_awprot" direction="output" role="awprot" width="3" />
+   <port name="axil_driver_arprot" direction="output" role="arprot" width="3" />
+  </interface>
+  <interface name="cal_done_rst_n" kind="reset" start="1">
+   <property name="associatedClock" value="axil_driver_clk" />
+   <property name="associatedDirectReset" value="" />
+   <property name="associatedResetSinks" value="none" />
+   <property name="synchronousEdges" value="DEASSERT" />
+   <port name="cal_done_rst_n" direction="output" role="reset_n" width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   kind="ed_synth_axil_driver_0"
+   version="1.0"
+   name="ed_synth_axil_driver_0">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_DEVICE" value="A5ED065BB32AE6SR0" />
+  <parameter name="AUTO_AXIL_DRIVER_AXI4_LITE_ADDRESS_MAP" value="" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Agilex 5" />
+  <parameter name="AUTO_BOARD" value="default" />
+  <parameter name="AUTO_AXIL_DRIVER_AXI4_LITE_ADDRESS_WIDTH" value="-1" />
+  <parameter name="AUTO_AXIL_DRIVER_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_AXIL_DRIVER_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <parameter name="AUTO_AXIL_DRIVER_CLK_CLOCK_RATE" value="-1" />
+  <generatedFiles>
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/synth/ed_synth_axil_driver_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/synth/ed_synth_axil_driver_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0.ip" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/ip/altera/emif_ph2/ip_axil_driver/emif_ph2_axil_driver_hw.tcl" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.components.hwtclvalidator.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.components.tclelement.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.hdlcomponent.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.model.common.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.privateinterfaces.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.intel.shared.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jacl1.3.2a.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/commons-text-1.10.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/commons-lang3-3.12.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/guava-32.0.1-jre.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jfreechart-1.5.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/miglayout-swing-5.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/docking-frames-common-1.1.2_20c.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/bare-bones-browser-launch-3.2.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-api.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-jxc.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-runtime.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-xjc.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/codemodel.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/dtd-parser.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/FastInfoset.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/istack-commons-runtime.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/istack-commons-tools.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/javax.activation-api.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/relaxng-datatype.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/rngom.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/stax-ex.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/txw2.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/xsom.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/failureaccess-1.0.1.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jsr305-3.0.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/checker-qual-3.33.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/j2objc-annotations-2.8.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/miglayout-core-5.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/docking-frames-core-1.1.2_20c.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.ipxact.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/antlr4-runtime-4.7.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopc.generator.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcreport.build.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcdocument.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.hdlwriter.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.ipxact.module.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopclibrary.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.atlantic.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcreport.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.ddmwriter.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.intel.quartus.dni.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopc.qsymbol.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.transforms.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.hypericonnect.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.cmsis.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.tcl.interpreter.jar" />
+  </childSourceFiles>
+  <messages>
+   <message level="Info" culprit="ed_synth_axil_driver_0">"Generating: ed_synth_axil_driver_0"</message>
+   <message level="Info" culprit="ed_synth_axil_driver_0">"Generating: ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq"</message>
+  </messages>
+ </entity>
+ <entity
+   kind="emif_ph2_axil_driver"
+   version="1.0.0"
+   name="ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq">
+  <parameter name="AXIL_DRIVER_ADDRESS_WIDTH" value="32" />
+  <generatedFiles>
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq.sv"
+       attributes="" />
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq_axil_driver_top.sv"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq.sv"
+       attributes="" />
+   <file
+       path="/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0/emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq_axil_driver_top.sv"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/ip/altera/emif_ph2/ip_axil_driver/emif_ph2_axil_driver_hw.tcl" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.components.hwtclvalidator.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.components.tclelement.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.hdlcomponent.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.model.common.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.privateinterfaces.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.intel.shared.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jacl1.3.2a.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/commons-text-1.10.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/commons-lang3-3.12.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/guava-32.0.1-jre.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jfreechart-1.5.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/miglayout-swing-5.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/docking-frames-common-1.1.2_20c.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/bare-bones-browser-launch-3.2.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-api.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-jxc.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-runtime.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jaxb-xjc.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/codemodel.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/dtd-parser.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/FastInfoset.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/istack-commons-runtime.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/istack-commons-tools.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/javax.activation-api.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/relaxng-datatype.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/rngom.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/stax-ex.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/txw2.jar" />
+   <file path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/xsom.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/failureaccess-1.0.1.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/jsr305-3.0.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/checker-qual-3.33.0.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/j2objc-annotations-2.8.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/miglayout-core-5.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/docking-frames-core-1.1.2_20c.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.ipxact.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/antlr4-runtime-4.7.2.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopc.generator.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcreport.build.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcdocument.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.hdlwriter.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.ipxact.module.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopclibrary.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.atlantic.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcreport.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.ddmwriter.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.intel.quartus.dni.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopc.qsymbol.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.sopcmodel.transforms.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.hypericonnect.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.qsys.cmsis.jar" />
+   <file
+       path="/home/toolchains/opt/intelFPGA/24.1_pro/qsys/lib/com.altera.tcl.interpreter.jar" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="ed_synth_axil_driver_0" as="emif_ph2_axil_driver_inst" />
+  <messages>
+   <message level="Info" culprit="ed_synth_axil_driver_0">"Generating: ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq"</message>
+  </messages>
+ </entity>
+</deploy>

@@ -1,0 +1,95 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the Intel FPGA Software License Subscription Agreements 
+on the Quartus Prime software download page.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 320 288)
+	(text "q_sys_product_info_0" (rect 86 0 178 12)(font "SansSerif" (font_size 11)))
+	(text "inst" (rect 8 272 20 284)(font "Arial" ))
+	(port
+		(pt 0 76)
+		(input)
+		(text "clk" (rect 0 0 10 12)(font "SansSerif" (font_size 8)))
+		(text "clk" (rect 4 65 22 76)(font "SansSerif" (font_size 8)))
+		(line (pt 0 76)(pt 119 76)(line_width 1))
+	)
+	(port
+		(pt 0 126)
+		(input)
+		(text "reset_n" (rect 0 0 30 12)(font "SansSerif" (font_size 8)))
+		(text "reset_n" (rect 4 115 46 126)(font "SansSerif" (font_size 8)))
+		(line (pt 0 126)(pt 119 126)(line_width 1))
+	)
+	(port
+		(pt 0 176)
+		(input)
+		(text "chipselect_n" (rect 0 0 48 12)(font "SansSerif" (font_size 8)))
+		(text "chipselect_n" (rect 4 165 76 176)(font "SansSerif" (font_size 8)))
+		(line (pt 0 176)(pt 119 176)(line_width 1))
+	)
+	(port
+		(pt 0 201)
+		(input)
+		(text "read_n" (rect 0 0 28 12)(font "SansSerif" (font_size 8)))
+		(text "read_n" (rect 4 190 40 201)(font "SansSerif" (font_size 8)))
+		(line (pt 0 201)(pt 119 201)(line_width 1))
+	)
+	(port
+		(pt 0 251)
+		(input)
+		(text "av_address[1..0]" (rect 0 0 67 12)(font "SansSerif" (font_size 8)))
+		(text "av_address[1..0]" (rect 4 240 100 251)(font "SansSerif" (font_size 8)))
+		(line (pt 0 251)(pt 119 251)(line_width 3))
+	)
+	(port
+		(pt 0 226)
+		(output)
+		(text "av_data_read[31..0]" (rect 0 0 80 12)(font "SansSerif" (font_size 8)))
+		(text "av_data_read[31..0]" (rect 4 215 118 226)(font "SansSerif" (font_size 8)))
+	)
+	(drawing
+		(text "clock_reset" (rect 53 46 172 105)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 124 71 266 152)(font "SansSerif" (color 0 0 0)))
+		(text "clock_reset_reset" (rect 15 96 132 205)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 124 121 290 252)(font "SansSerif" (color 0 0 0)))
+		(text "avalon_slave_0" (rect 30 146 144 305)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "chipselect_n" (rect 124 171 320 352)(font "SansSerif" (color 0 0 0)))
+		(text "read_n" (rect 124 196 284 402)(font "SansSerif" (color 0 0 0)))
+		(text "readdata" (rect 124 221 296 452)(font "SansSerif" (color 0 0 0)))
+		(text "address" (rect 124 246 290 502)(font "SansSerif" (color 0 0 0)))
+		(text " q_sys_product_info_0 " (rect 222 276 576 562)(font "SansSerif" ))
+		(line (pt 119 34)(pt 204 34)(line_width 1))
+		(line (pt 204 34)(pt 204 276)(line_width 1))
+		(line (pt 119 276)(pt 204 276)(line_width 1))
+		(line (pt 119 34)(pt 119 276)(line_width 1))
+		(line (pt 120 55)(pt 120 80)(line_width 1))
+		(line (pt 121 55)(pt 121 80)(line_width 1))
+		(line (pt 120 105)(pt 120 130)(line_width 1))
+		(line (pt 121 105)(pt 121 130)(line_width 1))
+		(line (pt 320 226)(pt 119 226)(line_width 3))
+		(line (pt 120 155)(pt 120 255)(line_width 1))
+		(line (pt 121 155)(pt 121 255)(line_width 1))
+		(line (pt 0 0)(pt 320 0)(line_width 1))
+		(line (pt 320 0)(pt 320 293)(line_width 1))
+		(line (pt 0 293)(pt 320 293)(line_width 1))
+		(line (pt 0 0)(pt 0 293)(line_width 1))
+	)
+)

@@ -1,0 +1,36 @@
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TOOL_NAME "QsysPrimePro"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TOOL_VERSION "24.1"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TOOL_ENV "QsysPrimePro"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TOOL_VENDOR_NAME "Altera Corporation"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TOP_LEVEL_COMPONENT_NAME "product_info"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name PRE_COMPILED_MODULE "ON"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name OCS_IP_FILE "/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_product_info_0.ip"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name OCS_IP_TYPE "product_info"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name OCS_IP_VERSION "1.0"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name OCS_IP_HASH "hgkqe6y"
+set_global_assignment -library "q_sys_product_info_0" -name SOPCINFO_FILE [file join $::quartus(qip_path) "q_sys_product_info_0.sopcinfo"]
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name SLD_INFO "QSYS_NAME q_sys_product_info_0 HAS_SOPCINFO 1 GENERATION_ID 0"
+set_global_assignment -library "q_sys_product_info_0" -name MISC_FILE [file join $::quartus(qip_path) "q_sys_product_info_0.cmp"]
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_TARGETED_DEVICE_FAMILY "Agilex 5"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_GENERATED_DEVICE_FAMILY "{Agilex 5}"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "q_sys_product_info_0" -name MISC_FILE [file join $::quartus(qip_path) "../q_sys_product_info_0.ip"]
+
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_NAME "cHJvZHVjdF9pbmZv"
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_DISPLAY_NAME "cHJvZHVjdF9pbmZv"
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_VERSION "MS4w"
+set_global_assignment -entity "product_info" -library "product_info_10" -name IP_COMPONENT_GROUP "Qm9hcmRUZXN0U3lzdGVt"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_NAME "cV9zeXNfcHJvZHVjdF9pbmZvXzA="
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_DISPLAY_NAME "c3lzdGVt"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_AUTHOR "QWx0ZXJhIENvcnBvcmF0aW9u"
+set_global_assignment -entity "q_sys_product_info_0" -library "q_sys_product_info_0" -name IP_COMPONENT_VERSION "MS4w"
+
+
+set_global_assignment -library "product_info_10" -name VHDL_FILE [file join $::quartus(qip_path) "product_info_10/synth/product_info.vhd"]
+set_global_assignment -library "q_sys_product_info_0" -name VERILOG_FILE [file join $::quartus(qip_path) "synth/q_sys_product_info_0.v"]
+

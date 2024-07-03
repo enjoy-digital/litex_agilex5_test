@@ -1,0 +1,40 @@
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TOOL_NAME "QsysPrimePro"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TOOL_VERSION "24.1"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TOOL_ENV "QsysPrimePro"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TOOL_VENDOR_NAME "AUTHOR"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TOP_LEVEL_COMPONENT_NAME "emif_ph2_axil_driver"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name PRE_COMPILED_MODULE "ON"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name OCS_IP_FILE "/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/ip/ed_synth/ed_synth_axil_driver_0.ip"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name OCS_IP_TYPE "emif_ph2_axil_driver"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name OCS_IP_VERSION "1.0.0"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name OCS_IP_HASH "4ns2hlq"
+set_global_assignment -library "ed_synth_axil_driver_0" -name SOPCINFO_FILE [file join $::quartus(qip_path) "ed_synth_axil_driver_0.sopcinfo"]
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name SLD_INFO "QSYS_NAME ed_synth_axil_driver_0 HAS_SOPCINFO 1 GENERATION_ID 0"
+set_global_assignment -library "ed_synth_axil_driver_0" -name MISC_FILE [file join $::quartus(qip_path) "ed_synth_axil_driver_0.cmp"]
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_TARGETED_DEVICE_FAMILY "Agilex 5"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_GENERATED_DEVICE_FAMILY "{Agilex 5}"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_QSYS_MODE "STANDALONE"
+set_global_assignment -name SYNTHESIS_ONLY_QIP ON
+set_global_assignment -library "ed_synth_axil_driver_0" -name MISC_FILE [file join $::quartus(qip_path) "../ed_synth_axil_driver_0.ip"]
+
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_NAME "ZWRfc3ludGhfYXhpbF9kcml2ZXJfMF9lbWlmX3BoMl9heGlsX2RyaXZlcl8xMDBfNG5zMmhscQ=="
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_DISPLAY_NAME "RU1JRiBBWEktTGl0ZSBEcml2ZXIgSVA="
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_REPORT_HIERARCHY "Off"
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_INTERNAL "On"
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_AUTHOR "QVVUSE9S"
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_VERSION "MS4wLjA="
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_DESCRIPTION "SW50ZWwgRXh0ZXJuYWwgTWVtb3J5IEludGVyZmFjZSBBWEktTGl0ZSBEcml2ZXIgSVA="
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_GROUP "SU5URVJOQUxfQ09NUE9ORU5UX1JPT1RfRk9MREVS"
+set_global_assignment -entity "ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq" -library "emif_ph2_axil_driver_100" -name IP_COMPONENT_DOCUMENTATION_LINK "REFUQVNIRUVUX1VSTA=="
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_NAME "ZWRfc3ludGhfYXhpbF9kcml2ZXJfMA=="
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_DISPLAY_NAME "c3lzdGVt"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_REPORT_HIERARCHY "On"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_INTERNAL "Off"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_AUTHOR "QVVUSE9S"
+set_global_assignment -entity "ed_synth_axil_driver_0" -library "ed_synth_axil_driver_0" -name IP_COMPONENT_VERSION "MS4w"
+
+
+set_global_assignment -library "emif_ph2_axil_driver_100" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq.sv"]
+set_global_assignment -library "emif_ph2_axil_driver_100" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "emif_ph2_axil_driver_100/synth/ed_synth_axil_driver_0_emif_ph2_axil_driver_100_4ns2hlq_axil_driver_top.sv"]
+set_global_assignment -library "ed_synth_axil_driver_0" -name VERILOG_FILE [file join $::quartus(qip_path) "synth/ed_synth_axil_driver_0.v"]
+

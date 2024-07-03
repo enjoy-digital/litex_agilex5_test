@@ -1,0 +1,226 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2024  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the Intel FPGA Software License Subscription Agreements 
+on the Quartus Prime software download page.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 336 616)
+	(text "ed_synth_axil_driver_0" (rect 92 0 187 12)(font "SansSerif" (font_size 11)))
+	(text "inst" (rect 8 600 20 612)(font "Arial" ))
+	(port
+		(pt 0 76)
+		(input)
+		(text "axil_driver_clk" (rect 0 0 57 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_clk" (rect 4 65 94 76)(font "SansSerif" (font_size 8)))
+		(line (pt 0 76)(pt 119 76)(line_width 1))
+	)
+	(port
+		(pt 0 126)
+		(input)
+		(text "axil_driver_rst_n" (rect 0 0 68 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_rst_n" (rect 4 115 106 126)(font "SansSerif" (font_size 8)))
+		(line (pt 0 126)(pt 119 126)(line_width 1))
+	)
+	(port
+		(pt 336 126)
+		(input)
+		(text "axil_driver_awready" (rect 0 0 81 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_awready" (rect 236 115 350 126)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 226)
+		(input)
+		(text "axil_driver_wready" (rect 0 0 76 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_wready" (rect 242 215 350 226)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 251)
+		(input)
+		(text "axil_driver_bresp[1..0]" (rect 0 0 88 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_bresp[1..0]" (rect 230 240 368 251)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 276)
+		(input)
+		(text "axil_driver_bvalid" (rect 0 0 69 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_bvalid" (rect 252 265 360 276)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 376)
+		(input)
+		(text "axil_driver_arready" (rect 0 0 79 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_arready" (rect 242 365 356 376)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 401)
+		(input)
+		(text "axil_driver_rdata[31..0]" (rect 0 0 90 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_rdata[31..0]" (rect 227 390 371 401)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 426)
+		(input)
+		(text "axil_driver_rresp[1..0]" (rect 0 0 87 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_rresp[1..0]" (rect 232 415 370 426)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 451)
+		(input)
+		(text "axil_driver_rvalid" (rect 0 0 68 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_rvalid" (rect 254 440 362 451)(font "SansSerif" (font_size 8)))
+	)
+	(port
+		(pt 336 76)
+		(output)
+		(text "axil_driver_awaddr[31..0]" (rect 0 0 99 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_awaddr[31..0]" (rect 214 65 364 76)(font "SansSerif" (font_size 8)))
+		(line (pt 336 76)(pt 204 76)(line_width 3))
+	)
+	(port
+		(pt 336 101)
+		(output)
+		(text "axil_driver_awvalid" (rect 0 0 75 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_awvalid" (rect 242 90 356 101)(font "SansSerif" (font_size 8)))
+		(line (pt 336 101)(pt 204 101)(line_width 1))
+	)
+	(port
+		(pt 336 151)
+		(output)
+		(text "axil_driver_wdata[31..0]" (rect 0 0 93 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_wdata[31..0]" (rect 221 140 365 151)(font "SansSerif" (font_size 8)))
+		(line (pt 336 151)(pt 204 151)(line_width 3))
+	)
+	(port
+		(pt 336 176)
+		(output)
+		(text "axil_driver_wstrb[3..0]" (rect 0 0 88 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_wstrb[3..0]" (rect 227 165 365 176)(font "SansSerif" (font_size 8)))
+		(line (pt 336 176)(pt 204 176)(line_width 3))
+	)
+	(port
+		(pt 336 201)
+		(output)
+		(text "axil_driver_wvalid" (rect 0 0 70 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_wvalid" (rect 248 190 356 201)(font "SansSerif" (font_size 8)))
+		(line (pt 336 201)(pt 204 201)(line_width 1))
+	)
+	(port
+		(pt 336 301)
+		(output)
+		(text "axil_driver_bready" (rect 0 0 75 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_bready" (rect 246 290 354 301)(font "SansSerif" (font_size 8)))
+		(line (pt 336 301)(pt 204 301)(line_width 1))
+	)
+	(port
+		(pt 336 326)
+		(output)
+		(text "axil_driver_araddr[31..0]" (rect 0 0 96 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_araddr[31..0]" (rect 220 315 370 326)(font "SansSerif" (font_size 8)))
+		(line (pt 336 326)(pt 204 326)(line_width 3))
+	)
+	(port
+		(pt 336 351)
+		(output)
+		(text "axil_driver_arvalid" (rect 0 0 73 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_arvalid" (rect 248 340 362 351)(font "SansSerif" (font_size 8)))
+		(line (pt 336 351)(pt 204 351)(line_width 1))
+	)
+	(port
+		(pt 336 476)
+		(output)
+		(text "axil_driver_rready" (rect 0 0 74 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_rready" (rect 248 465 356 476)(font "SansSerif" (font_size 8)))
+		(line (pt 336 476)(pt 204 476)(line_width 1))
+	)
+	(port
+		(pt 336 501)
+		(output)
+		(text "axil_driver_awprot[2..0]" (rect 0 0 93 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_awprot[2..0]" (rect 221 490 365 501)(font "SansSerif" (font_size 8)))
+		(line (pt 336 501)(pt 204 501)(line_width 3))
+	)
+	(port
+		(pt 336 526)
+		(output)
+		(text "axil_driver_arprot[2..0]" (rect 0 0 90 12)(font "SansSerif" (font_size 8)))
+		(text "axil_driver_arprot[2..0]" (rect 227 515 371 526)(font "SansSerif" (font_size 8)))
+		(line (pt 336 526)(pt 204 526)(line_width 3))
+	)
+	(port
+		(pt 336 576)
+		(output)
+		(text "cal_done_rst_n" (rect 0 0 62 12)(font "SansSerif" (font_size 8)))
+		(text "cal_done_rst_n" (rect 260 565 344 576)(font "SansSerif" (font_size 8)))
+		(line (pt 336 576)(pt 204 576)(line_width 1))
+	)
+	(drawing
+		(text "axil_driver_clk" (rect 36 46 162 105)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 124 71 266 152)(font "SansSerif" (color 0 0 0)))
+		(text "axil_driver_rst_n" (rect 21 96 144 205)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 124 121 290 252)(font "SansSerif" (color 0 0 0)))
+		(text "axil_driver_axi4_lite" (rect 205 46 536 105)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "awaddr" (rect 171 71 378 152)(font "SansSerif" (color 0 0 0)))
+		(text "awvalid" (rect 170 96 382 202)(font "SansSerif" (color 0 0 0)))
+		(text "awready" (rect 165 121 372 252)(font "SansSerif" (color 0 0 0)))
+		(text "wdata" (rect 177 146 384 302)(font "SansSerif" (color 0 0 0)))
+		(text "wstrb" (rect 178 171 386 352)(font "SansSerif" (color 0 0 0)))
+		(text "wvalid" (rect 175 196 386 402)(font "SansSerif" (color 0 0 0)))
+		(text "wready" (rect 170 221 376 452)(font "SansSerif" (color 0 0 0)))
+		(text "bresp" (rect 177 246 384 502)(font "SansSerif" (color 0 0 0)))
+		(text "bvalid" (rect 176 271 388 552)(font "SansSerif" (color 0 0 0)))
+		(text "bready" (rect 171 296 378 602)(font "SansSerif" (color 0 0 0)))
+		(text "araddr" (rect 173 321 382 652)(font "SansSerif" (color 0 0 0)))
+		(text "arvalid" (rect 172 346 386 702)(font "SansSerif" (color 0 0 0)))
+		(text "arready" (rect 167 371 376 752)(font "SansSerif" (color 0 0 0)))
+		(text "rdata" (rect 179 396 388 802)(font "SansSerif" (color 0 0 0)))
+		(text "rresp" (rect 178 421 386 852)(font "SansSerif" (color 0 0 0)))
+		(text "rvalid" (rect 177 446 390 902)(font "SansSerif" (color 0 0 0)))
+		(text "rready" (rect 172 471 380 952)(font "SansSerif" (color 0 0 0)))
+		(text "awprot" (rect 173 496 382 1002)(font "SansSerif" (color 0 0 0)))
+		(text "arprot" (rect 175 521 386 1052)(font "SansSerif" (color 0 0 0)))
+		(text "cal_done_rst_n" (rect 205 546 494 1105)(font "SansSerif" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 168 571 378 1152)(font "SansSerif" (color 0 0 0)))
+		(text " ed_synth_axil_driver_0 " (rect 234 601 612 1212)(font "SansSerif" ))
+		(line (pt 119 34)(pt 204 34)(line_width 1))
+		(line (pt 204 34)(pt 204 601)(line_width 1))
+		(line (pt 119 601)(pt 204 601)(line_width 1))
+		(line (pt 119 34)(pt 119 601)(line_width 1))
+		(line (pt 120 55)(pt 120 80)(line_width 1))
+		(line (pt 121 55)(pt 121 80)(line_width 1))
+		(line (pt 120 105)(pt 120 130)(line_width 1))
+		(line (pt 121 105)(pt 121 130)(line_width 1))
+		(line (pt 340 126)(pt 204 126)(line_width 1))
+		(line (pt 340 226)(pt 204 226)(line_width 1))
+		(line (pt 340 251)(pt 204 251)(line_width 3))
+		(line (pt 340 276)(pt 204 276)(line_width 1))
+		(line (pt 340 376)(pt 204 376)(line_width 1))
+		(line (pt 340 401)(pt 204 401)(line_width 3))
+		(line (pt 340 426)(pt 204 426)(line_width 3))
+		(line (pt 340 451)(pt 204 451)(line_width 1))
+		(line (pt 203 55)(pt 203 530)(line_width 1))
+		(line (pt 202 55)(pt 202 530)(line_width 1))
+		(line (pt 203 555)(pt 203 580)(line_width 1))
+		(line (pt 202 555)(pt 202 580)(line_width 1))
+		(line (pt 0 0)(pt 336 0)(line_width 1))
+		(line (pt 336 0)(pt 336 618)(line_width 1))
+		(line (pt 0 618)(pt 336 618)(line_width 1))
+		(line (pt 0 0)(pt 0 618)(line_width 1))
+	)
+)

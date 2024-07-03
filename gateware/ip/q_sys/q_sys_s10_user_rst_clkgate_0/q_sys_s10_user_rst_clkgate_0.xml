@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2024.04.03.15:05:55"
+ outputDirectory="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Agilex 5"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="A5ED065BB32AE6SR0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_BOARD"
+     type="String"
+     defaultValue="default"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="ninit_done" kind="reset" start="1">
+   <property name="associatedClock" value="" />
+   <property name="associatedDirectReset" value="" />
+   <property name="associatedResetSinks" value="none" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="ninit_done" direction="output" role="reset" width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   kind="q_sys_s10_user_rst_clkgate_0"
+   version="1.0"
+   name="q_sys_s10_user_rst_clkgate_0">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_DEVICE" value="A5ED065BB32AE6SR0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Agilex 5" />
+  <parameter name="AUTO_BOARD" value="default" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/synth/q_sys_s10_user_rst_clkgate_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/synth/q_sys_s10_user_rst_clkgate_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0.ip" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="/p/psg/swip/releases/acdskit/24.1/115/linux64/ip/altera/pgm/altera_s10_user_rst_clkgate/altera_s10_user_rst_clkgate_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Info" culprit="q_sys_s10_user_rst_clkgate_0">"Generating: q_sys_s10_user_rst_clkgate_0"</message>
+   <message level="Info" culprit="q_sys_s10_user_rst_clkgate_0">"Generating: altera_s10_user_rst_clkgate"</message>
+   <message level="Info" culprit="s10_user_rst_clkgate_0">generating top-level entity altera_s10_user_rst_clkgate</message>
+  </messages>
+ </entity>
+ <entity
+   kind="altera_s10_user_rst_clkgate"
+   version="19.4.7"
+   name="altera_s10_user_rst_clkgate">
+  <parameter name="DEVICE_FAMILY" value="Agilex 5" />
+  <parameter name="outputType" value="Reset Interface" />
+  <generatedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/altera_s10_user_rst_clkgate_1947/synth/altera_s10_user_rst_clkgate.sv"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/altera_s10_user_rst_clkgate_1947/synth/altera_s10_user_rst_clkgate_fm.sdc"
+       attributes="NO_AUTO_INSTANCE_DISCOVERY NO_SDC_PROMOTION" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/altera_s10_user_rst_clkgate_1947/synth/altera_s10_user_rst_clkgate.sv"
+       attributes="TOP_LEVEL_FILE" />
+   <file
+       path="/nfs/site/disks/psg_board_1/shaokuan/SM72/fpga/q23.4/bts_release/emif_q24.1/bts_lpddr4/ip/q_sys/q_sys_s10_user_rst_clkgate_0/altera_s10_user_rst_clkgate_1947/synth/altera_s10_user_rst_clkgate_fm.sdc"
+       attributes="NO_AUTO_INSTANCE_DISCOVERY NO_SDC_PROMOTION" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/p/psg/swip/releases/acdskit/24.1/115/linux64/ip/altera/pgm/altera_s10_user_rst_clkgate/altera_s10_user_rst_clkgate_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator
+     instantiator="q_sys_s10_user_rst_clkgate_0"
+     as="s10_user_rst_clkgate_0" />
+  <messages>
+   <message level="Info" culprit="q_sys_s10_user_rst_clkgate_0">"Generating: altera_s10_user_rst_clkgate"</message>
+   <message level="Info" culprit="s10_user_rst_clkgate_0">generating top-level entity altera_s10_user_rst_clkgate</message>
+  </messages>
+ </entity>
+</deploy>

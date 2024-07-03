@@ -1,0 +1,774 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Generated with Magillem 5.11.2.1 ( build id: 201707071153_5.11.2.1 ) at 6/9/22 8:53:29 AM
+-->
+<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009 http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009/index.xsd">
+    <spirit:vendor>Vendor</spirit:vendor>
+    <spirit:library>Library</spirit:library>
+    <spirit:name>io96b_user_mailbox</spirit:name>
+    <spirit:version>1.0</spirit:version>
+    <spirit:busInterfaces>
+        <spirit:busInterface>
+            <spirit:name>io96b_user_mailbox_slave</spirit:name>
+            <spirit:busType spirit:vendor="Magillem" spirit:library="MRV" spirit:name="MRVBusDef" spirit:version="1.0"/>
+            <spirit:abstractionType spirit:vendor="Magillem" spirit:library="MRV" spirit:name="MRVAbsDef" spirit:version="1.0"/>
+            <spirit:slave>
+                <spirit:memoryMapRef spirit:memoryMapRef="io96b_user_mailbox"/>
+            </spirit:slave>
+            <spirit:bitsInLau>32</spirit:bitsInLau>
+            <spirit:endianness>little</spirit:endianness>
+            <spirit:parameters>
+                <spirit:parameter>
+                    <spirit:name>_mre_definition_</spirit:name>
+                    <spirit:value>io96b_user_mailbox</spirit:value>
+                </spirit:parameter>
+            </spirit:parameters>
+        </spirit:busInterface>
+    </spirit:busInterfaces>
+    <spirit:memoryMaps>
+        <spirit:memoryMap>
+            <spirit:name>io96b_user_mailbox</spirit:name>
+            <spirit:displayName>IO96B_USER_MAILBOX</spirit:displayName>
+            <spirit:description>IO96B User Mailbox</spirit:description>
+            <spirit:addressBlock>
+                <spirit:name>io96b_user_mailbox_block</spirit:name>
+                <spirit:baseAddress>0x0</spirit:baseAddress>
+                <spirit:range>0x460</spirit:range>
+                <spirit:width>32</spirit:width>
+                <spirit:usage>register</spirit:usage>
+                <spirit:access>read-write</spirit:access>
+                <spirit:parameters>
+                    <spirit:parameter>
+                        <spirit:name>_mre_default_</spirit:name>
+                        <spirit:value>true</spirit:value>
+                    </spirit:parameter>
+                </spirit:parameters>
+                <spirit:register>
+                    <spirit:name>STATUS</spirit:name>
+                    <spirit:description>&lt;b&gt;Status &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x400</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0x7</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>STATUS_CAL_SUCCESS</spirit:name>
+                        <spirit:description>&lt;b&gt;Indicates final calibration status of all interfaces in the IO96: &lt;/b&gt;&lt;p&gt;    '1' All EMIF instances within the IO96 have calibrated successfully &lt;/p&gt;&lt;p&gt;    '0' One or more EMIF instances in the IO96 have either failed to calibrate or have not completed calibration yet. &lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>1</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">1</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>STATUS_CAL_FAIL</spirit:name>
+                        <spirit:description>&lt;b&gt;Indicates calibration failure status of any external memory interfaces in the IO96: &lt;/b&gt;&lt;p&gt;    '1' - One or more EMIF instances have failed to calibrate successfully &lt;/p&gt;&lt;p&gt;    '0' - No calibration failures have been reported for any of the EMIFs. &lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>1</spirit:bitOffset>
+                        <spirit:bitWidth>1</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">1</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>STATUS_CAL_BUSY</spirit:name>
+                        <spirit:description>&lt;b&gt;Indicates calibration busy status of any external memory interfaces in the IO96: &lt;/b&gt;&lt;p&gt;   '1' - One or more EMIF instances are busy with calibration.
+'0' - No EMIF instances are busy with calibration. &lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>2</spirit:bitOffset>
+                        <spirit:bitWidth>1</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">1</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_STATUS</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_6</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 6 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x420</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_6</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the seventh parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_6</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_5</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 5 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x424</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_5</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the sixth parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_5</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_4</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 4 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x428</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_4</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the fifth parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_4</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_3</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 3 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x42c</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_3</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the fourth parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_3</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_2</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 2 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x430</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_2</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the third parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_2</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_1</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 1 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x434</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_1</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the second parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_1</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_PARAM_0</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request Parameter 0 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x438</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_PARAM_0</spirit:name>
+                        <spirit:description>&lt;b&gt;This register specifies the first parameter (if applicable) for the requested command. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_PARAM_0</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_REQ</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Request &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x43c</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_OPCODE</spirit:name>
+                        <spirit:description>&lt;b&gt;The opcode of the command that the user wishes for firmware to perform &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>16</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">16</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>CMD_TYPE</spirit:name>
+                        <spirit:description>&lt;b&gt;The type of the command that the user wishes for firmware to perform. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>16</spirit:bitOffset>
+                        <spirit:bitWidth>8</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">8</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>CMD_TARGET_IP_INSTANCE_ID</spirit:name>
+                        <spirit:description>&lt;b&gt;Indicates the USER ID of the user claiming the interface &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>24</spirit:bitOffset>
+                        <spirit:bitWidth>5</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">5</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>CMD_TARGET_IP_TYPE</spirit:name>
+                        <spirit:description>&lt;b&gt;Indicates the type of IP: &lt;/b&gt;&lt;p&gt;
+0x0  Not used, 
+0x1  EMIF &lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>29</spirit:bitOffset>
+                        <spirit:bitWidth>3</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">3</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_REQ</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_RESPONSE_DATA_2</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Response Data 2 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x450</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_RESPONSE_DATA_2</spirit:name>
+                        <spirit:description>&lt;b&gt; For commands that return up to 3.5x 32-bit values, CMD_RESPONSE_DATA 0/1/2, and/or CMD_RESPONSE_DATA_SHORT fields contain the requested response data. &lt;/b&gt;
+</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_RESPONSE_DATA_2</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_RESPONSE_DATA_1</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Response Data 1 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x454</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_RESPONSE_DATA_1</spirit:name>
+                        <spirit:description>&lt;b&gt; This register can contain two types of values depending on the requested operation.
+For commands that return up to 3.5x 32-bit values, CMD_RESPONSE_DATA 0/1/2, and/or CMD_RESPONSE_DATA_SHORT fields contain the requested response data.
+For commands that return more data, this register specifies a pointer to a data buffer within the 4K User.  It is a byte offset relative to the start of the 4Kbyte RAM.  Users should not assume that this offset value remains static as the value of this pointer offset may change depending on the requested operation. &lt;/b&gt;
+</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_RESPONSE_DATA_1</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_RESPONSE_DATA_0</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Response Data 0 &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x458</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffffffff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>CMD_RESPONSE_DATA_0</spirit:name>
+                        <spirit:description>&lt;b&gt; This register can contain two types of values depending on the requested operation.
+For commands that return up to 3.5x 32-bit values, CMD_RESPONSE_DATA 0/1/2, and/or CMD_RESPONSE_DATA_SHORT fields contain the requested response data.
+For commands that return more data, this value contains the size of the returned data structure in bytes.  The location of the data buffer is specified in CMD_RESPONSE_DATA_1. &lt;/b&gt;
+</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>32</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">32</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x00000000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_RESPONSE_DATA_0</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+                <spirit:register>
+                    <spirit:name>CMD_RESPONSE_STATUS</spirit:name>
+                    <spirit:description>&lt;b&gt;Command Response status &lt;/b&gt;</spirit:description>
+                    <spirit:addressOffset>0x45c</spirit:addressOffset>
+                    <spirit:size>32</spirit:size>
+                    <spirit:access>read-write</spirit:access>
+                    <spirit:reset>
+                        <spirit:value>0x0</spirit:value>
+                        <spirit:mask>0xffff00ff</spirit:mask>
+                    </spirit:reset>
+                    <spirit:field>
+                        <spirit:name>STATUS_CMD_RESPONSE_ERROR</spirit:name>
+                        <spirit:description>&lt;b&gt;Reports errors related to the specific command &lt;/b&gt;&lt;p&gt;'000' - No error, other errors will be mentioned along with the specific command&lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>5</spirit:bitOffset>
+                        <spirit:bitWidth>3</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">3</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>STATUS_GENERAL_ERROR</spirit:name>
+                        <spirit:description>&lt;b&gt; Reports general errors  &lt;/b&gt; &lt;p&gt;'0000' - No error, '0001 - Indicates that an illegal command was received, '0010' - Indicates that the interface the command is targetting doesn't exist&lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>1</spirit:bitOffset>
+                        <spirit:bitWidth>4</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">4</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>STATUS_CMD_RESPONSE_READY</spirit:name>
+                        <spirit:description>&lt;b&gt;Tells whether the command response is ready  &lt;/b&gt;&lt;p&gt;'1' -  The response is ready &lt;/p&gt;</spirit:description>
+                        <spirit:bitOffset>0</spirit:bitOffset>
+                        <spirit:bitWidth>1</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">1</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:field>
+                        <spirit:name>CMD_RESPONSE_DATA_SHORT</spirit:name>
+                        <spirit:description>&lt;b&gt;For commands that return up to 16-bit value, this field contains the requested response data. &lt;/b&gt;</spirit:description>
+                        <spirit:bitOffset>16</spirit:bitOffset>
+                        <spirit:bitWidth>16</spirit:bitWidth>
+                        <spirit:access>read-write</spirit:access>
+                        <spirit:parameters>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_hw_</spirit:name>
+<spirit:value></spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_sysrdl_fieldwidth_</spirit:name>
+<spirit:value spirit:format="long">16</spirit:value>
+                            </spirit:parameter>
+                            <spirit:parameter>
+<spirit:name>_mre_formatted_reset_value_</spirit:name>
+<spirit:value>0x0000</spirit:value>
+                            </spirit:parameter>
+                        </spirit:parameters>
+                    </spirit:field>
+                    <spirit:parameters>
+                        <spirit:parameter>
+                            <spirit:name>_mre_definition_</spirit:name>
+                            <spirit:value>reg_CMD_RESPONSE_STATUS</spirit:value>
+                        </spirit:parameter>
+                        <spirit:parameter>
+                            <spirit:name>_sysrdl_accesswidth_</spirit:name>
+                            <spirit:value spirit:format="long">32</spirit:value>
+                        </spirit:parameter>
+                    </spirit:parameters>
+                </spirit:register>
+            </spirit:addressBlock>
+            <spirit:addressUnitBits>8</spirit:addressUnitBits>
+        </spirit:memoryMap>
+    </spirit:memoryMaps>
+</spirit:component>

@@ -1,0 +1,8 @@
+	component q_sys_reset_in is
+		port (
+			clk         : in  std_logic := 'X'; -- clk
+			in_reset_n  : in  std_logic := 'X'; -- reset_n
+			out_reset_n : out std_logic         -- reset_n
+		);
+	end component q_sys_reset_in;
+

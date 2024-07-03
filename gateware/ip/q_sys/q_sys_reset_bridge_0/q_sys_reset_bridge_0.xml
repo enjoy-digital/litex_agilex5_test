@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2024.04.24.12:03:13"
+ outputDirectory="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_reset_bridge_0/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Agilex 5"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="A5ED065BB32AE6SR0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_BOARD"
+     type="String"
+     defaultValue="default"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="in_reset" kind="reset" start="0">
+   <property name="associatedClock" value="" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="in_reset_n" direction="input" role="reset_n" width="1" />
+  </interface>
+  <interface name="out_reset" kind="reset" start="1">
+   <property name="associatedClock" value="" />
+   <property name="associatedDirectReset" value="in_reset" />
+   <property name="associatedResetSinks" value="in_reset" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="out_reset_n" direction="output" role="reset_n" width="1" />
+  </interface>
+ </perimeter>
+ <entity kind="q_sys_reset_bridge_0" version="1.0" name="q_sys_reset_bridge_0">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_DEVICE" value="A5ED065BB32AE6SR0" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Agilex 5" />
+  <parameter name="AUTO_BOARD" value="default" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_reset_bridge_0/synth/q_sys_reset_bridge_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_reset_bridge_0/synth/q_sys_reset_bridge_0.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_reset_bridge_0.ip" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <messages>
+   <message level="Info" culprit="q_sys_reset_bridge_0">"Generating: q_sys_reset_bridge_0"</message>
+  </messages>
+ </entity>
+</deploy>

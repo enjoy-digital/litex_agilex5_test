@@ -1,0 +1,27 @@
+	component ed_synth_axil_driver_0 is
+		port (
+			axil_driver_clk     : in  std_logic                     := 'X';             -- clk
+			axil_driver_rst_n   : in  std_logic                     := 'X';             -- reset_n
+			axil_driver_awaddr  : out std_logic_vector(31 downto 0);                    -- awaddr
+			axil_driver_awvalid : out std_logic;                                        -- awvalid
+			axil_driver_awready : in  std_logic                     := 'X';             -- awready
+			axil_driver_wdata   : out std_logic_vector(31 downto 0);                    -- wdata
+			axil_driver_wstrb   : out std_logic_vector(3 downto 0);                     -- wstrb
+			axil_driver_wvalid  : out std_logic;                                        -- wvalid
+			axil_driver_wready  : in  std_logic                     := 'X';             -- wready
+			axil_driver_bresp   : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- bresp
+			axil_driver_bvalid  : in  std_logic                     := 'X';             -- bvalid
+			axil_driver_bready  : out std_logic;                                        -- bready
+			axil_driver_araddr  : out std_logic_vector(31 downto 0);                    -- araddr
+			axil_driver_arvalid : out std_logic;                                        -- arvalid
+			axil_driver_arready : in  std_logic                     := 'X';             -- arready
+			axil_driver_rdata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- rdata
+			axil_driver_rresp   : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- rresp
+			axil_driver_rvalid  : in  std_logic                     := 'X';             -- rvalid
+			axil_driver_rready  : out std_logic;                                        -- rready
+			axil_driver_awprot  : out std_logic_vector(2 downto 0);                     -- awprot
+			axil_driver_arprot  : out std_logic_vector(2 downto 0);                     -- arprot
+			cal_done_rst_n      : out std_logic                                         -- reset_n
+		);
+	end component ed_synth_axil_driver_0;
+

@@ -1,0 +1,6 @@
+	component q_sys_s10_user_rst_clkgate_0 is
+		port (
+			ninit_done : out std_logic   -- reset
+		);
+	end component q_sys_s10_user_rst_clkgate_0;
+

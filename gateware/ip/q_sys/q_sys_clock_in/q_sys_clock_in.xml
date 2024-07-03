@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2024.04.24.12:03:13"
+ outputDirectory="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_clock_in/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Agilex 5"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="A5ED065BB32AE6SR0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="2"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_BOARD"
+     type="String"
+     defaultValue="default"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_IN_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_IN_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_IN_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="in_clk" kind="clock" start="0">
+   <property name="clockRate" value="0" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="in_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="out_clk" kind="clock" start="1">
+   <property name="associatedDirectClock" value="in_clk" />
+   <property name="clockRate" value="100000000" />
+   <property name="clockRateKnown" value="true" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="out_clk" direction="output" role="clk" width="1" />
+  </interface>
+ </perimeter>
+ <entity kind="q_sys_clock_in" version="1.0" name="q_sys_clock_in">
+  <parameter name="AUTO_GENERATION_ID" value="0" />
+  <parameter name="AUTO_DEVICE" value="A5ED065BB32AE6SR0" />
+  <parameter name="AUTO_IN_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Agilex 5" />
+  <parameter name="AUTO_BOARD" value="default" />
+  <parameter name="AUTO_IN_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <parameter name="AUTO_IN_CLK_CLOCK_DOMAIN" value="-1" />
+  <generatedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_clock_in/synth/q_sys_clock_in.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_clock_in/synth/q_sys_clock_in.v"
+       attributes="CONTAINS_INLINE_CONFIGURATION" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="/nfs/site/disks/psg_board_1/annagu/SM72/qii24.1b115_fgi/emif/bts_lpddr4/ip/q_sys/q_sys_clock_in.ip" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <messages>
+   <message level="Info" culprit="q_sys_clock_in">"Generating: q_sys_clock_in"</message>
+  </messages>
+ </entity>
+</deploy>

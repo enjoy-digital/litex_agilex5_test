@@ -1,0 +1,11 @@
+	component q_sys_product_info_0 is
+		port (
+			clk          : in  std_logic                     := 'X';             -- clk
+			reset_n      : in  std_logic                     := 'X';             -- reset_n
+			chipselect_n : in  std_logic                     := 'X';             -- chipselect_n
+			read_n       : in  std_logic                     := 'X';             -- read_n
+			av_data_read : out std_logic_vector(31 downto 0);                    -- readdata
+			av_address   : in  std_logic_vector(1 downto 0)  := (others => 'X')  -- address
+		);
+	end component q_sys_product_info_0;
+
