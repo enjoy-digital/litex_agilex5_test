@@ -23,7 +23,7 @@ from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 # CRG ----------------------------------------------------------------------------------------------
 
 class _CRG(LiteXModule):
-    def __init__(self, platform, sys_clk_freq):
+    def __init__(self, platform, sys_clk_freq, with_lpddr=True):
         self.rst      = Signal()
         self.cd_sys   = ClockDomain()
         self.cd_por   = ClockDomain()
@@ -34,26 +34,28 @@ class _CRG(LiteXModule):
         # Clk / Rst
         clk100        = platform.request("clk100")
         rst_n         = platform.request("user_btn", 0)
-        lpddr_ref_clk = platform.request("lpddr_refclk")
 
-        # Clocking
-        self.comb += self.cd_sys.clk.eq(clk100)
-        platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
 
         # Power on reset
         por_count = Signal(16, reset=2**16-1)
         por_done  = Signal()
         self.comb += por_done.eq(por_count == 0)
-        self.comb += self.cd_por.clk.eq(self.cd_sys.clk)
+        self.comb += self.cd_por.clk.eq(clk100)
         self.sync.por += If(~por_done, por_count.eq(por_count - 1))
-        self.specials += [
-            AsyncResetSynchronizer(self.cd_por, ~rst_n),
-            AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
-        ]
+        self.specials += AsyncResetSynchronizer(self.cd_por, ~rst_n),
 
-        # LPDDR4
-        self.comb += self.cd_lpddr.clk.eq(lpddr_ref_clk.p)
-        self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
+        # Clocking
+        if with_lpddr:
+            self.comb     += self.cd_sys.clk.eq(ClockSignal("lpddr_usr"))
+            self.specials += AsyncResetSynchronizer(self.cd_sys, ResetSignal("lpddr_usr"))
+            # LPDDR4
+            self.comb     += self.cd_lpddr.clk.eq(platform.request("lpddr_refclk").p)
+            self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
+        else:
+            self.comb += self.cd_sys.clk.eq(clk100)
+            self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
+
+        platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
 
 # BaseSoC ------------------------------------------------------------------------------------------
 
@@ -62,13 +64,17 @@ class BaseSoC(SoCCore):
         platform = Platform()
 
         # CRG --------------------------------------------------------------------------------------
-        self.crg = _CRG(platform, sys_clk_freq)
+        with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
+        # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
+        sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
+        self.crg   = _CRG(platform, sys_clk_freq, with_lpddr)
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on Agilex5E 065B", **kwargs)
 
         # LPDDR4 -----------------------------------------------------------------------------------
-        self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
+        if with_lpddr:
+            self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
 
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
