@@ -63,7 +63,7 @@ class _CRG(LiteXModule):
 # BaseSoC ------------------------------------------------------------------------------------------
 
 class BaseSoC(SoCCore):
-    def __init__(self, sys_clk_freq=100e6, with_led_chaser=True, **kwargs):
+    def __init__(self, sys_clk_freq=100e6, with_analyzer=False, with_led_chaser=True, **kwargs):
         platform = Platform()
 
         # CRG --------------------------------------------------------------------------------------
@@ -87,30 +87,31 @@ class BaseSoC(SoCCore):
 
             self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
-            main_ram_bus = self.bus.slaves["main_ram"]
-            analyzer_signals_w = [
-                main_ram_bus.aw,
-                main_ram_bus.w,
-                main_ram_bus.b,
-            ]
-            analyzer_signals_r = [
-                main_ram_bus.ar,
-                main_ram_bus.r,
-            ]
+            if with_analyzer:
+                main_ram_bus = self.bus.slaves["main_ram"]
+                analyzer_signals_w = [
+                    main_ram_bus.aw,
+                    main_ram_bus.w,
+                    main_ram_bus.b,
+                ]
+                analyzer_signals_r = [
+                    main_ram_bus.ar,
+                    main_ram_bus.r,
+                ]
 
-            self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
-                depth        = 128,
-                clock_domain = "sys",
-                register     = True,
-                csr_csv      = "analyzer_w.csv"
-            )
+                self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
+                    depth        = 128,
+                    clock_domain = "sys",
+                    register     = True,
+                    csr_csv      = "analyzer_w.csv"
+                )
 
-            self.analyzer_r = LiteScopeAnalyzer(analyzer_signals_r,
-                depth        = 128,
-                clock_domain = "sys",
-                register     = True,
-                csr_csv      = "analyzer_r.csv"
-            )
+                self.analyzer_r = LiteScopeAnalyzer(analyzer_signals_r,
+                    depth        = 128,
+                    clock_domain = "sys",
+                    register     = True,
+                    csr_csv      = "analyzer_r.csv"
+                )
 
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
@@ -133,7 +134,8 @@ def main():
     args = parser.parse_args()
 
     soc = BaseSoC(
-        sys_clk_freq = args.sys_clk_freq,
+        sys_clk_freq  = args.sys_clk_freq,
+        with_analyzer = args.with_analyzer,
         **parser.soc_argdict
     )
 
