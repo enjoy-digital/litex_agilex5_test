@@ -17,16 +17,25 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
     def __init__(self, platform, pads):
 
         self.bus      = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
-        self.axil     = axi.AXILiteInterface(data_width=32, address_width=32)
         self.cal_done = Signal()
+
+        # # #
+
+        # EMIF LPDDR4 Clock Domain.
+        # -------------------------
+        self.cd_lpddr_usr = ClockDomain()
 
         self.ip_params = dict()
 
         self.ip_params.update(
+            # EMIF Module reference clock.
+            # ----------------------------
             i_ref_clk_i_clk               = ClockSignal("lpddr"),
             i_core_init_n_i_reset_n       = ResetSignal("lpddr"),
-            o_usr_clk_o_clk               = Open(),
-            o_usr_rst_n_o_reset_n         = Open(),
+            # EMIF Module usr clk output.
+            # ---------------------------
+            o_usr_clk_o_clk               = ClockSignal("lpddr_usr"),
+            o_usr_rst_n_o_reset_n         = ResetSignal("lpddr_usr"),
 
             # AXIL Driver Clk/Rst (Calibration).
             i_axil_driver_clk_i_clk       = ClockSignal("sys"),
