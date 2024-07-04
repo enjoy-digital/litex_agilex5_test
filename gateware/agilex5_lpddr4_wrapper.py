@@ -6,6 +6,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import os
+from shutil import which
+import subprocess
 
 from migen import *
 
@@ -114,6 +116,18 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         self.specials += Instance("ed_synth", **self.ip_params)
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
-        platform.add_ip(os.path.join(curr_dir, "ed_synth.qsys"))
+        qsys_file = os.path.join(curr_dir, "ed_synth.qsys")
+        platform.add_ip(qsys_file)
         platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_emif_ph2_inst.ip"))
         platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_axil_driver_0.ip"))
+
+        if which("qsys-edit") is None:
+            msg = "Unable to find Quartus toolchain, please:\n"
+            msg += "- Add Quartus toolchain to your $PATH."
+            raise OSError(msg)
+
+        command = f"qsys-generate --synthesis {qsys_file}"
+
+        ret = subprocess.run(command, shell=True)
+        if ret.returncode != 0:
+            raise OSError("Error occured during Quartus's script execution.")
