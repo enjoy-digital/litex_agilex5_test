@@ -24,6 +24,7 @@ from litex.soc.cores.led import LedChaser
 from litescope import LiteScopeAnalyzer
 
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
+from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -67,6 +68,7 @@ class _CRG(LiteXModule):
 class BaseSoC(SoCCore):
     def __init__(self, sys_clk_freq=100e6,
         with_analyzer   = False,
+        with_ethernet   = False,
         with_led_chaser = True,
         with_spi_sdcard = False,
         **kwargs):
@@ -132,6 +134,12 @@ class BaseSoC(SoCCore):
             ])
             self.add_spi_sdcard()
 
+        # Ethernet ---------------------------------------------------------------------------------
+        if with_ethernet:
+            self.ethphy = GMIIToRGMII(platform,
+                clock_pads = self.platform.request("eth_clocks", 2),
+                pads       = self.platform.request("eth", 2))
+
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
             self.leds = LedChaser(
@@ -146,6 +154,8 @@ def main():
     parser.add_target_argument("--sys-clk-freq",    default=100e6, type=float, help="System clock frequency.")
     parser.add_target_argument("--with-analyzer",   action="store_true",       help="Enable liteScope to probe LPDDR4 AXI.")
     parser.add_target_argument("--with-spi-sdcard", action="store_true",       help="Enable SPI-mode SDCard support.")
+    parser.add_target_argument("--with-ethernet",   action="store_true",       help="Enable Ethernet support.")
+
     parser.set_defaults(synth_tool="quartus_syn")
     parser.set_defaults(bus_standard="axi")
 
@@ -156,6 +166,7 @@ def main():
     soc = BaseSoC(
         sys_clk_freq    = args.sys_clk_freq,
         with_analyzer   = args.with_analyzer,
+        with_ethernet   = args.with_ethernet,
         with_spi_sdcard = args.with_spi_sdcard,
         **parser.soc_argdict
     )
