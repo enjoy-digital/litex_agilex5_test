@@ -79,7 +79,7 @@ class BaseSoC(SoCCore):
             # Add SDRAM region.
             main_ram_region = SoCRegion(
                 origin = self.mem_map.get("main_ram", None),
-                size   = 1024 * 1024 * 1024,
+                size   = GB,
                 mode   = "rwx")
             self.bus.add_region("main_ram", main_ram_region)
 
