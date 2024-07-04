@@ -19,6 +19,8 @@ from litex.soc.integration.soc_core import *
 from litex.soc.integration.builder import *
 from litex.soc.cores.led import LedChaser
 
+from litescope import LiteScopeAnalyzer
+
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 
 # CRG ----------------------------------------------------------------------------------------------
@@ -85,6 +87,31 @@ class BaseSoC(SoCCore):
 
             self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
+            main_ram_bus = self.bus.slaves["main_ram"]
+            analyzer_signals_w = [
+                main_ram_bus.aw,
+                main_ram_bus.w,
+                main_ram_bus.b,
+            ]
+            analyzer_signals_r = [
+                main_ram_bus.ar,
+                main_ram_bus.r,
+            ]
+
+            self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
+                depth        = 128,
+                clock_domain = "sys",
+                register     = True,
+                csr_csv      = "analyzer_w.csv"
+            )
+
+            self.analyzer_r = LiteScopeAnalyzer(analyzer_signals_r,
+                depth        = 128,
+                clock_domain = "sys",
+                register     = True,
+                csr_csv      = "analyzer_r.csv"
+            )
+
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
             self.leds = LedChaser(
@@ -96,8 +123,10 @@ class BaseSoC(SoCCore):
 def main():
     from litex.build.parser import LiteXArgumentParser
     parser = LiteXArgumentParser(platform=Platform, description="LiteX SoC on LiteX SoC on Agilex5E 065B.")
-    parser.set_defaults(synth_tool="quartus_syn")
     parser.add_target_argument("--sys-clk-freq", default=100e6, type=float, help="System clock frequency.")
+    parser.add_target_argument("--with-analyzer", action="store_true",      help="Enable liteScope to probe LPDDR4 AXI.")
+    parser.set_defaults(synth_tool="quartus_syn")
+    parser.set_defaults(bus_standard="axi")
 
     # soc.json default path
     parser.set_defaults(soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json")
