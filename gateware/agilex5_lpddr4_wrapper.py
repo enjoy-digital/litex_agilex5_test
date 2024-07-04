@@ -14,12 +14,26 @@ from migen import *
 from litex.gen import *
 
 from litex.soc.interconnect import axi
+from litex.soc.interconnect.csr import *
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
     def __init__(self, platform, pads):
 
         self.bus      = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
         self.cal_done = Signal()
+
+        self._status = CSRStatus(description="EMIF LDDR4 Status.", fields=[
+            CSRField("cal_done", size=1, offset=0, description="EMIF LPDDR4 calibration done."),
+        ])
+
+        self._control = CSRStorage(description="EMIF LPDDR4 Control.", fields=[
+            CSRField("reset", size=1, offset=0, description="EMIF LPDDR4 Controler reset.", values=[
+                ("``0b0``", "Normal operation."),
+                ("``0b1``", "Reset state."),
+            ]),
+        ])
+
+        self.comb += self._status.fields.cal_done.eq(self.cal_done),
 
         # # #
 
@@ -33,7 +47,8 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             # EMIF Module reference clock.
             # ----------------------------
             i_ref_clk_i_clk               = ClockSignal("lpddr"),
-            i_core_init_n_i_reset_n       = ResetSignal("lpddr"),
+            i_core_init_n_i_reset_n       = ~(ResetSignal("lpddr") | self._control.fields.reset),
+
             # EMIF Module usr clk output.
             # ---------------------------
             o_usr_clk_o_clk               = ClockSignal("lpddr_usr"),
@@ -41,11 +56,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
             # AXIL Driver Clk/Rst (Calibration).
             i_axil_driver_clk_i_clk       = ClockSignal("sys"),
-            i_axil_driver_rst_n_i_reset_n = ResetSignal("sys"),
+            i_axil_driver_rst_n_i_reset_n = ~ResetSignal("sys"),
 
             # MEM AXI Lite Clk/Rst (Calibration).
             i_s0_axil_clk_i_clk           = ClockSignal("sys"),
-            i_s0_axil_rst_n_i_reset_n     = ResetSignal("sys"),
+            i_s0_axil_rst_n_i_reset_n     = ~ResetSignal("sys"),
 
             # MEM Cal Done.
             o_cal_done_rst_n_reset_n      = self.cal_done,
