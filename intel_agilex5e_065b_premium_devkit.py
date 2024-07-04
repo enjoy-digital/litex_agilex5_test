@@ -10,6 +10,8 @@
 from migen import *
 from migen.genlib.resetsync import AsyncResetSynchronizer
 
+from litex.build.generic_platform import *
+
 from litex.gen import *
 
 from intel_agilex5e_065b_premium_devkit_platform import Platform
@@ -63,7 +65,11 @@ class _CRG(LiteXModule):
 # BaseSoC ------------------------------------------------------------------------------------------
 
 class BaseSoC(SoCCore):
-    def __init__(self, sys_clk_freq=100e6, with_analyzer=False, with_led_chaser=True, **kwargs):
+    def __init__(self, sys_clk_freq=100e6,
+        with_analyzer   = False,
+        with_led_chaser = True,
+        with_spi_sdcard = False,
+        **kwargs):
         platform = Platform()
 
         # CRG --------------------------------------------------------------------------------------
@@ -113,6 +119,19 @@ class BaseSoC(SoCCore):
                     csr_csv      = "analyzer_r.csv"
                 )
 
+        # SDCard -----------------------------------------------------------------------------------
+        if with_spi_sdcard:
+            platform.add_extension([
+                ("spisdcard", 0, # FIXME: arbitrary choice
+                    Subsignal("clk",  Pins(f"j9:7")),
+                    Subsignal("mosi", Pins(f"j9:3")),
+                    Subsignal("cs_n", Pins(f"j9:4")),
+                    Subsignal("miso", Pins(f"j9:6")),
+                    IOStandard("3.3V LVCMOS"),
+                ),
+            ])
+            self.add_spi_sdcard()
+
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
             self.leds = LedChaser(
@@ -124,8 +143,9 @@ class BaseSoC(SoCCore):
 def main():
     from litex.build.parser import LiteXArgumentParser
     parser = LiteXArgumentParser(platform=Platform, description="LiteX SoC on LiteX SoC on Agilex5E 065B.")
-    parser.add_target_argument("--sys-clk-freq", default=100e6, type=float, help="System clock frequency.")
-    parser.add_target_argument("--with-analyzer", action="store_true",      help="Enable liteScope to probe LPDDR4 AXI.")
+    parser.add_target_argument("--sys-clk-freq",    default=100e6, type=float, help="System clock frequency.")
+    parser.add_target_argument("--with-analyzer",   action="store_true",       help="Enable liteScope to probe LPDDR4 AXI.")
+    parser.add_target_argument("--with-spi-sdcard", action="store_true",       help="Enable SPI-mode SDCard support.")
     parser.set_defaults(synth_tool="quartus_syn")
     parser.set_defaults(bus_standard="axi")
 
@@ -134,8 +154,9 @@ def main():
     args = parser.parse_args()
 
     soc = BaseSoC(
-        sys_clk_freq  = args.sys_clk_freq,
-        with_analyzer = args.with_analyzer,
+        sys_clk_freq    = args.sys_clk_freq,
+        with_analyzer   = args.with_analyzer,
+        with_spi_sdcard = args.with_spi_sdcard,
         **parser.soc_argdict
     )
 
