@@ -14,6 +14,7 @@ from litex.gen import *
 
 from intel_agilex5e_065b_premium_devkit_platform import Platform
 
+from litex.soc.integration.soc      import *
 from litex.soc.integration.soc_core import *
 from litex.soc.integration.builder import *
 from litex.soc.cores.led import LedChaser
@@ -75,6 +76,14 @@ class BaseSoC(SoCCore):
         # LPDDR4 -----------------------------------------------------------------------------------
         if with_lpddr:
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
+            # Add SDRAM region.
+            main_ram_region = SoCRegion(
+                origin = self.mem_map.get("main_ram", None),
+                size   = 1024 * 1024 * 1024,
+                mode   = "rwx")
+            self.bus.add_region("main_ram", main_ram_region)
+
+            self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
