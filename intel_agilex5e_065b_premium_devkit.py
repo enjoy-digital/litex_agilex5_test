@@ -18,19 +18,23 @@ from litex.soc.integration.soc_core import *
 from litex.soc.integration.builder import *
 from litex.soc.cores.led import LedChaser
 
+from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
+
 # CRG ----------------------------------------------------------------------------------------------
 
 class _CRG(LiteXModule):
     def __init__(self, platform, sys_clk_freq):
-        self.rst    = Signal()
-        self.cd_sys = ClockDomain()
-        self.cd_por = ClockDomain()
+        self.rst      = Signal()
+        self.cd_sys   = ClockDomain()
+        self.cd_por   = ClockDomain()
+        self.cd_lpddr = ClockDomain()
 
         # # #
 
         # Clk / Rst
-        clk100 = platform.request("clk100")
-        rst_n  = platform.request("user_btn", 0)
+        clk100        = platform.request("clk100")
+        rst_n         = platform.request("user_btn", 0)
+        lpddr_ref_clk = platform.request("lpddr_refclk")
 
         # Clocking
         self.comb += self.cd_sys.clk.eq(clk100)
@@ -47,6 +51,10 @@ class _CRG(LiteXModule):
             AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
         ]
 
+        # LPDDR4
+        self.comb += self.cd_lpddr.clk.eq(lpddr_ref_clk.p)
+        self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
+
 # BaseSoC ------------------------------------------------------------------------------------------
 
 class BaseSoC(SoCCore):
@@ -58,6 +66,9 @@ class BaseSoC(SoCCore):
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on Agilex5E 065B", **kwargs)
+
+        # LPDDR4 -----------------------------------------------------------------------------------
+        self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
 
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
