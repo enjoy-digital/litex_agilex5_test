@@ -114,10 +114,11 @@ class GMIIToRGMII(LiteXModule):
     rx_clk_freq = 125e6
 
     def __init__(self, platform, clock_pads, pads):
-        self.model = False
-        self.crg   = GMIIToRGMIICRG(clock_pads, pads)
-        self.tx    = ClockDomainsRenamer("eth_rx")(GMIIToRGMIITX(pads))
-        self.rx    = ClockDomainsRenamer("eth_rx")(GMIIToRGMIIRX(pads))
+        self.platform = platform
+        self.model    = False
+        self.crg      = GMIIToRGMIICRG(clock_pads, pads)
+        self.tx       = ClockDomainsRenamer("eth_rx")(GMIIToRGMIITX(pads))
+        self.rx       = ClockDomainsRenamer("eth_rx")(GMIIToRGMIIRX(pads))
         self.sink, self.source = self.tx.sink, self.rx.source
 
         # # #
@@ -153,7 +154,7 @@ class GMIIToRGMII(LiteXModule):
         curr_dir = os.path.abspath(os.path.dirname(__file__))
         ip_name = "gmii_to_rgmii"
         ip_file = os.path.join(curr_dir, ip_name + ".ip")
-        platform.add_ip(ip_file)
+        self.platform.add_ip(ip_file)
 
         if which("quartus_ipgenerate") is None:
             msg = "Unable to find Quartus toolchain, please:\n"
