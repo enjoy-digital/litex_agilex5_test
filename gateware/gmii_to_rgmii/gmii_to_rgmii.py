@@ -10,6 +10,7 @@ from shutil import which
 import subprocess
 
 from migen import *
+from migen.genlib.resetsync import AsyncResetSynchronizer
 
 from liteeth.phy.gmii_mii import *
 
@@ -18,14 +19,108 @@ from litex.gen import *
 from litex.soc.interconnect import axi
 from litex.soc.interconnect.csr import *
 
-class GMIIToRGMII(LiteXModule):
-    def __init__(self, platform, clock_pads, pads):
-        self.gmii = Record(tx_pads_layout + rx_pads_layout)
+# GMIIToRGMII TX -----------------------------------------------------------------------------------
+
+class GMIIToRGMIITX(LiteXModule):
+    def __init__(self, pads):
+        self.sink      = sink = stream.Endpoint(eth_phy_description(8))
+        self.ip_params = dict()
 
         # # #
 
+        self.ip_params.update(
+            # GMII Tx Interface.
+            # ------------------
+            i_hps_gmii_mac_txd_o     = sink.data,
+            i_hps_gmii_mac_txen      = sink.valid,
+            i_hps_gmii_mac_txer      = 0,
+
+            # RGMII Tx Interface.
+            # -------------------
+            o_phy_rgmii_rgmii_txd    = pads.tx_data,
+            o_phy_rgmii_rgmii_tx_ctl = pads.tx_ctl,
+        )
+
+        self.sync += sink.ready.eq(1)
+
+# GMIIToRGMII RX -----------------------------------------------------------------------------------
+
+class GMIIToRGMIIRX(LiteXModule):
+    def __init__(self, pads):
+        self.source    = source = stream.Endpoint(eth_phy_description(8))
+        self.ip_params = dict()
+
+        # # #
+
+        dv_d = Signal()
+
+        self.ip_params.update(
+            # GMII Rx Interface.
+            # ------------------
+            o_hps_gmii_mac_rxdv      = source.valid,
+            o_hps_gmii_mac_rxer      = Open(),
+            o_hps_gmii_mac_rxd       = source.data,
+
+            # RGMII Rx Interface.
+            # -------------------
+            i_phy_rgmii_rgmii_rxd    = pads.rx_data,
+            i_phy_rgmii_rgmii_rx_ctl = pads.rx_ctl,
+        )
+
+        self.sync += dv_d.eq(source.valid)
+        self.comb += source.last.eq(~source.valid & dv_d)
+
+# GMIIToRGMII CRG ----------------------------------------------------------------------------------
+
+class GMIIToRGMIICRG(LiteXModule):
+    def __init__(self, clock_pads, pads):
+        self._reset    = CSRStorage()
+
+        self.ip_params = dict()
+
+        # # #
         self.cd_eth_rx = ClockDomain()
         self.cd_eth_tx = ClockDomain()
+
+        self.ip_params.update(
+            # GMII Tx Clk/Rst.
+            # ----------------
+            i_hps_gmii_mac_tx_clk_o  = ClockSignal("eth_tx"),
+            o_hps_gmii_mac_tx_clk_i  = Open(), # FIXME: check
+            i_hps_gmii_mac_rst_tx_n  = ResetSignal("eth_tx"),
+
+            # GMII Rx Clk/Rst.
+            # ----------------
+            o_hps_gmii_mac_rx_clk    = ClockSignal("eth_rx"),
+            i_hps_gmii_mac_rst_rx_n  = ~ResetSignal("eth_rx"),
+
+            # RGMII Rx Clk.
+            # -------------------
+            i_phy_rgmii_rgmii_rx_clk = clock_pads.rx,
+            # RGMII Tx Clk.
+            # -------------------
+            o_phy_rgmii_rgmii_tx_clk = clock_pads.tx,
+        )
+
+        # Reset
+        self.specials += [
+            AsyncResetSynchronizer(self.cd_eth_rx, self._reset.storage),
+            AsyncResetSynchronizer(self.cd_eth_tx, self._reset.storage),
+        ]
+
+class GMIIToRGMII(LiteXModule):
+    dw          = 8
+    tx_clk_freq = 125e6
+    rx_clk_freq = 125e6
+
+    def __init__(self, platform, clock_pads, pads):
+        self.model = False
+        self.crg   = GMIIToRGMIICRG(clock_pads, pads)
+        self.tx    = ClockDomainsRenamer("eth_rx")(GMIIToRGMIITX(pads))
+        self.rx    = ClockDomainsRenamer("eth_rx")(GMIIToRGMIIRX(pads))
+        self.sink, self.source = self.tx.sink, self.rx.source
+
+        # # #
 
         # EMIF LPDDR4 Clock Domain.
         # -------------------------
@@ -42,42 +137,17 @@ class GMIIToRGMII(LiteXModule):
             i_peri_reset_reset          = 0,
             i_peri_clock_clk            = 0,
 
-            # GMII Tx Interface.
-            # ------------------
-            i_hps_gmii_mac_tx_clk_o     = ClockSignal("eth_tx"),
-            o_hps_gmii_mac_tx_clk_i     = Open(), # FIXME: check
-            i_hps_gmii_mac_rst_tx_n     = ResetSignal("eth_tx"),
-            i_hps_gmii_mac_txd_o        = self.gmii.tx_data,
-            i_hps_gmii_mac_txen         = self.gmii.tx_en,
-            i_hps_gmii_mac_txer         = self.gmii.tx_er,
-
-            # GMII Rx Interface.
-            # ------------------
-            o_hps_gmii_mac_rx_clk       = ClockSignal("eth_rx"),
-            i_hps_gmii_mac_rst_rx_n     = ~ResetSignal("eth_rx"),
-            o_hps_gmii_mac_rxdv         = self.gmii.rx_dv,
-            o_hps_gmii_mac_rxer         = self.gmii.rx_er,
-            o_hps_gmii_mac_rxd          = self.gmii.rx_data,
-
             # GMII Control Interface.
             # -----------------------
             i_hps_gmii_mac_speed        = Constant(0, 3),
             o_hps_gmii_mac_col          = Open(),
             o_hps_gmii_mac_crs          = Open(),
-
-            # RGMII Rx Interface.
-            # -------------------
-            i_phy_rgmii_rgmii_rx_clk    = clock_pads.rx,
-            i_phy_rgmii_rgmii_rxd       = pads.rx_data,
-            i_phy_rgmii_rgmii_rx_ctl    = pads.rx_ctl,
-
-            # RGMII Tx Interface.
-            # -------------------
-            o_phy_rgmii_rgmii_tx_clk    = clock_pads.tx,
-            o_phy_rgmii_rgmii_txd       = pads.tx_data,
-            o_phy_rgmii_rgmii_tx_ctl    = pads.tx_ctl,
+            **self.crg.ip_params,
+            **self.tx.ip_params,
+            **self.rx.ip_params,
         )
 
+    def do_finalize(self):
         self.specials += Instance("gmii_to_rgmii", **self.ip_params)
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))

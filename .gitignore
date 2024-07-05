@@ -1,3 +1,11 @@
 __pycache__
 build
 third_party
+*.rpt
+*.sopcinfo
+*.html
+board.info
+gateware/ed_synth
+gateware/ip/ed_synth/ed_synth_axil_driver_0
+gateware/ip/ed_synth/ed_synth_emif_ph2_inst
+gateware/gmii_to_rgmii/gmii_to_rgmii
