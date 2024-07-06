@@ -5,6 +5,9 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
+# See.
+# https://www.intel.com/content/www/us/en/docs/programmable/683130/22-3/fpga-gmii-to-rgmii-converter-core-interface.html
+
 import os
 from shutil import which
 import subprocess
@@ -60,6 +63,9 @@ class GMIIToRGMIIRX(LiteXModule):
             o_hps_gmii_mac_rxdv      = source.valid,
             o_hps_gmii_mac_rxer      = Open(),
             o_hps_gmii_mac_rxd       = source.data,
+            i_hps_gmii_mac_speed     = Constant(0, 3),
+            o_hps_gmii_mac_col       = Open(),
+            o_hps_gmii_mac_crs       = Open(),
 
             # RGMII Rx Interface.
             # -------------------
@@ -121,6 +127,9 @@ class GMIIToRGMII(LiteXModule):
         self.rx       = ClockDomainsRenamer("eth_rx")(GMIIToRGMIIRX(pads))
         self.sink, self.source = self.tx.sink, self.rx.source
 
+        if hasattr(pads, "mdc"):
+            self.mdio = LiteEthPHYMDIO(pads)
+
         # # #
 
         # EMIF LPDDR4 Clock Domain.
@@ -138,11 +147,6 @@ class GMIIToRGMII(LiteXModule):
             i_peri_reset_reset          = 0,
             i_peri_clock_clk            = 0,
 
-            # GMII Control Interface.
-            # -----------------------
-            i_hps_gmii_mac_speed        = Constant(0, 3),
-            o_hps_gmii_mac_col          = Open(),
-            o_hps_gmii_mac_crs          = Open(),
             **self.crg.ip_params,
             **self.tx.ip_params,
             **self.rx.ip_params,
