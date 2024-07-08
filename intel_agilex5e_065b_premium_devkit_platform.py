@@ -14,8 +14,9 @@ from litex.build.generic_platform  import Pins, IOStandard, Subsignal, Misc
 _io = [
 
     # Clk
-    ("clk100",     0, Pins("D8"),    IOStandard("3.3-V LVCMOS")), # SI5332 OUT4
-    ("sys_clk100", 0, Pins("BF111"), IOStandard("3.3-V LVCMOS")), # SI5332 OUT5
+    ("clk100",        0, Pins("D8"),    IOStandard("3.3-V LVCMOS")), # SI5332 OUT4
+    ("sys_clk100",    0, Pins("BF111"), IOStandard("3.3-V LVCMOS")), # SI5332 OUT5
+    ("hvio6d_clk125", 0, Pins("A23"),   IOStandard("1.8-V LVCMOS")), # SI5518A OUT1 (for RGMII)
 
     # Serial
     ("serial", 0,
@@ -97,10 +98,10 @@ _io = [
     ),
 
     # RGMII Ethernet (88E1512 RGMII)
-    # FIXME: IOStandard
     ("eth_clocks", 2,
         Subsignal("tx", Pins("B14")),
         Subsignal("rx", Pins("B23")),
+        IOStandard("1.8-V LVCMOS"),
     ),
     ("eth", 2,
         Subsignal("int_n",   Pins("B35")),
@@ -111,6 +112,7 @@ _io = [
         Subsignal("rx_data", Pins("A30 B30 A33 A35")),
         Subsignal("tx_ctl",  Pins("A14")),
         Subsignal("tx_data", Pins("A8 B4 A11 B11")),
+        IOStandard("1.8-V LVCMOS"),
     ),
 
     # SFP
