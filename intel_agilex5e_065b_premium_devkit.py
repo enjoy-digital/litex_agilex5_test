@@ -25,11 +25,12 @@ from litescope import LiteScopeAnalyzer
 
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
+from gateware.porRGMIIPLL.porRGMIIPLL import PorRGMIIPLL
 
 # CRG ----------------------------------------------------------------------------------------------
 
 class _CRG(LiteXModule):
-    def __init__(self, platform, sys_clk_freq, with_lpddr=True):
+    def __init__(self, platform, sys_clk_freq, with_lpddr=True, with_ethernet=False):
         self.rst      = Signal()
         self.cd_sys   = ClockDomain()
         self.cd_por   = ClockDomain()
@@ -61,6 +62,10 @@ class _CRG(LiteXModule):
             self.comb += self.cd_sys.clk.eq(clk100)
             self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
 
+        if with_ethernet:
+            pll_ref_clk    = platform.request("hvio6d_clk125")
+            self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
+
         platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
 
 # BaseSoC ------------------------------------------------------------------------------------------
@@ -81,7 +86,7 @@ class BaseSoC(SoCCore):
         with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
         # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
         sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
-        self.crg   = _CRG(platform, sys_clk_freq, with_lpddr)
+        self.crg   = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on Agilex5E 065B", **kwargs)
