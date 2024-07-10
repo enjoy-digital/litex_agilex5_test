@@ -2621,7 +2621,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="MEM_PRESET_FILE_QPRS" type="string">
           <ipxact:name>MEM_PRESET_FILE_QPRS</ipxact:name>
           <ipxact:displayName>Memory Preset custom file path</ipxact:displayName>
-          <ipxact:value>/home/gwe/enjoydigital/intel/litex_agilex_test/gateware/lpddr_4266bin_1866.qprs</ipxact:value>
+          <ipxact:value>QPRS_PATH/lpddr_4266bin_1866.qprs</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="MEM_PRESET_FILE_EN_FSP0" type="bit">
           <ipxact:name>MEM_PRESET_FILE_EN_FSP0</ipxact:name>

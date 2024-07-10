@@ -6,10 +6,12 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 import os
-from shutil import which
+from shutil import which, copyfile
 import subprocess
 
 from migen import *
+
+from litex.build import tools
 
 from litex.gen import *
 
@@ -131,9 +133,18 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         self.specials += Instance("ed_synth", **self.ip_params)
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
+
+        # Avoid hardcoded path to qprs file
+        ip_dir = os.path.join(curr_dir, "ip", "ed_synth")
+        ip_src = os.path.join(ip_dir, "ed_synth_emif_ph2_inst_template.ip")
+        ip_dst = os.path.join(ip_dir, "ed_synth_emif_ph2_inst.ip")
+        copyfile(ip_src, ip_dst)
+
+        tools.replace_in_file(ip_dst, "QPRS_PATH", curr_dir)
+
         qsys_file = os.path.join(curr_dir, "ed_synth.qsys")
         platform.add_ip(qsys_file)
-        platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_emif_ph2_inst.ip"))
+        platform.add_ip(ip_dst)
         platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_axil_driver_0.ip"))
 
         if which("qsys-edit") is None:
