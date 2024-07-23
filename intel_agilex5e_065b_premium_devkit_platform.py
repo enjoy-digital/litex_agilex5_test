@@ -27,9 +27,9 @@ _io = [
 
     # Leds
     ("user_led", 0, Pins("BM59"), IOStandard("1.1 V")),
-    ("user_led", 0, Pins("BH59"), IOStandard("1.1 V")),
-    ("user_led", 0, Pins("BH62"), IOStandard("1.1 V")),
-    ("user_led", 0, Pins("BK59"), IOStandard("1.1 V")),
+    ("user_led", 1, Pins("BH59"), IOStandard("1.1 V")),
+    ("user_led", 2, Pins("BH62"), IOStandard("1.1 V")),
+    ("user_led", 3, Pins("BK59"), IOStandard("1.1 V")),
 
     # Switches
     ("user_sw", 0, Pins("CH12"), IOStandard("3.3-V LVCMOS")),
