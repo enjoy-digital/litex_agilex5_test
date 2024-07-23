@@ -285,6 +285,7 @@ class Platform(AlteraPlatform):
 
     def __init__(self, toolchain="quartus"):
         AlteraPlatform.__init__(self, "A5ED065BB32AE6SR0", _io, _connectors, toolchain=toolchain)
+        self.create_rbf = False
         self.add_platform_command("set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT \"LINEAR FORMAT\"")
         self.add_platform_command("set_global_assignment -name PWRMGT_LINEAR_FORMAT_N \"-12\"")
 
