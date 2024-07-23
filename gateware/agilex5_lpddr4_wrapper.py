@@ -39,6 +39,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
         # # #
 
+        # Signals.
+        usr_rst_n = Signal()
+
+        self.comb += ResetSignal("lpddr_usr").eq(~usr_rst_n)
+
         # EMIF LPDDR4 Clock Domain.
         # -------------------------
         self.cd_lpddr_usr = ClockDomain()
@@ -54,7 +59,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             # EMIF Module usr clk output.
             # ---------------------------
             o_usr_clk_o_clk               = ClockSignal("lpddr_usr"),
-            o_usr_rst_n_o_reset_n         = ResetSignal("lpddr_usr"),
+            o_usr_rst_n_o_reset_n         = usr_rst_n,
 
             # AXIL Driver Clk/Rst (Calibration).
             i_axil_driver_clk_i_clk       = ClockSignal("sys"),
