@@ -59,7 +59,7 @@ class _CRG(LiteXModule):
             self.comb     += self.cd_lpddr.clk.eq(platform.request("lpddr_refclk").p)
             self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
         else:
-            self.comb += self.cd_sys.clk.eq(clk100)
+            self.comb     += self.cd_sys.clk.eq(clk100)
             self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
 
         if with_ethernet:
@@ -84,9 +84,10 @@ class BaseSoC(SoCCore):
 
         # CRG --------------------------------------------------------------------------------------
         with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
+        with_lpddr = True
         # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
         sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
-        self.crg   = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
+        self.crg     = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on Agilex5E 065B", **kwargs)
@@ -96,15 +97,15 @@ class BaseSoC(SoCCore):
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
             # Add SDRAM region.
             main_ram_region = SoCRegion(
-                origin = self.mem_map.get("main_ram", None),
+                origin = self.mem_map.get("ddr_main_ram", None),
                 size   = 1 * GB,
                 mode   = "rwx")
-            self.bus.add_region("main_ram", main_ram_region)
+            self.bus.add_region("ddr_main_ram", main_ram_region)
 
-            self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
+            self.bus.add_slave(name="ddr_main_ram", slave=self.lpddr.bus)
 
             if with_analyzer:
-                main_ram_bus = self.bus.slaves["main_ram"]
+                main_ram_bus = self.lpddr.bus
                 analyzer_signals_w = [
                     main_ram_bus.aw,
                     main_ram_bus.w,
