@@ -40,7 +40,8 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # # #
 
         # Signals.
-        usr_rst_n = Signal()
+        usr_rst_n  = Signal()
+        ninit_done = Signal()
 
         self.comb += ResetSignal("lpddr_usr").eq(~usr_rst_n)
 
@@ -54,7 +55,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             # EMIF Module reference clock.
             # ----------------------------
             i_ref_clk_i_clk               = ClockSignal("lpddr"),
-            i_core_init_n_i_reset_n       = ~(ResetSignal("lpddr") | self._control.fields.reset),
+            i_core_init_n_i_reset_n       = ninit_done | ~self._control.fields.reset,
 
             # EMIF Module usr clk output.
             # ---------------------------
@@ -136,6 +137,10 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         )
 
         self.specials += Instance("ed_synth", **self.ip_params)
+
+        self.specials += Instance("altera_agilex_config_reset_release_endpoint",
+            o_conf_reset = ninit_done,
+        )
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
 
