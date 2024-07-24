@@ -23,6 +23,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
         self.bus      = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
         self.cal_done = Signal()
+        self.platform = platform
 
         self._status = CSRStatus(description="EMIF LDDR4 Status.", fields=[
             CSRField("cal_done", size=1, offset=0, description="EMIF LPDDR4 calibration done."),
@@ -40,8 +41,8 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # # #
 
         # Signals.
-        usr_rst_n  = Signal()
-        ninit_done = Signal()
+        usr_rst_n       = Signal()
+        self.ninit_done = Signal()
 
         self.comb += ResetSignal("lpddr_usr").eq(~usr_rst_n)
 
@@ -55,7 +56,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             # EMIF Module reference clock.
             # ----------------------------
             i_ref_clk_i_clk               = ClockSignal("lpddr"),
-            i_core_init_n_i_reset_n       = ninit_done | ~self._control.fields.reset,
+            i_core_init_n_i_reset_n       = self.ninit_done | ~self._control.fields.reset,
 
             # EMIF Module usr clk output.
             # ---------------------------
@@ -136,10 +137,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             i_oct_oct_rzqin               = pads.rzq,
         )
 
+    def do_finalize(self):
         self.specials += Instance("ed_synth", **self.ip_params)
 
         self.specials += Instance("altera_agilex_config_reset_release_endpoint",
-            o_conf_reset = ninit_done,
+            o_conf_reset = self.ninit_done,
         )
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
@@ -153,9 +155,9 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         tools.replace_in_file(ip_dst, "QPRS_PATH", curr_dir)
 
         qsys_file = os.path.join(curr_dir, "ed_synth.qsys")
-        platform.add_ip(qsys_file)
-        platform.add_ip(ip_dst)
-        platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_axil_driver_0.ip"))
+        self.platform.add_ip(qsys_file)
+        self.platform.add_ip(ip_dst)
+        self.platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_axil_driver_0.ip"))
 
         if which("qsys-edit") is None:
             msg = "Unable to find Quartus toolchain, please:\n"
