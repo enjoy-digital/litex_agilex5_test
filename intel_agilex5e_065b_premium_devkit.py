@@ -170,7 +170,7 @@ def main():
     parser.add_target_argument("--eth-dynamic-ip",  action="store_true",       help="Enable dynamic Ethernet IP addresses setting.")
 
     parser.set_defaults(synth_tool="quartus_syn")
-    parser.set_defaults(bus_standard="axi")
+    #parser.set_defaults(bus_standard="axi")
 
     # soc.json default path
     parser.set_defaults(soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json")
