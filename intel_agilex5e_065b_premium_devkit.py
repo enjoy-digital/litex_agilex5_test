@@ -14,7 +14,7 @@ from litex.build.generic_platform import *
 
 from litex.gen import *
 
-from intel_agilex5e_065b_premium_devkit_platform import Platform
+from intel_agilex5e_065b_premium_devkit_platform import Platform, _sdcard_io
 
 from litex.soc.integration.soc      import *
 from litex.soc.integration.soc_core import *
@@ -79,12 +79,13 @@ class BaseSoC(SoCCore):
         eth_dynamic_ip  = False,
         with_led_chaser = True,
         with_spi_sdcard = False,
+        with_sdcard     = False,
         **kwargs):
         platform = Platform()
 
         # CRG --------------------------------------------------------------------------------------
         with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
-        with_lpddr = True
+        #with_lpddr = True
         # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
         sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
         self.crg     = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
@@ -131,17 +132,12 @@ class BaseSoC(SoCCore):
                 )
 
         # SDCard -----------------------------------------------------------------------------------
-        if with_spi_sdcard:
-            platform.add_extension([
-                ("spisdcard", 0, # FIXME: arbitrary choice
-                    Subsignal("clk",  Pins(f"j9:7")),
-                    Subsignal("mosi", Pins(f"j9:3")),
-                    Subsignal("cs_n", Pins(f"j9:4")),
-                    Subsignal("miso", Pins(f"j9:6")),
-                    IOStandard("3.3V LVCMOS"),
-                ),
-            ])
-            self.add_spi_sdcard()
+        if with_spi_sdcard or with_sdcard:
+            platform.add_extension(_sdcard_io)
+            if with_spi_sdcard:
+                self.add_spi_sdcard()
+            else:
+                self.add_sdcard()
 
         # Ethernet ---------------------------------------------------------------------------------
         if with_ethernet:
@@ -163,7 +159,9 @@ def main():
     parser = LiteXArgumentParser(platform=Platform, description="LiteX SoC on LiteX SoC on Agilex5E 065B.")
     parser.add_target_argument("--sys-clk-freq",    default=100e6, type=float, help="System clock frequency.")
     parser.add_target_argument("--with-analyzer",   action="store_true",       help="Enable liteScope to probe LPDDR4 AXI.")
-    parser.add_target_argument("--with-spi-sdcard", action="store_true",       help="Enable SPI-mode SDCard support.")
+    sdopts = parser.target_group.add_mutually_exclusive_group()
+    sdopts.add_argument("--with-spi-sdcard",        action="store_true",       help="Enable SPI-mode SDCard support.")
+    sdopts.add_argument("--with-sdcard",            action="store_true",       help="Enable SDCard support.")
     parser.add_target_argument("--with-ethernet",   action="store_true",       help="Enable Ethernet support.")
     parser.add_target_argument("--eth-ip",          default="192.168.1.50",    help="Ethernet/Etherbone IP address.")
     parser.add_target_argument("--remote-ip",       default="192.168.1.100",   help="Remote IP address of TFTP server.")
@@ -184,6 +182,7 @@ def main():
         remote_ip       = args.remote_ip,
         eth_dynamic_ip  = args.eth_dynamic_ip,
         with_spi_sdcard = args.with_spi_sdcard,
+        with_sdcard     = args.with_sdcard,
         **parser.soc_argdict
     )
 

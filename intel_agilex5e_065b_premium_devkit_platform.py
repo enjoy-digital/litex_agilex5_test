@@ -295,7 +295,7 @@ def sdcard_io():
             IOStandard("3.3-V LVCMOS"),
         ),
     ]
-_sdcard_io = sdcard_pmod_io() # SDCARD on J9.
+_sdcard_io = sdcard_io() # SDCARD on J9.
 
 # Platform -----------------------------------------------------------------------------------------
 
