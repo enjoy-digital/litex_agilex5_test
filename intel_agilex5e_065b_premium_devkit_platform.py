@@ -277,6 +277,26 @@ _connectors = [
     ),
 ]
 
+def sdcard_io():
+    return [
+        # SDCard: https://github.com/gsteiert/a5e2pmod
+        ("spisdcard", 0,
+            Subsignal("clk",  Pins(f"j9:7")),
+            Subsignal("mosi", Pins(f"j9:3")),
+            Subsignal("cs_n", Pins(f"j9:1")),
+            Subsignal("miso", Pins(f"j9:5")),
+            IOStandard("3.3-V LVCMOS"),
+        ),
+        ("sdcard", 0,
+            Subsignal("data", Pins(f"j9:5 j9:2 j9:4 j9:1")),
+            Subsignal("cmd",  Pins(f"j9:3")),
+            Subsignal("clk",  Pins(f"j9:7")),
+            Subsignal("det",  Pins(f"j9:6")),
+            IOStandard("3.3-V LVCMOS"),
+        ),
+    ]
+_sdcard_io = sdcard_pmod_io() # SDCARD on J9.
+
 # Platform -----------------------------------------------------------------------------------------
 
 class Platform(AlteraPlatform):
