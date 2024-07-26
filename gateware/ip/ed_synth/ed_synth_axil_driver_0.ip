@@ -12,7 +12,7 @@ the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
 refer to the applicable agreement for further details, at
 https://fpgasoftware.intel.com/eula.-->
-<ipxact:component xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions" xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014">
+<ipxact:component xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014" xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions">
   <ipxact:vendor>AUTHOR</ipxact:vendor>
   <ipxact:library>ed_synth_axil_driver_0</ipxact:library>
   <ipxact:name>emif_ph2_axil_driver_inst</ipxact:name>
@@ -20,10 +20,10 @@ https://fpgasoftware.intel.com/eula.-->
   <ipxact:busInterfaces>
     <ipxact:busInterface>
       <ipxact:name>axil_driver_clk</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="clock" version="24.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="clock" version="24.2"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="24.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="clock" version="24.2"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -57,10 +57,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>axil_driver_rst_n</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="24.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="24.2"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="24.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="24.2"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -89,10 +89,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>axil_driver_axi4_lite</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.2"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4lite" version="24.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="axi4lite" version="24.2"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -301,6 +301,26 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:displayName>maximumOutstandingTransactions</ipxact:displayName>
           <ipxact:value>1</ipxact:value>
         </ipxact:parameter>
+        <ipxact:parameter parameterId="dataCheck" type="bit">
+          <ipxact:name>dataCheck</ipxact:name>
+          <ipxact:displayName>dataCheck</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="addressCheck" type="bit">
+          <ipxact:name>addressCheck</ipxact:name>
+          <ipxact:displayName>addressCheck</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="securityAttribute" type="bit">
+          <ipxact:name>securityAttribute</ipxact:name>
+          <ipxact:displayName>securityAttribute</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="userData" type="bit">
+          <ipxact:name>userData</ipxact:name>
+          <ipxact:displayName>userData</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
         <ipxact:parameter parameterId="readIssuingCapability" type="longint">
           <ipxact:name>readIssuingCapability</ipxact:name>
           <ipxact:displayName>Read issuing capability</ipxact:displayName>
@@ -320,10 +340,10 @@ https://fpgasoftware.intel.com/eula.-->
     </ipxact:busInterface>
     <ipxact:busInterface>
       <ipxact:name>cal_done_rst_n</ipxact:name>
-      <ipxact:busType vendor="intel" library="intel" name="reset" version="24.1"></ipxact:busType>
+      <ipxact:busType vendor="intel" library="intel" name="reset" version="24.2"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
-          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="24.1"></ipxact:abstractionRef>
+          <ipxact:abstractionRef vendor="intel" library="intel" name="reset" version="24.2"></ipxact:abstractionRef>
           <ipxact:portMaps>
             <ipxact:portMap>
               <ipxact:logicalPort>
@@ -1076,6 +1096,22 @@ https://fpgasoftware.intel.com/eula.-->
                     &lt;entry&gt;
                         &lt;key&gt;maximumOutstandingTransactions&lt;/key&gt;
                         &lt;value&gt;1&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;dataCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;addressCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;securityAttribute&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;userData&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;readIssuingCapability&lt;/key&gt;

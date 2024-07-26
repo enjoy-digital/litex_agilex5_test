@@ -12,7 +12,7 @@ the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
 refer to the applicable agreement for further details, at
 https://fpgasoftware.intel.com/eula.-->
-<ipxact:design xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions" xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014">
+<ipxact:design xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014" xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions">
   <ipxact:vendor>Altera Corporation</ipxact:vendor>
   <ipxact:library>ed_synth</ipxact:library>
   <ipxact:name>ed_synth</ipxact:name>
@@ -509,6 +509,22 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;dataCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;addressCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;securityAttribute&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;userData&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;readIssuingCapability&lt;/key&gt;
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
@@ -874,6 +890,22 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
+                        &lt;key&gt;dataCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;addressCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;securityAttribute&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;userData&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
                         &lt;key&gt;readIssuingCapability&lt;/key&gt;
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
@@ -981,7 +1013,7 @@ https://fpgasoftware.intel.com/eula.-->
             <ipxact:parameter parameterId="liveModuleName" type="string">
               <ipxact:name>liveModuleName</ipxact:name>
               <ipxact:displayName>Live Module Name</ipxact:displayName>
-              <ipxact:value>ed_synth_axil_driver_0</ipxact:value>
+              <ipxact:value>emif_ph2_axil_driver_inst</ipxact:value>
             </ipxact:parameter>
             <ipxact:parameter parameterId="logicalView" type="string">
               <ipxact:name>logicalView</ipxact:name>
@@ -1578,6 +1610,22 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;dataCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;addressCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;securityAttribute&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;userData&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;readAcceptanceCapability&lt;/key&gt;
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
@@ -2077,6 +2125,22 @@ https://fpgasoftware.intel.com/eula.-->
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
                         &lt;entry&gt;
+                            &lt;key&gt;dataCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;addressCheck&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;securityAttribute&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
+                            &lt;key&gt;userData&lt;/key&gt;
+                            &lt;value&gt;false&lt;/value&gt;
+                        &lt;/entry&gt;
+                        &lt;entry&gt;
                             &lt;key&gt;readAcceptanceCapability&lt;/key&gt;
                             &lt;value&gt;1&lt;/value&gt;
                         &lt;/entry&gt;
@@ -2141,7 +2205,7 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;/boundary&gt;
     &lt;originalModuleInfo&gt;
         &lt;className&gt;emif_ph2&lt;/className&gt;
-        &lt;version&gt;6.1.0&lt;/version&gt;
+        &lt;version&gt;6.2.0&lt;/version&gt;
         &lt;displayName&gt;External Memory Interfaces (EMIF) IP&lt;/displayName&gt;
     &lt;/originalModuleInfo&gt;
     &lt;systemInfoParameterDescriptors&gt;
@@ -2831,6 +2895,22 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
+                        &lt;key&gt;dataCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;addressCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;securityAttribute&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;userData&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
                         &lt;key&gt;readAcceptanceCapability&lt;/key&gt;
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
@@ -3330,6 +3410,22 @@ https://fpgasoftware.intel.com/eula.-->
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
+                        &lt;key&gt;dataCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;addressCheck&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;securityAttribute&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
+                        &lt;key&gt;userData&lt;/key&gt;
+                        &lt;value&gt;false&lt;/value&gt;
+                    &lt;/entry&gt;
+                    &lt;entry&gt;
                         &lt;key&gt;readAcceptanceCapability&lt;/key&gt;
                         &lt;value&gt;1&lt;/value&gt;
                     &lt;/entry&gt;
@@ -3400,31 +3496,31 @@ https://fpgasoftware.intel.com/eula.-->
     &lt;hdlLibraryName&gt;ed_synth_emif_ph2_inst&lt;/hdlLibraryName&gt;
     &lt;fileSets&gt;
         &lt;fileSet&gt;
-            &lt;fileSetName&gt;QUARTUS_SYNTH&lt;/fileSetName&gt;
+            &lt;fileSetName&gt;ed_synth_emif_ph2_inst&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;ed_synth_emif_ph2_inst&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;QUARTUS_SYNTH&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
-            &lt;fileSetName&gt;SIM_VERILOG&lt;/fileSetName&gt;
+            &lt;fileSetName&gt;ed_synth_emif_ph2_inst&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;ed_synth_emif_ph2_inst&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VERILOG&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
-            &lt;fileSetName&gt;SIM_VHDL&lt;/fileSetName&gt;
+            &lt;fileSetName&gt;ed_synth_emif_ph2_inst&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;ed_synth_emif_ph2_inst&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;SIM_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
-            &lt;fileSetName&gt;CDC&lt;/fileSetName&gt;
+            &lt;fileSetName&gt;ed_synth_emif_ph2_inst&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;ed_synth_emif_ph2_inst&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
         &lt;/fileSet&gt;
         &lt;fileSet&gt;
-            &lt;fileSetName&gt;CDC_VHDL&lt;/fileSetName&gt;
+            &lt;fileSetName&gt;ed_synth_emif_ph2_inst&lt;/fileSetName&gt;
             &lt;fileSetFixedName&gt;ed_synth_emif_ph2_inst&lt;/fileSetFixedName&gt;
             &lt;fileSetKind&gt;CDC_VHDL&lt;/fileSetKind&gt;
             &lt;fileSetFiles/&gt;
@@ -3469,7 +3565,7 @@ https://fpgasoftware.intel.com/eula.-->
       </altera:module>
     </altera:modules>
     <altera:connections>
-      <altera:connection altera:kind="avalon" altera:version="24.1" altera:start="emif_ph2_axil_driver_0.axil_driver_axi4_lite" altera:end="emif_ph2_inst.s0_axil">
+      <altera:connection altera:kind="avalon" altera:version="24.2" altera:start="emif_ph2_axil_driver_0.axil_driver_axi4_lite" altera:end="emif_ph2_inst.s0_axil">
         <altera:connection_parameter altera:parameter_name="arbitrationPriority" altera:parameter_value="1"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="baseAddress" altera:parameter_value="0x0000"></altera:connection_parameter>
         <altera:connection_parameter altera:parameter_name="defaultConnection" altera:parameter_value="false"></altera:connection_parameter>
@@ -3519,11 +3615,11 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:busInterfaces>
           <ipxact:busInterface>
             <ipxact:name>emif_ph2_inst.s0_axil</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.2"></ipxact:busType>
           </ipxact:busInterface>
           <ipxact:busInterface>
             <ipxact:name>emif_ph2_axil_driver_0.axil_driver_axi4_lite</ipxact:name>
-            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.1"></ipxact:busType>
+            <ipxact:busType vendor="intel" library="intel" name="axi4lite" version="24.2"></ipxact:busType>
             <ipxact:master>
               <ipxact:addressSpaceRef addressSpaceRef="emif_ph2_axil_driver_0.axil_driver_axi4_lite">
                 <ipxact:baseAddress>0x0000_0000</ipxact:baseAddress>

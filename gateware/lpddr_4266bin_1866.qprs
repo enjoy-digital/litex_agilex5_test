@@ -4,7 +4,7 @@
 		<parameter name="SHOW_INTERNAL_SETTINGS" value="false" />
 		<parameter name="MEM_TECHNOLOGY" value="MEM_TECHNOLOGY_LPDDR4" />
 		<parameter name="MEM_FORMAT" value="MEM_FORMAT_DISCRETE" />
-		<parameter name="PHY_MEMCLK_FREQ_MHZ" value="933.0" />
+		<parameter name="PHY_MEMCLK_FREQ_MHZ" value="800.0" />
 		<parameter name="MEM_NUM_CHANNELS" value="1" />
 		<parameter name="MEM_NUM_RANKS" value="1" />
 		<parameter name="MEM_COMPS_PER_RANK" value="2" />
