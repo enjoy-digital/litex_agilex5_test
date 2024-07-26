@@ -370,6 +370,45 @@ class SimSoC(SoCCore):
                 clock_domain = "sys",
                 csr_csv      = "analyzer.csv")
 
+
+        # AXI Test ---------------------------------------------------------------------------------
+
+        from litex.soc.interconnect import axi
+
+        axi_bus = axi.AXIInterface(data_width=64, address_width=32, id_width=7)
+
+        main_ram_region = SoCRegion(
+            origin = self.mem_map.get("axi_ram", None),
+            size   = 1 * GB,
+            mode   = "rwx",
+        )
+        self.bus.add_region("axi_ram", main_ram_region)
+        self.bus.add_slave(name="axi_ram", slave=axi_bus)
+
+        count = Signal(8)
+
+        self.fsm = fsm = FSM(reset_state="IDLE")
+        fsm.act("IDLE",
+            axi_bus.ar.ready.eq(1),
+            If(axi_bus.ar.valid,
+                NextValue(count, 0),
+                NextState("READ")
+            )
+        )
+        fsm.act("READ",
+            If(count == 8, # delay.
+                axi_bus.r.valid.eq(1),
+                If(axi_bus.r.ready,
+                    NextState("IDLE")
+                )
+            ).Else(
+                NextValue(count, count + 1)
+            )
+        )
+
+        self.sync += If(axi_bus.ar.valid & axi_bus.ar.ready, Display("AR!"))
+        self.sync += If(axi_bus.r.valid & axi_bus.r.ready,   Display("R!"))
+
 # Build --------------------------------------------------------------------------------------------
 
 def generate_gtkw_savefile(builder, vns, trace_fst):
