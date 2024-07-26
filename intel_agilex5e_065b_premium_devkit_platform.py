@@ -46,7 +46,7 @@ _io = [
     # LPDDR4
     ("lpddr_refclk", 0,
         Subsignal("p", Pins("BW78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
-        #Subsignal("n", Pins("CA78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
+        Subsignal("n", Pins("CA78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
     ),
     ("lpddr4", 0, # FIXME: IOStandard
         Subsignal("clk_p",   Pins("BM81")),
@@ -308,6 +308,8 @@ class Platform(AlteraPlatform):
         self.create_rbf = False
         self.add_platform_command("set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT \"LINEAR FORMAT\"")
         self.add_platform_command("set_global_assignment -name PWRMGT_LINEAR_FORMAT_N \"-12\"")
+        self.add_platform_command("set_global_assignment -name ENABLE_INTERMEDIATE_SNAPSHOTS \"ON\"")
+        self.add_platform_command("set_global_assignment -name DEVICE_INITIALIZATION_CLOCK  \"OSC_CLK_1_125MHZ\"")
 
 
     def do_finalize(self, fragment):
