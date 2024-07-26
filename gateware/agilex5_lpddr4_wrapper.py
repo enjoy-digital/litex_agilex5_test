@@ -21,7 +21,16 @@ from litex.soc.interconnect.csr import *
 class Agilex5LPDDR4Wrapper(LiteXModule):
     def __init__(self, platform, pads):
 
-        self.bus      = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
+        self.bus      = axi.AXIInterface(
+            data_width    = 256,
+            address_width = 32,
+            id_width      = 7,
+            aw_user_width = 4,
+            w_user_width  = 64,
+            b_user_width  = 0,
+            ar_user_width = 4,
+            r_user_width  = 64,
+        )
         self.cal_done = Signal()
         self.platform = platform
 
@@ -34,6 +43,10 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
                 ("``0b0``", "Normal operation."),
                 ("``0b1``", "Reset state."),
             ]),
+            CSRField("ready", size=1, offset=1, description="Ready always high or driven by the bus.", values=[
+                ("``0b0``", "always high."),
+                ("``0b1``", "bus driven."),
+            ]),
         ])
 
         self.comb += self._status.fields.cal_done.eq(self.cal_done),
@@ -43,6 +56,13 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # Signals.
         usr_rst_n       = Signal()
         self.ninit_done = Signal()
+        self.axi_r_ready     = Signal()
+
+        self.comb += If(self._control.fields.ready == 0,
+            self.axi_r_ready.eq(1),
+        ).Else(
+            self.axi_r_ready.eq(self.bus.r.ready),
+        )
 
         self.comb += ResetSignal("lpddr_usr").eq(~usr_rst_n)
 
@@ -93,7 +113,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             o_s0_axi4_rresp               = self.bus.r.resp,
             o_s0_axi4_rlast               = self.bus.r.last,
             o_s0_axi4_ruser               = self.bus.r.user,
-            i_s0_axi4_rready              = self.bus.r.ready,
+            i_s0_axi4_rready              = self.axi_r_ready,
             o_s0_axi4_rvalid              = self.bus.r.valid,
 
             # AXI aw.
