@@ -375,7 +375,7 @@ class SimSoC(SoCCore):
 
         from litex.soc.interconnect import axi
 
-        axi_bus = axi.AXIInterface(data_width=64, address_width=32, id_width=7)
+        axi_bus = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
 
         main_ram_region = SoCRegion(
             origin = self.mem_map.get("axi_ram", None),
@@ -386,25 +386,11 @@ class SimSoC(SoCCore):
         self.bus.add_slave(name="axi_ram", slave=axi_bus)
 
         count = Signal(8)
+        self.comb += axi_bus.ar.ready.eq(1)
+        self.sync += If(axi_bus.ar.valid, count.eq(count + 1))
 
-        self.fsm = fsm = FSM(reset_state="IDLE")
-        fsm.act("IDLE",
-            axi_bus.ar.ready.eq(1),
-            If(axi_bus.ar.valid,
-                NextValue(count, 0),
-                NextState("READ")
-            )
-        )
-        fsm.act("READ",
-            If(count == 8, # delay.
-                axi_bus.r.valid.eq(1),
-                If(axi_bus.r.ready,
-                    NextState("IDLE")
-                )
-            ).Else(
-                NextValue(count, count + 1)
-            )
-        )
+        self.comb += axi_bus.r.valid.eq(count > 0)
+        self.comb += If(axi_bus.r.valid & axi_bus.r.ready, count.eq(count - 1))
 
         self.sync += If(axi_bus.ar.valid & axi_bus.ar.ready, Display("AR!"))
         self.sync += If(axi_bus.r.valid & axi_bus.r.ready,   Display("R!"))
