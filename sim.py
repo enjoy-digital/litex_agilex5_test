@@ -386,6 +386,7 @@ class SimSoC(SoCCore):
         self.bus.add_slave(name="axi_ram", slave=axi_bus)
 
         count = Signal(8)
+
         self.comb += axi_bus.ar.ready.eq(1)
         self.sync += If(axi_bus.ar.valid, count.eq(count + 1))
 
@@ -394,6 +395,9 @@ class SimSoC(SoCCore):
 
         self.sync += If(axi_bus.ar.valid & axi_bus.ar.ready, Display("AR!"))
         self.sync += If(axi_bus.r.valid & axi_bus.r.ready,   Display("R!"))
+
+        # ./sim.py --bus-standard=axi --trace --trace-fst
+        # mem_read 0x40000000 16
 
 # Build --------------------------------------------------------------------------------------------
 
