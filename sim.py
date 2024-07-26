@@ -374,8 +374,10 @@ class SimSoC(SoCCore):
         # AXI Test ---------------------------------------------------------------------------------
 
         from litex.soc.interconnect import axi
+        from verilog_axi.axi.axi_adapter import AXIAdapter
 
-        axi_bus = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
+        axi_bus_32b  = axi.AXIInterface(data_width= 32, address_width=32, id_width=7)
+        axi_bus_256b = axi.AXIInterface(data_width=256, address_width=32, id_width=7)
 
         main_ram_region = SoCRegion(
             origin = self.mem_map.get("axi_ram", None),
@@ -383,18 +385,24 @@ class SimSoC(SoCCore):
             mode   = "rwx",
         )
         self.bus.add_region("axi_ram", main_ram_region)
-        self.bus.add_slave(name="axi_ram", slave=axi_bus)
+        self.bus.add_slave(name="axi_ram", slave=axi_bus_32b)
+
+        self.adapter = AXIAdapter(
+            platform = platform,
+            s_axi    = axi_bus_32b,
+            m_axi    = axi_bus_256b,
+        )
 
         count = Signal(8)
 
-        self.comb += axi_bus.ar.ready.eq(1)
-        self.sync += If(axi_bus.ar.valid, count.eq(count + 1))
+        self.comb += axi_bus_256b.ar.ready.eq(1)
+        self.sync += If(axi_bus_256b.ar.valid, count.eq(count + 1))
 
-        self.comb += axi_bus.r.valid.eq(count > 0)
-        self.comb += If(axi_bus.r.valid & axi_bus.r.ready, count.eq(count - 1))
+        self.comb += axi_bus_256b.r.valid.eq(count > 0)
+        self.sync += If(axi_bus_256b.r.valid & axi_bus_256b.r.ready, count.eq(count - 1))
 
-        self.sync += If(axi_bus.ar.valid & axi_bus.ar.ready, Display("AR!"))
-        self.sync += If(axi_bus.r.valid & axi_bus.r.ready,   Display("R!"))
+        self.sync += If(axi_bus_256b.ar.valid & axi_bus_256b.ar.ready, Display("AR!"))
+        self.sync += If(axi_bus_256b.r.valid & axi_bus_256b.r.ready,   Display("R!"))
 
         # ./sim.py --bus-standard=axi --trace --trace-fst
         # mem_read 0x40000000 16

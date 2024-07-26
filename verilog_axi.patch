@@ -1,0 +1,84 @@
+diff --git a/rtl/axi_adapter_rd.v b/rtl/axi_adapter_rd.v
+index 4290861..7e18aa7 100644
+--- a/rtl/axi_adapter_rd.v
++++ b/rtl/axi_adapter_rd.v
+@@ -465,12 +465,12 @@ always @* begin
+                     burst_size_next = s_axi_arsize;
+                     if (s_axi_arsize > M_BURST_SIZE) begin
+                         // need to adjust burst size
+-                        if ({s_axi_arlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_arsize) > 255) begin
+-                            // limit burst length to max
+-                            master_burst_next = 8'd255;
+-                        end else begin
+-                            master_burst_next = {s_axi_arlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_arsize);
+-                        end
++                        //if ({s_axi_arlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_arsize) > 255) begin
++                        //    // limit burst length to max
++                        //    master_burst_next = 8'd255;
++                        //end else begin
++                        //    master_burst_next = {s_axi_arlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_arsize);
++                        //end
+                         master_burst_size_next = M_BURST_SIZE;
+                         m_axi_arlen_next = master_burst_next;
+                         m_axi_arsize_next = master_burst_size_next;
+@@ -528,12 +528,12 @@ always @* begin
+                             m_axi_araddr_next = addr_next;
+                             if (burst_size_reg > M_BURST_SIZE) begin
+                                 // need to adjust burst size
+-                                if ({burst_next, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg) > 255) begin
+-                                    // limit burst length to max
+-                                    master_burst_next = 8'd255;
+-                                end else begin
+-                                    master_burst_next = {burst_next, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg);
+-                                end
++                                //if ({burst_next, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg) > 255) begin
++                                //    // limit burst length to max
++                                //    master_burst_next = 8'd255;
++                                //end else begin
++                                //    master_burst_next = {burst_next, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg);
++                                //end
+                                 master_burst_size_next = M_BURST_SIZE;
+                                 m_axi_arlen_next = master_burst_next;
+                                 m_axi_arsize_next = master_burst_size_next;
+diff --git a/rtl/axi_adapter_wr.v b/rtl/axi_adapter_wr.v
+index 214a9a4..e5ea62c 100644
+--- a/rtl/axi_adapter_wr.v
++++ b/rtl/axi_adapter_wr.v
+@@ -511,12 +511,12 @@ always @* begin
+                     burst_active_next = 1'b1;
+                     if (s_axi_awsize > M_BURST_SIZE) begin
+                         // need to adjust burst size
+-                        if ({s_axi_awlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_awsize) > 255) begin
+-                            // limit burst length to max
+-                            master_burst_next = 8'd255;
+-                        end else begin
+-                            master_burst_next = {s_axi_awlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_awsize);
+-                        end
++                        //if ({s_axi_awlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_awsize) > 255) begin
++                        //    // limit burst length to max
++                        //    master_burst_next = 8'd255;
++                        //end else begin
++                        //    master_burst_next = {s_axi_awlen, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-s_axi_awsize);
++                        //end
+                         master_burst_size_next = M_BURST_SIZE;
+                         m_axi_awlen_next = master_burst_next;
+                         m_axi_awsize_next = master_burst_size_next;
+@@ -615,12 +615,12 @@ always @* begin
+                         m_axi_awaddr_next = addr_reg;
+                         if (burst_size_reg > M_BURST_SIZE) begin
+                             // need to adjust burst size
+-                            if ({burst_reg, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg) > 255) begin
+-                                // limit burst length to max
+-                                master_burst_next = 8'd255;
+-                            end else begin
+-                                master_burst_next = {burst_reg, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg);
+-                            end
++                            //if ({burst_reg, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg) > 255) begin
++                            //    // limit burst length to max
++                            //    master_burst_next = 8'd255;
++                            //end else begin
++                            //    master_burst_next = {burst_reg, {S_BURST_SIZE-M_BURST_SIZE{1'b1}}} >> (S_BURST_SIZE-burst_size_reg);
++                            //end
+                             master_burst_size_next = M_BURST_SIZE;
+                             m_axi_awlen_next = master_burst_next;
+                             m_axi_awsize_next = master_burst_size_next;
