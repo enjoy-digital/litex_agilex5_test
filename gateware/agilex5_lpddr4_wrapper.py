@@ -18,10 +18,23 @@ from litex.gen import *
 from litex.soc.interconnect import axi
 from litex.soc.interconnect.csr import *
 
+from verilog_axi.axi.axi_adapter import AXIAdapter
+
 class Agilex5LPDDR4Wrapper(LiteXModule):
     def __init__(self, platform, pads):
 
         self.bus      = axi.AXIInterface(
+            data_width    = 32,
+            address_width = 32,
+            id_width      = 7,
+            aw_user_width = 4,
+            w_user_width  = 64,
+            b_user_width  = 0,
+            ar_user_width = 4,
+            r_user_width  = 64,
+        )
+
+        self.bus_256b = axi.AXIInterface(
             data_width    = 256,
             address_width = 32,
             id_width      = 7,
@@ -31,6 +44,13 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             ar_user_width = 4,
             r_user_width  = 64,
         )
+
+        self.adapter = AXIAdapter(
+            platform = platform,
+            s_axi    = self.bus,
+            m_axi    = self.bus_256b,
+        )
+
         self.cal_done = Signal()
         self.platform = platform
 
@@ -61,7 +81,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         self.comb += If(self._control.fields.ready == 0,
             self.axi_r_ready.eq(1),
         ).Else(
-            self.axi_r_ready.eq(self.bus.r.ready),
+            self.axi_r_ready.eq(self.bus_256b.r.ready),
         )
 
         self.comb += ResetSignal("lpddr_usr").eq(~usr_rst_n)
@@ -95,53 +115,53 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             o_cal_done_rst_n_reset_n      = self.cal_done,
 
             # AXI ar.
-            i_s0_axi4_arid                = self.bus.ar.id,
-            i_s0_axi4_araddr              = self.bus.ar.addr,
-            i_s0_axi4_arlen               = self.bus.ar.len,
-            i_s0_axi4_arsize              = self.bus.ar.size,
-            i_s0_axi4_arburst             = self.bus.ar.burst,
-            i_s0_axi4_arlock              = self.bus.ar.lock,
-            i_s0_axi4_arprot              = self.bus.ar.prot,
-            i_s0_axi4_arvalid             = self.bus.ar.valid,
-            i_s0_axi4_aruser              = self.bus.ar.user,
-            o_s0_axi4_arready             = self.bus.ar.ready,
-            i_s0_axi4_arqos               = self.bus.ar.qos,
+            i_s0_axi4_arid                = self.bus_256b.ar.id,
+            i_s0_axi4_araddr              = self.bus_256b.ar.addr,
+            i_s0_axi4_arlen               = self.bus_256b.ar.len,
+            i_s0_axi4_arsize              = self.bus_256b.ar.size,
+            i_s0_axi4_arburst             = self.bus_256b.ar.burst,
+            i_s0_axi4_arlock              = self.bus_256b.ar.lock,
+            i_s0_axi4_arprot              = self.bus_256b.ar.prot,
+            i_s0_axi4_arvalid             = self.bus_256b.ar.valid,
+            i_s0_axi4_aruser              = self.bus_256b.ar.user,
+            o_s0_axi4_arready             = self.bus_256b.ar.ready,
+            i_s0_axi4_arqos               = self.bus_256b.ar.qos,
 
             # AXI r.
-            o_s0_axi4_rid                 = self.bus.r.id,
-            o_s0_axi4_rdata               = self.bus.r.data,
-            o_s0_axi4_rresp               = self.bus.r.resp,
-            o_s0_axi4_rlast               = self.bus.r.last,
-            o_s0_axi4_ruser               = self.bus.r.user,
+            o_s0_axi4_rid                 = self.bus_256b.r.id,
+            o_s0_axi4_rdata               = self.bus_256b.r.data,
+            o_s0_axi4_rresp               = self.bus_256b.r.resp,
+            o_s0_axi4_rlast               = self.bus_256b.r.last,
+            o_s0_axi4_ruser               = self.bus_256b.r.user,
             i_s0_axi4_rready              = self.axi_r_ready,
-            o_s0_axi4_rvalid              = self.bus.r.valid,
+            o_s0_axi4_rvalid              = self.bus_256b.r.valid,
 
             # AXI aw.
-            i_s0_axi4_awid                = self.bus.aw.id,
-            i_s0_axi4_awaddr              = self.bus.aw.addr,
-            i_s0_axi4_awlen               = self.bus.aw.len,
-            i_s0_axi4_awsize              = self.bus.aw.size,
-            i_s0_axi4_awburst             = self.bus.aw.burst,
-            i_s0_axi4_awlock              = self.bus.aw.lock,
-            i_s0_axi4_awprot              = self.bus.aw.prot,
-            i_s0_axi4_awvalid             = self.bus.aw.valid,
-            i_s0_axi4_awuser              = self.bus.aw.user,
-            o_s0_axi4_awready             = self.bus.aw.ready,
-            i_s0_axi4_awqos               = self.bus.aw.qos,
+            i_s0_axi4_awid                = self.bus_256b.aw.id,
+            i_s0_axi4_awaddr              = self.bus_256b.aw.addr,
+            i_s0_axi4_awlen               = self.bus_256b.aw.len,
+            i_s0_axi4_awsize              = self.bus_256b.aw.size,
+            i_s0_axi4_awburst             = self.bus_256b.aw.burst,
+            i_s0_axi4_awlock              = self.bus_256b.aw.lock,
+            i_s0_axi4_awprot              = self.bus_256b.aw.prot,
+            i_s0_axi4_awvalid             = self.bus_256b.aw.valid,
+            i_s0_axi4_awuser              = self.bus_256b.aw.user,
+            o_s0_axi4_awready             = self.bus_256b.aw.ready,
+            i_s0_axi4_awqos               = self.bus_256b.aw.qos,
 
             # AXI w.
-            i_s0_axi4_wdata               = self.bus.w.data,
-            i_s0_axi4_wstrb               = self.bus.w.strb,
-            i_s0_axi4_wlast               = self.bus.w.last,
-            i_s0_axi4_wvalid              = self.bus.w.valid,
-            i_s0_axi4_wuser               = self.bus.w.user,
-            o_s0_axi4_wready              = self.bus.w.ready,
+            i_s0_axi4_wdata               = self.bus_256b.w.data,
+            i_s0_axi4_wstrb               = self.bus_256b.w.strb,
+            i_s0_axi4_wlast               = self.bus_256b.w.last,
+            i_s0_axi4_wvalid              = self.bus_256b.w.valid,
+            i_s0_axi4_wuser               = self.bus_256b.w.user,
+            o_s0_axi4_wready              = self.bus_256b.w.ready,
 
             # AXI b.
-            i_s0_axi4_bready              = self.bus.b.ready,
-            o_s0_axi4_bid                 = self.bus.b.id,
-            o_s0_axi4_bresp               = self.bus.b.resp,
-            o_s0_axi4_bvalid              = self.bus.b.valid,
+            i_s0_axi4_bready              = self.bus_256b.b.ready,
+            o_s0_axi4_bid                 = self.bus_256b.b.id,
+            o_s0_axi4_bresp               = self.bus_256b.b.resp,
+            o_s0_axi4_bvalid              = self.bus_256b.b.valid,
 
             # RAM port
             o_mem_mem_ck_t                = pads.clk_p,
