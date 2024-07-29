@@ -56,7 +56,10 @@ class _CRG(LiteXModule):
             self.comb     += self.cd_sys.clk.eq(ClockSignal("lpddr_usr"))
             self.specials += AsyncResetSynchronizer(self.cd_sys, ResetSignal("lpddr_usr"))
             # LPDDR4
-            self.comb     += self.cd_lpddr.clk.eq(platform.request("lpddr_refclk").p)
+            lpddr_refclk    = platform.request("lpddr_refclk")
+            lpddr_refclk_se = Signal()
+            self.specials += DifferentialInput(lpddr_refclk.p, lpddr_refclk.n, lpddr_refclk_se)
+            self.comb     += self.cd_lpddr.clk.eq(lpddr_refclk_se)
             self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
         else:
             self.comb     += self.cd_sys.clk.eq(clk100)
@@ -87,7 +90,7 @@ class BaseSoC(SoCCore):
         with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
         #with_lpddr = True
         # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
-        sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
+        #sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
         self.crg     = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
 
         # SoCCore ----------------------------------------------------------------------------------
@@ -98,15 +101,15 @@ class BaseSoC(SoCCore):
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
             # Add SDRAM region.
             main_ram_region = SoCRegion(
-                origin = self.mem_map.get("ddr_main_ram", None),
+                origin = self.mem_map.get("main_ram", None),
                 size   = 1 * GB,
                 mode   = "rwx")
-            self.bus.add_region("ddr_main_ram", main_ram_region)
+            self.bus.add_region("main_ram", main_ram_region)
 
-            self.bus.add_slave(name="ddr_main_ram", slave=self.lpddr.bus)
+            self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
             if with_analyzer:
-                main_ram_bus = self.lpddr.bus
+                main_ram_bus = self.lpddr.bus_256b
                 analyzer_signals_w = [
                     main_ram_bus.aw,
                     main_ram_bus.w,
@@ -168,7 +171,7 @@ def main():
     parser.add_target_argument("--eth-dynamic-ip",  action="store_true",       help="Enable dynamic Ethernet IP addresses setting.")
 
     parser.set_defaults(synth_tool="quartus_syn")
-    #parser.set_defaults(bus_standard="axi")
+    parser.set_defaults(bus_standard="axi")
 
     # soc.json default path
     parser.set_defaults(soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json")
