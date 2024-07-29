@@ -11,6 +11,7 @@ from migen import *
 from migen.genlib.resetsync import AsyncResetSynchronizer
 
 from litex.build.generic_platform import *
+from litex.build.io import DifferentialInput
 
 from litex.gen import *
 
