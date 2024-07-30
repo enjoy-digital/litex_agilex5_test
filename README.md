@@ -44,8 +44,8 @@ Clone the project repository with all its submodules using the following command
 ```bash git clone git@github.com:enjoy-digital/litex_agilex_test.git --recursive ```
 
 
-[> Building the Gateware
-------------------------
+[> Build the Gateware
+---------------------
 
 ### [> Build Commands
 
@@ -65,3 +65,21 @@ DDR mode (vexriscv CPU, DDR):
 ```bash
 ./intel_agilex5e_065b_premium_devkit.py --build
 ```
+
+TODO: Add LiteX BIOS prompt log with DRAM.
+
+
+[> Build the Linux Image
+------------------------
+
+TODO
+
+[> Boot Linux from Serial
+-------------------------
+
+TODO
+
+[> Boot Linux from SDCard
+-------------------------
+
+TODO
