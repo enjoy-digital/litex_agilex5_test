@@ -1,3 +1,16 @@
+[> Intro
+--------
+
+This project aims to integrate and test LiteX support on Agilex5 FPGAs, with the objective of
+booting various Linux-capable SoCs. Different CPUs already supported by LiteX will be evaluated,
+and resource usage will be compared across different FPGA architectures.
+
+To facilitate Linux testing and demonstrate the use of additional LiteX cores and peripherals,
+support for the following board peripherals will be added:
+- LPDDR4 EMIF integration as an AXI-4 DRAM controller
+- LiteSDCard support
+- LiteEth support
+
 [> Getting started
 ------------------
 
