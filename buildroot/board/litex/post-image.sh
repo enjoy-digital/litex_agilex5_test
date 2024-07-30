@@ -12,11 +12,13 @@ DST_DTB="${LINUX_ON_LITEX_DIR}/soc.dtb"
 DST_OPENSBI="${LINUX_ON_LITEX_DIR}/opensbi.bin"
 DST_IMAGE="${LINUX_ON_LITEX_DIR}/Image"
 DST_ROOTFS="${LINUX_ON_LITEX_DIR}/rootfs.cpio"
+DST_EXT4ROOTFS="${LINUX_ON_LITEX_DIR}/rootfs.ext4"
 
 # Force-create symlinks to binaries.
 ln -sf "${BINARIES_DIR}/fw_jump.bin" "${DST_OPENSBI}"
 ln -sf "${BINARIES_DIR}/Image" "${DST_IMAGE}"
 ln -sf "${BINARIES_DIR}/rootfs.cpio" "${DST_ROOTFS}"
+ln -sf "${BINARIES_DIR}/rootfs.ext4" "${DST_EXT4ROOTFS}"
 
 # Check DTB presence, create dummy if absent.
 if [ ! -e "${DST_DTB}" ]; then
