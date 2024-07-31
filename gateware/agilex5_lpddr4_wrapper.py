@@ -21,7 +21,7 @@ from litex.soc.interconnect.csr import *
 from verilog_axi.axi.axi_adapter import AXIAdapter
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
-    def __init__(self, platform, pads, data_width=32, direct_axiinterface=True):
+    def __init__(self, platform, pads, data_width=32, with_crossbar=False, direct_axiinterface=True):
 
         self.bus      = axi.AXIInterface(
             data_width    = data_width,
@@ -33,6 +33,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             ar_user_width = 4,
             r_user_width  = 64,
         )
+
+        if with_crossbar:
+            from verilog_axi.axi.axi_crossbar import AXICrossbar
+            self.axi_crossbar = AXICrossbar(platform)
+            self.axi_crossbar.add_slave(s_axi=self.bus)
 
         self.bus_256b = axi.AXIInterface(
             data_width    = 256,
