@@ -173,6 +173,7 @@ def main():
 
     parser.set_defaults(synth_tool="quartus_syn")
     parser.set_defaults(bus_standard="axi")
+    parser.set_defaults(output_dir="build/intel_agilex5e_065b_premium_devkit_platform")
 
     # soc.json default path
     args = parser.parse_args()
