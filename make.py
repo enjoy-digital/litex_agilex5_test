@@ -38,6 +38,21 @@ def switch_dir(path):
         # Restore the orignal directory.
         os.chdir(original_dir)
 
+# Gateware Build -----------------------------------------------------------------------------------
+
+gateware_cmds = {
+    "vexriscv": "--cpu-type=vexriscv_smp --cpu-variant=linux \
+    --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
+    --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
+    --with-sdcard --with-rvc --with-fpu --with-wishbone-memory",
+}
+
+def gateware_build(cpu_type):
+    command = f"./intel_agilex5e_065b_premium_devkit.py --build --output-dir=build_{cpu_type} {gateware_cmds[cpu_type]}"
+
+    ret = subprocess.run(command, shell=True)
+    return ret.returncode
+
 # Linux Build --------------------------------------------------------------------------------------
 
 buildroot_url     = "http://github.com/buildroot/buildroot"
@@ -230,9 +245,13 @@ def main():
     description = "LiteX Hardware CI/Linux Tests.\n\n"
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
 
+    # CPU Arguments.
+    # --------------
+    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=["vexriscv"])
+
     # SoC Arguments.
     # --------------
-    parser.add_argument("soc_json",                                  help="SoC JSON file.")
+    parser.add_argument("--soc-json",                                help="SoC JSON file.")
 
     # RootFS Arguments.
     # -----------------
@@ -240,17 +259,28 @@ def main():
 
     # Build Arguments.
     # ----------------
-    parser.add_argument("--clean",        action="store_true", help="Clean Linux Build.")
-    parser.add_argument("--build",        action="store_true", help="Build Linux Images (through Buildroot) and Device Tree.")
-    parser.add_argument("--generate-dtb", action="store_true", help="Prepare Linux Device Tree.")
-    parser.add_argument("--prepare-tftp", action="store_true", help="Prepare/Copy Linux Images to TFTP root directory.")
-    parser.add_argument("--copy-images",  action="store_true", help="Copy Linux Images to target build directory.")
-    parser.add_argument("--prepare-only", action="store_true", help="Only prepare tftp. Assumes necessary binaries are already available.")
+    parser.add_argument("--build-gateware", action="store_true", help="Build gateware.")
+    parser.add_argument("--clean",          action="store_true", help="Clean Linux Build.")
+    parser.add_argument("--build",          action="store_true", help="Build Linux Images (through Buildroot) and Device Tree.")
+    parser.add_argument("--generate-dtb",   action="store_true", help="Prepare Linux Device Tree.")
+    parser.add_argument("--prepare-tftp",   action="store_true", help="Prepare/Copy Linux Images to TFTP root directory.")
+    parser.add_argument("--copy-images",    action="store_true", help="Copy Linux Images to target build directory.")
+    parser.add_argument("--prepare-only",   action="store_true", help="Only prepare tftp. Assumes necessary binaries are already available.")
 
     args = parser.parse_args()
 
+    soc_json = args.soc_json
+
+    if args.build_gateware:
+        assert args.cpu_type is not None
+        if gateware_build(args.cpu_type):
+            print("Gateware build failed")
+            return
+        soc_json = f"build_{args.cpu_type}/soc.json"
+
     # soc.json
-    soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json"
+    if soc_json is None:
+        soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json"
 
     if args.prepare_only:
         args.clean        = False
