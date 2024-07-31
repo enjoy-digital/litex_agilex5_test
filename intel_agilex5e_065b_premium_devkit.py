@@ -175,8 +175,8 @@ def main():
     parser.set_defaults(bus_standard="axi")
 
     # soc.json default path
-    parser.set_defaults(soc_json = f"{args.output_dir}/soc.json")
     args = parser.parse_args()
+    args.soc_json = f"{args.output_dir}/soc.json"
 
     soc = BaseSoC(
         sys_clk_freq    = args.sys_clk_freq,

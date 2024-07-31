@@ -48,6 +48,12 @@ gateware_cmds = {
 
     "naxriscv_32": "--cpu-type=naxriscv --xlen=32 \
     --with-sdcard --with-rvc --with-fpu --with-coherent-dma",
+
+    "vexiiriscv_32": "--cpu-type=vexiiriscv --vexii-args=\"--xlen=32\" --cpu-variant=linux \
+    --with-sdcard --with-coherent-dma",
+
+    "vexiiriscv_64": "--cpu-type=vexiiriscv --vexii-args=\"--xlen=64\" --cpu-variant=linux \
+    --with-sdcard --with-coherent-dma",
 }
 
 def gateware_build(cpu_type):
@@ -250,7 +256,12 @@ def main():
 
     # CPU Arguments.
     # --------------
-    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=["vexriscv", "naxriscv_32"])
+    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=[
+        "vexriscv",
+        "naxriscv_32",
+        "vexiiriscv_32"
+        "vexiiriscv_64"
+    ])
 
     # SoC Arguments.
     # --------------
@@ -314,6 +325,10 @@ def main():
             cpu_type = "naxriscv_32"
         elif cpu_type.startswith("naxriscv 64-bit"):
             cpu_type = "naxriscv_64"
+        elif cpu_type.startswith("vexiiriscv 32-bit"):
+            cpu_type = "vexiiriscv_32"
+        elif cpu_type.startswith("vexiiriscv 64-bit"):
+            cpu_type = "vexiiriscv_64"
         else:
             print(f"Error: unknown cpu_type {cpu_type}")
             return ErrorCode.CONFIG_ERROR
