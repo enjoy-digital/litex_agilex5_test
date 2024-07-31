@@ -259,7 +259,7 @@ def main():
     parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=[
         "vexriscv",
         "naxriscv_32",
-        "vexiiriscv_32"
+        "vexiiriscv_32",
         "vexiiriscv_64"
     ])
 
