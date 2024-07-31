@@ -27,6 +27,8 @@ class PorRGMIIPLL(LiteXModule):
 
         self.cd_rgmii_clk250 = ClockDomain()
         self.cd_rgmii_clk125 = ClockDomain()
+        self.cd_rgmii_clk25  = ClockDomain()
+        self.cd_rgmii_clk2_5 = ClockDomain()
         self.cd_pll_clk100   = ClockDomain()
 
         # # #
@@ -45,12 +47,16 @@ class PorRGMIIPLL(LiteXModule):
             o_outclk_0 = ClockSignal("pll_clk100"),
             o_outclk_1 = ClockSignal("rgmii_clk250"),
             o_outclk_2 = ClockSignal("rgmii_clk125"),
+            o_outclk_3 = ClockSignal("rgmii_clk25"),
+            o_outclk_4 = ClockSignal("rgmii_clk2_5"),
         )
 
         self.specials += [
             AsyncResetSynchronizer(self.cd_pll_clk100,   ~locked),
             AsyncResetSynchronizer(self.cd_rgmii_clk250, ~locked),
             AsyncResetSynchronizer(self.cd_rgmii_clk125, ~locked),
+            AsyncResetSynchronizer(self.cd_rgmii_clk25,  ~locked),
+            AsyncResetSynchronizer(self.cd_rgmii_clk2_5, ~locked),
         ]
 
     def do_finalize(self):
