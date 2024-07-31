@@ -21,7 +21,7 @@ from litex.soc.interconnect.csr import *
 from verilog_axi.axi.axi_adapter import AXIAdapter
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
-    def __init__(self, platform, pads):
+    def __init__(self, platform, pads, direct_axiinterface=True):
 
         self.bus      = axi.AXIInterface(
             data_width    = 32,
@@ -34,27 +34,28 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             r_user_width  = 64,
         )
 
-        self.bus_64b = axi.AXIInterface(
-            data_width    = 64,
-            address_width = 32,
-            id_width      = 7,
-            aw_user_width = 4,
-            w_user_width  = 64,
-            b_user_width  = 0,
-            ar_user_width = 4,
-            r_user_width  = 64,
-        )
+        if not direct_axiinterface:
+            self.bus_64b = axi.AXIInterface(
+                data_width    = 64,
+                address_width = 32,
+                id_width      = 7,
+                aw_user_width = 4,
+                w_user_width  = 64,
+                b_user_width  = 0,
+                ar_user_width = 4,
+                r_user_width  = 64,
+            )
 
-        self.bus_128b = axi.AXIInterface(
-            data_width    = 128,
-            address_width = 32,
-            id_width      = 7,
-            aw_user_width = 4,
-            w_user_width  = 64,
-            b_user_width  = 0,
-            ar_user_width = 4,
-            r_user_width  = 64,
-        )
+            self.bus_128b = axi.AXIInterface(
+                data_width    = 128,
+                address_width = 32,
+                id_width      = 7,
+                aw_user_width = 4,
+                w_user_width  = 64,
+                b_user_width  = 0,
+                ar_user_width = 4,
+                r_user_width  = 64,
+            )
 
         self.bus_256b = axi.AXIInterface(
             data_width    = 256,
@@ -67,21 +68,28 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             r_user_width  = 64,
         )
 
-        self.adapter32b_64b = AXIAdapter(
-            platform = platform,
-            s_axi    = self.bus,
-            m_axi    = self.bus_64b,
-        )
-        self.adapter64b_128b = AXIAdapter(
-            platform = platform,
-            s_axi    = self.bus_64b,
-            m_axi    = self.bus_128b,
-        )
-        self.adapter128b_256b = AXIAdapter(
-            platform = platform,
-            s_axi    = self.bus_128b,
-            m_axi    = self.bus_256b,
-        )
+        if direct_axiinterface:
+            self.adapter32b_256b = AXIAdapter(
+                platform = platform,
+                s_axi    = self.bus,
+                m_axi    = self.bus_256b,
+            )
+        else:
+            self.adapter32b_64b = AXIAdapter(
+                platform = platform,
+                s_axi    = self.bus,
+                m_axi    = self.bus_64b,
+            )
+            self.adapter64b_128b = AXIAdapter(
+                platform = platform,
+                s_axi    = self.bus_64b,
+                m_axi    = self.bus_128b,
+            )
+            self.adapter128b_256b = AXIAdapter(
+                platform = platform,
+                s_axi    = self.bus_128b,
+                m_axi    = self.bus_256b,
+            )
 
         self.cal_done = Signal()
         self.platform = platform
