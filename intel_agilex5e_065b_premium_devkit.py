@@ -175,7 +175,7 @@ def main():
     parser.set_defaults(bus_standard="axi")
 
     # soc.json default path
-    parser.set_defaults(soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json")
+    parser.set_defaults(soc_json = f"{args.output_dir}/soc.json")
     args = parser.parse_args()
 
     soc = BaseSoC(
