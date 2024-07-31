@@ -1,0 +1,66 @@
+diff --git a/rtl/axi_adapter_rd.v b/rtl/axi_adapter_rd.v
+index 4290861..c96387b 100644
+--- a/rtl/axi_adapter_rd.v
++++ b/rtl/axi_adapter_rd.v
+@@ -220,6 +220,31 @@ assign m_axi_aruser = ARUSER_ENABLE ? m_axi_aruser_reg : {ARUSER_WIDTH{1'b0}};
+ assign m_axi_arvalid = m_axi_arvalid_reg;
+ assign m_axi_rready = m_axi_rready_reg;
+ 
++// data_reg decoding
++wire [2:0] addr_reg_shift = addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET];
++reg [31:0] data_reg_shift;
++
++always @* begin
++    case (addr_reg_shift)
++        3'b000:
++            data_reg_shift = m_axi_rdata[(32*1)-1:32*0];
++        3'b001:
++            data_reg_shift = m_axi_rdata[(32*2)-1:32*1];
++        3'b010:
++            data_reg_shift = m_axi_rdata[(32*3)-1:32*2];
++        3'b011:
++            data_reg_shift = m_axi_rdata[(32*4)-1:32*3];
++        3'b100:
++            data_reg_shift = m_axi_rdata[(32*5)-1:32*4];
++        3'b101:
++            data_reg_shift = m_axi_rdata[(32*6)-1:32*5];
++        3'b110:
++            data_reg_shift = m_axi_rdata[(32*7)-1:32*6];
++        3'b111:
++            data_reg_shift = m_axi_rdata[(32*8)-1:32*7];
++    endcase
++end
++
+ always @* begin
+     state_next = STATE_IDLE;
+ 
+@@ -365,7 +390,8 @@ always @* begin
+ 
+                 if (m_axi_rready && m_axi_rvalid) begin
+                     s_axi_rid_int = id_reg;
+-                    s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    //s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    s_axi_rdata_int = data_reg_shift;
+                     s_axi_rresp_int = m_axi_rresp;
+                     s_axi_rlast_int = m_axi_rlast;
+                     s_axi_ruser_int = m_axi_ruser;
+@@ -390,7 +416,8 @@ always @* begin
+                     data_next = m_axi_rdata;
+                     resp_next = m_axi_rresp;
+                     ruser_next = m_axi_ruser;
+-                    s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    //s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    s_axi_rdata_int = data_reg_shift;
+                     s_axi_rresp_int = m_axi_rresp;
+                     s_axi_rlast_int = 1'b0;
+                     s_axi_ruser_int = m_axi_ruser;
+@@ -417,7 +444,8 @@ always @* begin
+ 
+                 if (s_axi_rready_int_reg) begin
+                     s_axi_rid_int = id_reg;
+-                    s_axi_rdata_int = data_reg >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    //s_axi_rdata_int = data_reg >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
++                    s_axi_rdata_int = data_reg_shift;
+                     s_axi_rresp_int = resp_reg;
+                     s_axi_rlast_int = 1'b0;
+                     s_axi_ruser_int = ruser_reg;
