@@ -75,7 +75,27 @@ Clone the project repository with all its submodules using the following command
 [> Build the Linux Image
 ------------------------
 
-TODO
+This repository provides a script, called `make.py`, that can build the gateware and the software components (using *buildroot* for software).
+
+### [> Usage
+
+To run the script, use the following command:
+```bash
+./make.py --cpu-type=CPU_TYPE --build-gateware --build --generate-dtb [--rootfs=xxxx] [--soc-json=somewhere/soc.json]
+```
+
+**Options**
+
+- `--cpu-type=CPU_TYPE`: specifies the CPU to use. **CPU_TYPE** must be one of the following:
+  - **vexriscv**,
+  - **naxriscv_32**,
+  - **vexiiriscv_32**
+  - **vexiiriscv_64**
+- `--build-gateware`: builds first the gateware. The (`--cpu-type` argument is required when using this option
+- `--build`: clones, configures and builds the root filesystem image, the bootloader and the kernel using *buildroot*
+- `--generate-dtb`: converts the *soc.json* to *soc.dts* and produces the *soc.dtb*
+- `--rootfs` (optional, default: *ram0*): specifies the root filesystem. The user can select between a ramdisk (*ram0*) or the second SDCard partition (*mmcblk0p2*)
+- `--soc-json`: provides the path to the *soc.json*.This option is only required when `--build-gateware` is not used
 
 [> Boot Linux from Serial
 -------------------------
@@ -85,4 +105,11 @@ TODO
 [> Boot Linux from SDCard
 -------------------------
 
-TODO
+Once both the gateware and software have been successfully built, an image named *sdcard.img* will be generated and
+located in *images* sub-directory. To write this image to the SDCard, use the following command:
+
+ ```bash
+ sudo dd if=images/sdcard.img of=/dev/sdXXX bs=4M status=progress
+ ```
+
+ **WARNING: using `dd` with the wrong device may erase the hard driver content. Ensure you have correctly identified the SDCard device before executing this command.**
