@@ -56,18 +56,21 @@ Clone the project repository with all its submodules using the following command
 
 ### [> Standard Build
 
-Basic mode (vexriscv CPU, BRAM):
+**Basic mode (vexriscv CPU, BRAM):**
+
 ```bash
 ./intel_agilex5e_065b_premium_devkit.py --build --integrated-main-ram-size=1024
 ```
 
-DDR mode (vexriscv CPU, DDR):
+![LiteX bios with BRAM](figs/litex_bios_main_ram_bram.png)
+
+**DR mode (vexriscv CPU, DDR):**
+
 ```bash
 ./intel_agilex5e_065b_premium_devkit.py --build
 ```
 
-TODO: Add LiteX BIOS prompt log with DRAM.
-
+![LiteX bios with LPDDR](figs/litex_bios_main_ram_lpddr.png)
 
 [> Build the Linux Image
 ------------------------
