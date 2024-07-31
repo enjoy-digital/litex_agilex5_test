@@ -45,6 +45,9 @@ gateware_cmds = {
     --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
     --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
     --with-sdcard --with-rvc --with-fpu --with-wishbone-memory",
+
+    "naxriscv_32": "--cpu-type=naxriscv --xlen=32 \
+    --with-sdcard --with-rvc --with-fpu --with-coherent-dma",
 }
 
 def gateware_build(cpu_type):
@@ -247,7 +250,7 @@ def main():
 
     # CPU Arguments.
     # --------------
-    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=["vexriscv"])
+    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=["vexriscv", "naxriscv_32"])
 
     # SoC Arguments.
     # --------------
