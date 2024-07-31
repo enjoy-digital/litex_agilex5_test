@@ -100,7 +100,20 @@ To run the script, use the following command:
 [> Boot Linux from Serial
 -------------------------
 
-TODO
+Once both the gateware and software have been successfully built, all required files are present in *images* directory:
+- *boot.json*
+- *Image*
+- *rootfs.cpio*
+- *soc.dtb*
+- *opensbi.bin*
+
+To boot using `serialboot` use the following command:
+```bash
+litex_term /dev/ttyUSB1 --image images/boot.json
+```
+
+*NOTE:* with the default UART baudrate, downloading all files takes time: to reduce this delay `--uart-baudrate` must be
+used with a value like `1000000`.
 
 [> Boot Linux from SDCard
 -------------------------
