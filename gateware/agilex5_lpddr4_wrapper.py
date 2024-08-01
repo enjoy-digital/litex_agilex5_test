@@ -37,7 +37,6 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         if with_crossbar:
             from verilog_axi.axi.axi_crossbar import AXICrossbar
             self.axi_crossbar = AXICrossbar(platform)
-            self.axi_crossbar.add_slave(s_axi=self.bus)
 
         self.bus_256b = axi.AXIInterface(
             data_width    = 256,
@@ -227,6 +226,13 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             io_mem_mem_dqs_c              = pads.dqs_n,
             io_mem_mem_dmi                = pads.dmi,
             i_oct_oct_rzqin               = pads.rzq,
+        )
+
+    def set_master_region(self, region):
+        self.axi_crossbar.add_master(
+            m_axi  = self.bus,
+            origin = region.origin,
+            size   = region.size,
         )
 
     def do_finalize(self):

@@ -113,6 +113,7 @@ class BaseSoC(SoCCore):
             self.bus.add_region("main_ram", main_ram_region)
 
             if with_crossbar:
+                self.lpddr.set_master_region(self.bus.regions["main_ram"])
                 # Add CPU's direct memory buses (if not already declared) --------------------------
                 if hasattr(self.cpu, "add_memory_buses"):
                     self.cpu.add_memory_buses(
@@ -121,11 +122,7 @@ class BaseSoC(SoCCore):
                     )
                 if len(self.cpu.memory_buses):
                     for mem_bus in self.cpu.memory_buses:
-                        self.lpddr.axi_crossbar.add_master(
-                            m_axi  = mem_bus,
-                            origin = self.bus.regions["main_ram"].origin,
-                            size   = self.bus.regions["main_ram"].size,
-                        )
+                        self.lpddr.axi_crossbar.add_slave(s_axi=mem_bus)
 
                 self.main_ram_axi = axi.AXIInterface(
                     data_width    = data_width,
@@ -140,11 +137,7 @@ class BaseSoC(SoCCore):
 
                 self.bus.add_slave(name="main_ram", slave=self.main_ram_axi)
 
-                self.lpddr.axi_crossbar.add_master(
-                    m_axi  = self.main_ram_axi,
-                    origin = self.bus.regions["main_ram"].origin,
-                    size   = self.bus.regions["main_ram"].size,
-                )
+                self.lpddr.axi_crossbar.add_slave(s_axi  = self.main_ram_axi)
             else:
                 self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
