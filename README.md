@@ -21,6 +21,17 @@ support for the following board peripherals will be added:
 
 <p align="center"><img src="doc/architecture.png"></p>
 
+
+[> Configs/Resource Usage
+-------------------------
+
+| CPU Name           | soc.json                                                                  | .sof                                                                                                          | sdcard.img                                                                         | Resource Usage Report                                                                                                 |  ALMs  | RAMs | DSPs |
+|--------------------|---------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|--------|------|------|
+| Vexriscv-32-bit    | [soc.json](https://github.com/user-attachments/files/16438498/soc.json)   | [sof](https://github.com/user-attachments/files/16438510/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [sdcard.img](https://github.com/user-attachments/files/16438517/sdcard.img.zip)    | [fit.rpt](https://github.com/user-attachments/files/16438546/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 11,840 |  57  |   7  |
+| NaxRiscv-32-bit    | [soc.json](https://github.com/user-attachments/files/16440816/soc.json)   | [sof](https://github.com/user-attachments/files/16440820/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [sdcard.img](https://github.com/user-attachments/files/16440880/sdcard.img.zip)    | [fit.rpt](https://github.com/user-attachments/files/16440825/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 28,547 |  148 |   7  |
+| VexiiRiscv-32-bit  | [soc.json](https://github.com/user-attachments/files/16442400/soc.json)   | [sof](https://github.com/user-attachments/files/16442401/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [sdcard.img](https://github.com/user-attachments/files/16442415/sdcard.img.zip)    | [fit.rpt](https://github.com/user-attachments/files/16442410/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 10,148 |  87  |   2  |
+| VexiiRiscv-64-bit  | [soc.json](https://github.com/user-attachments/files/16443039/soc.json)   | [sof](https://github.com/user-attachments/files/16443041/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [sdcard.img](https://github.com/user-attachments/files/16443120/sdcard.img.zip)    | [fit.rpt](https://github.com/user-attachments/files/16443115/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 11,520 |  90  |   8  |
+
 [> Getting started
 ------------------
 
