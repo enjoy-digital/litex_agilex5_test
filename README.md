@@ -1,10 +1,10 @@
-             __   _ __      _  __    ___       _ __         ____    ______        __
-            / /  (_) /____ | |/_/___/ _ |___ _(_) /____ __ / __/___/_  __/__ ___ / /_
-           / /__/ / __/ -_)>  </___/ __ / _ `/ / / -_) \ //__ \/___// / / -_|_-</ __/
-          /____/_/\__/\__/_/|_|   /_/ |_\_, /_/_/\__/_\_\/____/    /_/  \__/___/\__/
-                                       /___/
-                    Initial Test/Support of LiteX on Intel Agilex5 FPGAs.
-                         Developed by Enjoy-Digital for Intel.
+                 __   _ __      _  __    ___       _ __         ____    ______        __
+                / /  (_) /____ | |/_/___/ _ |___ _(_) /____ __ / __/___/_  __/__ ___ / /_
+               / /__/ / __/ -_)>  </___/ __ / _ `/ / / -_) \ //__ \/___// / / -_|_-</ __/
+              /____/_/\__/\__/_/|_|   /_/ |_\_, /_/_/\__/_\_\/____/    /_/  \__/___/\__/
+                                           /___/
+                        Initial Test/Support of LiteX on Intel Agilex5 FPGAs.
+                             Developed by Enjoy-Digital for Intel.
 
 [> Intro
 --------
@@ -15,9 +15,11 @@ and resource usage will be compared across different FPGA architectures.
 
 To facilitate Linux testing and demonstrate the use of additional LiteX cores and peripherals,
 support for the following board peripherals will be added:
-- LPDDR4 EMIF integration as an AXI-4 DRAM controller
-- LiteSDCard support
-- LiteEth support
+- LPDDR4 EMIF integration as an AXI-4 DRAM controller.
+- LiteSDCard support.
+- LiteEth support.
+
+<p align="center"><img src="doc/architecture.png"></p>
 
 [> Getting started
 ------------------
