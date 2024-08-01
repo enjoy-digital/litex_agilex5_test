@@ -1,3 +1,11 @@
+             __   _ __      _  __    ___       _ __         ____    ______        __
+            / /  (_) /____ | |/_/___/ _ |___ _(_) /____ __ / __/___/_  __/__ ___ / /_
+           / /__/ / __/ -_)>  </___/ __ / _ `/ / / -_) \ //__ \/___// / / -_|_-</ __/
+          /____/_/\__/\__/_/|_|   /_/ |_\_, /_/_/\__/_\_\/____/    /_/  \__/___/\__/
+                                       /___/
+                    Initial Test/Support of LiteX on Intel Agilex5 FPGAs.
+                         Developed by Enjoy-Digital for Intel.
+
 [> Intro
 --------
 
@@ -65,7 +73,7 @@ Clone the project repository with all its submodules using the following command
 ./intel_agilex5e_065b_premium_devkit.py --build --integrated-main-ram-size=1024
 ```
 
-![LiteX bios with BRAM](doc/litex_bios_main_ram_bram.png)
+<p align="center"><img src="doc/litex_bios_main_ram_bram.png"></p>
 
 **DR mode (vexriscv CPU, DDR):**
 
@@ -73,7 +81,7 @@ Clone the project repository with all its submodules using the following command
 ./intel_agilex5e_065b_premium_devkit.py --build
 ```
 
-![LiteX bios with LPDDR](doc/litex_bios_main_ram_lpddr.png)
+<p align="center"><img src="doc/litex_bios_main_ram_lpddr.png"></p>
 
 [> Build the Linux Image
 ------------------------
