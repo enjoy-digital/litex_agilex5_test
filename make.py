@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# This file is part of LiteX-HW-CI.
+# This file is part of LiteX-HW-CI and adapted for LiteX-Agilex5-Test project.
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 # SPDX-License-Identifier: BSD-2-Clause
@@ -41,18 +41,34 @@ def switch_dir(path):
 # Gateware Build -----------------------------------------------------------------------------------
 
 gateware_cmds = {
-    "vexriscv": "--cpu-type=vexriscv_smp --cpu-variant=linux \
+    # VexRiscv 32-bit Linux SoC.
+    # --------------------------
+    "vexriscv":
+
+    "--cpu-type=vexriscv_smp --cpu-variant=linux \
     --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
     --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
     --with-sdcard --with-rvc --with-fpu --with-wishbone-memory",
 
-    "naxriscv_32": "--cpu-type=naxriscv --xlen=32 \
+    # NaxRiscv 32-bit Linux SoC.
+    # --------------------------
+    "naxriscv_32":
+
+    "--cpu-type=naxriscv --xlen=32 \
     --with-sdcard --with-rvc --with-fpu --with-coherent-dma",
 
-    "vexiiriscv_32": "--cpu-type=vexiiriscv --vexii-args=\"--xlen=32\" --cpu-variant=linux \
+    # VexiiRiscv 32-bit Linux SoC.
+    # ----------------------------
+    "vexiiriscv_32":
+
+    "--cpu-type=vexiiriscv --vexii-args=\"--xlen=32\" --cpu-variant=linux \
     --with-sdcard --with-coherent-dma",
 
-    "vexiiriscv_64": "--cpu-type=vexiiriscv --vexii-args=\"--xlen=64\" --cpu-variant=linux \
+    # VexiiRiscv 64-bit Linux SoC.
+    # ----------------------------
+    "vexiiriscv_64":
+
+    "--cpu-type=vexiiriscv --vexii-args=\"--xlen=64\" --cpu-variant=linux \
     --with-sdcard --with-coherent-dma",
 }
 
