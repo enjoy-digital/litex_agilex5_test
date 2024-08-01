@@ -23,8 +23,11 @@ Install LiteX by following the instructions provided on the LiteX Wiki:
 [LiteX AXI Verilog Test](https://github.com/enjoy-digital/litex_verilog_axi_test) must also be installed:
 
 ```bash
+cd gateware
 git clone --recursive https://github.com/enjoy-digital/litex_verilog_axi_test
 cd litex_verilog_axi_test
+cd verilog_axi/verilog/ && git apply ../../../verilog_axi_adapter_rd.patch
+cd ../../
 pip3 install --user -e .
 ```
 
