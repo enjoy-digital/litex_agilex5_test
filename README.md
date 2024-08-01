@@ -96,6 +96,20 @@ Clone the project repository with all its submodules using the following command
 
 <p align="center"><img src="doc/litex_bios_main_ram_lpddr.png"></p>
 
+#### [> Note on booting firmware/image
+
+In the following sections, GNU/Linux is booted using either *serialboot* or with *sdcardboot*.
+
+- *serialboot*: this method involves booting through UART. It allows the firmware to be loaded over a serial connection,
+  which is often used for initial development and debugging.
+- *sdcardboot*: this method uses an SD card to store all the necessary files for booting. It is a convenient and portable
+  option, especially for deploying the system in different environments.
+
+For a detailed explanation of all the booting options provided by LiteX, including step-by-step instructions and additional
+methods, please refer to the
+[Load Aplication Code To CPU](https://github.com/enjoy-digital/litex/wiki/Load-Application-Code-To-CPU) page on the LiteX
+wiki. This resource will give you a comprehensive understanding of how to load and execute application code on your CPU.
+
 [> Build the Linux Image
 ------------------------
 
