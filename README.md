@@ -92,17 +92,17 @@ This repository provides a script, called `make.py`, that can build the gateware
 
 To run the script, use the following command:
 ```bash
-./make.py --cpu-type=CPU_TYPE --build-gateware --build --generate-dtb [--rootfs=xxxx] [--soc-json=somewhere/soc.json]
+./make.py --config=CONFIG --build-gateware --build --generate-dtb [--rootfs=xxxx] [--soc-json=somewhere/soc.json]
 ```
 
 **Options**
 
-- `--cpu-type=CPU_TYPE`: specifies the CPU to use. **CPU_TYPE** must be one of the following:
+- `--config=CONFIG`: specifies the Configuration to use. **CONFIG** must be one of the following:
   - **vexriscv**,
   - **naxriscv_32**,
   - **vexiiriscv_32**
   - **vexiiriscv_64**
-- `--build-gateware`: builds first the gateware. The (`--cpu-type` argument is required when using this option
+- `--build-gateware`: builds first the gateware. The (`--config` argument is required when using this option
 - `--build`: clones, configures and builds the root filesystem image, the bootloader and the kernel using *buildroot*
 - `--generate-dtb`: converts the *soc.json* to *soc.dts* and produces the *soc.dtb*
 - `--rootfs` (optional, default: *ram0*): specifies the root filesystem. The user can select between a ramdisk (*ram0*) or the second SDCard partition (*mmcblk0p2*)

@@ -270,14 +270,9 @@ def main():
     description = "LiteX Hardware CI/Linux Tests.\n\n"
     parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
 
-    # CPU Arguments.
+    # Config Arguments.
     # --------------
-    parser.add_argument("--cpu-type",                                help="CPU TYPE", choices=[
-        "vexriscv",
-        "naxriscv_32",
-        "vexiiriscv_32",
-        "vexiiriscv_64"
-    ])
+    parser.add_argument("--config",                                  help="Configuration to build.", choices=gateware_cmds.keys())
 
     # SoC Arguments.
     # --------------
@@ -302,11 +297,11 @@ def main():
     soc_json = args.soc_json
 
     if args.build_gateware:
-        assert args.cpu_type is not None
-        if gateware_build(args.cpu_type):
+        assert args.config is not None
+        if gateware_build(args.config):
             print("Gateware build failed")
             return
-        soc_json = f"build_{args.cpu_type}/soc.json"
+        soc_json = f"build_{args.config}/soc.json"
 
     # soc.json
     if soc_json is None:
