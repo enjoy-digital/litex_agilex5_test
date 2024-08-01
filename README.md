@@ -62,7 +62,7 @@ Clone the project repository with all its submodules using the following command
 ./intel_agilex5e_065b_premium_devkit.py --build --integrated-main-ram-size=1024
 ```
 
-![LiteX bios with BRAM](figs/litex_bios_main_ram_bram.png)
+![LiteX bios with BRAM](doc/litex_bios_main_ram_bram.png)
 
 **DR mode (vexriscv CPU, DDR):**
 
@@ -70,7 +70,7 @@ Clone the project repository with all its submodules using the following command
 ./intel_agilex5e_065b_premium_devkit.py --build
 ```
 
-![LiteX bios with LPDDR](figs/litex_bios_main_ram_lpddr.png)
+![LiteX bios with LPDDR](doc/litex_bios_main_ram_lpddr.png)
 
 [> Build the Linux Image
 ------------------------
