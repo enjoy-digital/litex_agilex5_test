@@ -84,7 +84,7 @@ class BaseSoC(SoCCore):
         with_led_chaser = True,
         with_spi_sdcard = False,
         with_sdcard     = False,
-        with_crossbar   = False)
+        with_crossbar   = False,
         **kwargs):
         platform = Platform()
 
