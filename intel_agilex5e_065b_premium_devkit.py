@@ -85,6 +85,7 @@ class BaseSoC(SoCCore):
         with_spi_sdcard = False,
         with_sdcard     = False,
         with_crossbar   = False,
+        with_l2_cache   = False,
         **kwargs):
         platform = Platform()
 
@@ -104,7 +105,8 @@ class BaseSoC(SoCCore):
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"),
                 data_width          = data_width,
                 with_crossbar       = with_crossbar,
-                direct_axiinterface = True)
+                direct_axiinterface = False,
+                with_l2_cache       = with_l2_cache)
             # Add SDRAM region.
             main_ram_region = SoCRegion(
                 origin = self.mem_map.get("main_ram", None),

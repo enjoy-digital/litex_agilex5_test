@@ -19,3 +19,4 @@ qdb
 *.log.*
 *.rec.*
 *.rec
+core_axi_cache
