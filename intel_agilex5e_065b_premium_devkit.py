@@ -32,10 +32,11 @@ from gateware.porRGMIIPLL.porRGMIIPLL import PorRGMIIPLL
 
 class _CRG(LiteXModule):
     def __init__(self, platform, sys_clk_freq, with_lpddr=True, with_ethernet=False):
-        self.rst      = Signal()
-        self.cd_sys   = ClockDomain()
-        self.cd_por   = ClockDomain()
-        self.cd_lpddr = ClockDomain()
+        self.rst       = Signal()
+        self.cd_sys    = ClockDomain()
+        self.cd_por    = ClockDomain()
+        self.cd_lpddr  = ClockDomain()
+        self.lpddr_rst = Signal()
 
         # # #
 
@@ -53,18 +54,18 @@ class _CRG(LiteXModule):
         self.specials += AsyncResetSynchronizer(self.cd_por, ~rst_n),
 
         # Clocking
+        self.comb     += self.cd_sys.clk.eq(clk100)
+        self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst | self.lpddr_rst)
         if with_lpddr:
-            self.comb     += self.cd_sys.clk.eq(ClockSignal("lpddr_usr"))
-            self.specials += AsyncResetSynchronizer(self.cd_sys, ResetSignal("lpddr_usr"))
+            #self.comb     += self.cd_sys.clk.eq(ClockSignal("lpddr_usr"))
+            #self.specials += AsyncResetSynchronizer(self.cd_sys, ResetSignal("lpddr_usr"))
             # LPDDR4
             lpddr_refclk    = platform.request("lpddr_refclk")
             lpddr_refclk_se = Signal()
             self.specials += DifferentialInput(lpddr_refclk.p, lpddr_refclk.n, lpddr_refclk_se)
             self.comb     += self.cd_lpddr.clk.eq(lpddr_refclk_se)
             self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
-        else:
-            self.comb     += self.cd_sys.clk.eq(clk100)
-            self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst)
+        #else:
 
         if with_ethernet:
             pll_ref_clk    = platform.request("hvio6d_clk125")
@@ -104,6 +105,8 @@ class BaseSoC(SoCCore):
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"),
                 data_width    = data_width,
                 with_crossbar = with_crossbar)
+
+            self.comb += self.crg.lpddr_rst.eq(self.lpddr.cal_done)
 
             # Add SDRAM region.
             main_ram_region = SoCRegion(

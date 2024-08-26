@@ -12,7 +12,7 @@ the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
 refer to the applicable agreement for further details, at
 https://fpgasoftware.intel.com/eula.-->
-<ipxact:component xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014" xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions">
+<ipxact:component xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions" xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014">
   <ipxact:vendor>Intel Corporation</ipxact:vendor>
   <ipxact:library>ed_synth_emif_ph2_inst</ipxact:library>
   <ipxact:name>emif_ph2_inst</ipxact:name>
@@ -88,7 +88,7 @@ https://fpgasoftware.intel.com/eula.-->
       </ipxact:parameters>
     </ipxact:busInterface>
     <ipxact:busInterface>
-      <ipxact:name>usr_clk_0</ipxact:name>
+      <ipxact:name>usr_async_clk_0</ipxact:name>
       <ipxact:busType vendor="intel" library="intel" name="clock" version="24.2"></ipxact:busType>
       <ipxact:abstractionTypes>
         <ipxact:abstractionType>
@@ -99,28 +99,18 @@ https://fpgasoftware.intel.com/eula.-->
                 <ipxact:name>clk</ipxact:name>
               </ipxact:logicalPort>
               <ipxact:physicalPort>
-                <ipxact:name>usr_clk_0</ipxact:name>
+                <ipxact:name>usr_async_clk_0</ipxact:name>
               </ipxact:physicalPort>
             </ipxact:portMap>
           </ipxact:portMaps>
         </ipxact:abstractionType>
       </ipxact:abstractionTypes>
-      <ipxact:master></ipxact:master>
+      <ipxact:slave></ipxact:slave>
       <ipxact:parameters>
-        <ipxact:parameter parameterId="associatedDirectClock" type="string">
-          <ipxact:name>associatedDirectClock</ipxact:name>
-          <ipxact:displayName>Associated direct clock</ipxact:displayName>
-          <ipxact:value></ipxact:value>
-        </ipxact:parameter>
         <ipxact:parameter parameterId="clockRate" type="longint">
           <ipxact:name>clockRate</ipxact:name>
           <ipxact:displayName>Clock rate</ipxact:displayName>
           <ipxact:value>0</ipxact:value>
-        </ipxact:parameter>
-        <ipxact:parameter parameterId="clockRateKnown" type="bit">
-          <ipxact:name>clockRateKnown</ipxact:name>
-          <ipxact:displayName>Clock rate known</ipxact:displayName>
-          <ipxact:value>false</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="externallyDriven" type="bit">
           <ipxact:name>externallyDriven</ipxact:name>
@@ -157,7 +147,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="associatedClock" type="string">
           <ipxact:name>associatedClock</ipxact:name>
           <ipxact:displayName>Associated clock</ipxact:displayName>
-          <ipxact:value>usr_clk_0</ipxact:value>
+          <ipxact:value>usr_async_clk_0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="associatedDirectReset" type="string">
           <ipxact:name>associatedDirectReset</ipxact:name>
@@ -503,7 +493,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="associatedClock" type="string">
           <ipxact:name>associatedClock</ipxact:name>
           <ipxact:displayName>Associated clock</ipxact:displayName>
-          <ipxact:value>usr_clk_0</ipxact:value>
+          <ipxact:value>usr_async_clk_0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="associatedReset" type="string">
           <ipxact:name>associatedReset</ipxact:name>
@@ -872,12 +862,12 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="associatedClock" type="string">
           <ipxact:name>associatedClock</ipxact:name>
           <ipxact:displayName>Associated clock</ipxact:displayName>
-          <ipxact:value></ipxact:value>
+          <ipxact:value>s0_axil_clk</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="synchronousEdges" type="string">
           <ipxact:name>synchronousEdges</ipxact:name>
           <ipxact:displayName>Synchronous edges</ipxact:displayName>
-          <ipxact:value>NONE</ipxact:value>
+          <ipxact:value>DEASSERT</ipxact:value>
         </ipxact:parameter>
       </ipxact:parameters>
     </ipxact:busInterface>
@@ -1254,9 +1244,9 @@ https://fpgasoftware.intel.com/eula.-->
         </ipxact:wire>
       </ipxact:port>
       <ipxact:port>
-        <ipxact:name>usr_clk_0</ipxact:name>
+        <ipxact:name>usr_async_clk_0</ipxact:name>
         <ipxact:wire>
-          <ipxact:direction>out</ipxact:direction>
+          <ipxact:direction>in</ipxact:direction>
           <ipxact:vectors></ipxact:vectors>
           <ipxact:wireTypeDefs>
             <ipxact:wireTypeDef>
@@ -2112,7 +2102,7 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:vectors>
             <ipxact:vector>
               <ipxact:left>0</ipxact:left>
-              <ipxact:right>31</ipxact:right>
+              <ipxact:right>26</ipxact:right>
             </ipxact:vector>
           </ipxact:vectors>
           <ipxact:wireTypeDefs>
@@ -2262,7 +2252,7 @@ https://fpgasoftware.intel.com/eula.-->
           <ipxact:vectors>
             <ipxact:vector>
               <ipxact:left>0</ipxact:left>
-              <ipxact:right>31</ipxact:right>
+              <ipxact:right>26</ipxact:right>
             </ipxact:vector>
           </ipxact:vectors>
           <ipxact:wireTypeDefs>
@@ -2566,7 +2556,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="PHY_ASYNC_EN" type="bit">
           <ipxact:name>PHY_ASYNC_EN</ipxact:name>
           <ipxact:displayName>Asynchronous Enable</ipxact:displayName>
-          <ipxact:value>false</ipxact:value>
+          <ipxact:value>true</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="CTRL_ECC_MODE_AUTO_BOOL" type="bit">
           <ipxact:name>CTRL_ECC_MODE_AUTO_BOOL</ipxact:name>
@@ -2621,12 +2611,12 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="PHY_MEMCLK_FREQ_MHZ_AUTO_BOOL" type="bit">
           <ipxact:name>PHY_MEMCLK_FREQ_MHZ_AUTO_BOOL</ipxact:name>
           <ipxact:displayName>&lt;html&gt; </ipxact:displayName>
-          <ipxact:value>false</ipxact:value>
+          <ipxact:value>true</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="PHY_MEMCLK_FREQ_MHZ" type="real">
           <ipxact:name>PHY_MEMCLK_FREQ_MHZ</ipxact:name>
           <ipxact:displayName>Memory Clock Frequency</ipxact:displayName>
-          <ipxact:value>800.0</ipxact:value>
+          <ipxact:value>1600.0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="PHY_MEMCLK_FSP0_FREQ_MHZ_AUTO_BOOL" type="bit">
           <ipxact:name>PHY_MEMCLK_FSP0_FREQ_MHZ_AUTO_BOOL</ipxact:name>
@@ -2701,12 +2691,12 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="MEM_PRESET_ID_AUTO_BOOL" type="bit">
           <ipxact:name>MEM_PRESET_ID_AUTO_BOOL</ipxact:name>
           <ipxact:displayName>&lt;html&gt; </ipxact:displayName>
-          <ipxact:value>false</ipxact:value>
+          <ipxact:value>true</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="MEM_PRESET_ID" type="string">
           <ipxact:name>MEM_PRESET_ID</ipxact:name>
           <ipxact:displayName>Memory Preset</ipxact:displayName>
-          <ipxact:value>Custom Preset</ipxact:value>
+          <ipxact:value>DDR4-3200AA 1600MHz CL22 ParityxOFF DMxOFF WDBIxOFF RDBIxOFF Component 1CS 1D 8Gb 512M x16</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP0_AUTO_BOOL" type="bit">
           <ipxact:name>MEM_PRESET_ID_FSP0_AUTO_BOOL</ipxact:name>
@@ -2716,7 +2706,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP0" type="string">
           <ipxact:name>MEM_PRESET_ID_FSP0</ipxact:name>
           <ipxact:displayName>Memory Preset for FSP 0</ipxact:displayName>
-          <ipxact:value>{No Presets Found}</ipxact:value>
+          <ipxact:value>DDR4-3200AA 1600MHz CL22 ParityxOFF DMxOFF WDBIxOFF RDBIxOFF Component 1CS 1D 8Gb 512M x16</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP1_AUTO_BOOL" type="bit">
           <ipxact:name>MEM_PRESET_ID_FSP1_AUTO_BOOL</ipxact:name>
@@ -2726,7 +2716,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP1" type="string">
           <ipxact:name>MEM_PRESET_ID_FSP1</ipxact:name>
           <ipxact:displayName>Memory Preset for FSP 1</ipxact:displayName>
-          <ipxact:value>{No Presets Found}</ipxact:value>
+          <ipxact:value>DDR4-3200AA 1600MHz CL22 ParityxOFF DMxOFF WDBIxOFF RDBIxOFF Component 1CS 1D 8Gb 512M x16</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP2_AUTO_BOOL" type="bit">
           <ipxact:name>MEM_PRESET_ID_FSP2_AUTO_BOOL</ipxact:name>
@@ -2736,7 +2726,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="MEM_PRESET_ID_FSP2" type="string">
           <ipxact:name>MEM_PRESET_ID_FSP2</ipxact:name>
           <ipxact:displayName>Memory Preset for FSP 2</ipxact:displayName>
-          <ipxact:value>{No Presets Found}</ipxact:value>
+          <ipxact:value>DDR4-3200AA 1600MHz CL22 ParityxOFF DMxOFF WDBIxOFF RDBIxOFF Component 1CS 1D 8Gb 512M x16</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="PHY_REFCLK_FREQ_MHZ_AUTO_BOOL" type="bit">
           <ipxact:name>PHY_REFCLK_FREQ_MHZ_AUTO_BOOL</ipxact:name>
@@ -2746,7 +2736,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="PHY_REFCLK_FREQ_MHZ" type="real">
           <ipxact:name>PHY_REFCLK_FREQ_MHZ</ipxact:name>
           <ipxact:displayName>PLL Reference Clock Frequency</ipxact:displayName>
-          <ipxact:value>116.666667</ipxact:value>
+          <ipxact:value>100.0</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="HMC_ADDR_SWAP" type="bit">
           <ipxact:name>HMC_ADDR_SWAP</ipxact:name>
@@ -3086,7 +3076,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="DEBUG_TOOLS_EN" type="bit">
           <ipxact:name>DEBUG_TOOLS_EN</ipxact:name>
           <ipxact:displayName>Enable Debug Tools</ipxact:displayName>
-          <ipxact:value>true</ipxact:value>
+          <ipxact:value>false</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="AXI_SIDEBAND_ACCESS_MODE_AUTO_BOOL" type="bit">
           <ipxact:name>AXI_SIDEBAND_ACCESS_MODE_AUTO_BOOL</ipxact:name>
@@ -3136,7 +3126,7 @@ https://fpgasoftware.intel.com/eula.-->
         <ipxact:parameter parameterId="EX_DESIGN_CORE_CLK_FREQ_MHZ" type="string">
           <ipxact:name>EX_DESIGN_CORE_CLK_FREQ_MHZ</ipxact:name>
           <ipxact:displayName>Core Clock Freq</ipxact:displayName>
-          <ipxact:value>220</ipxact:value>
+          <ipxact:value>200</ipxact:value>
         </ipxact:parameter>
         <ipxact:parameter parameterId="EX_DESIGN_CORE_REFCLK_FREQ_MHZ" type="string">
           <ipxact:name>EX_DESIGN_CORE_REFCLK_FREQ_MHZ</ipxact:name>
@@ -3240,8 +3230,16 @@ https://fpgasoftware.intel.com/eula.-->
          type = "String";
       }
    }
+   element emif_ph2_0
+   {
+   }
    element emif_ph2_inst
    {
+      datum _originalVersion
+      {
+         value = "6.1.0";
+         type = "String";
+      }
       datum _sortIndex
       {
          value = "0";
@@ -3326,14 +3324,14 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;/parameters&gt;
         &lt;/interface&gt;
         &lt;interface&gt;
-            &lt;name&gt;usr_clk_0&lt;/name&gt;
+            &lt;name&gt;usr_async_clk_0&lt;/name&gt;
             &lt;type&gt;clock&lt;/type&gt;
-            &lt;isStart&gt;true&lt;/isStart&gt;
+            &lt;isStart&gt;false&lt;/isStart&gt;
             &lt;ports&gt;
                 &lt;port&gt;
-                    &lt;name&gt;usr_clk_0&lt;/name&gt;
+                    &lt;name&gt;usr_async_clk_0&lt;/name&gt;
                     &lt;role&gt;clk&lt;/role&gt;
-                    &lt;direction&gt;Output&lt;/direction&gt;
+                    &lt;direction&gt;Input&lt;/direction&gt;
                     &lt;width&gt;1&lt;/width&gt;
                     &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                     &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;
@@ -3346,15 +3344,8 @@ https://fpgasoftware.intel.com/eula.-->
             &lt;parameters&gt;
                 &lt;parameterValueMap&gt;
                     &lt;entry&gt;
-                        &lt;key&gt;associatedDirectClock&lt;/key&gt;
-                    &lt;/entry&gt;
-                    &lt;entry&gt;
                         &lt;key&gt;clockRate&lt;/key&gt;
                         &lt;value&gt;0&lt;/value&gt;
-                    &lt;/entry&gt;
-                    &lt;entry&gt;
-                        &lt;key&gt;clockRateKnown&lt;/key&gt;
-                        &lt;value&gt;false&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;externallyDriven&lt;/key&gt;
@@ -3388,7 +3379,7 @@ https://fpgasoftware.intel.com/eula.-->
                 &lt;parameterValueMap&gt;
                     &lt;entry&gt;
                         &lt;key&gt;associatedClock&lt;/key&gt;
-                        &lt;value&gt;usr_clk_0&lt;/value&gt;
+                        &lt;value&gt;usr_async_clk_0&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;associatedDirectReset&lt;/key&gt;
@@ -3777,7 +3768,7 @@ https://fpgasoftware.intel.com/eula.-->
                 &lt;parameterValueMap&gt;
                     &lt;entry&gt;
                         &lt;key&gt;associatedClock&lt;/key&gt;
-                        &lt;value&gt;usr_clk_0&lt;/value&gt;
+                        &lt;value&gt;usr_async_clk_0&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;associatedReset&lt;/key&gt;
@@ -4095,10 +4086,11 @@ https://fpgasoftware.intel.com/eula.-->
                 &lt;parameterValueMap&gt;
                     &lt;entry&gt;
                         &lt;key&gt;associatedClock&lt;/key&gt;
+                        &lt;value&gt;s0_axil_clk&lt;/value&gt;
                     &lt;/entry&gt;
                     &lt;entry&gt;
                         &lt;key&gt;synchronousEdges&lt;/key&gt;
-                        &lt;value&gt;NONE&lt;/value&gt;
+                        &lt;value&gt;DEASSERT&lt;/value&gt;
                     &lt;/entry&gt;
                 &lt;/parameterValueMap&gt;
             &lt;/parameters&gt;
@@ -4112,7 +4104,7 @@ https://fpgasoftware.intel.com/eula.-->
                     &lt;name&gt;s0_axi4lite_awaddr&lt;/name&gt;
                     &lt;role&gt;awaddr&lt;/role&gt;
                     &lt;direction&gt;Input&lt;/direction&gt;
-                    &lt;width&gt;32&lt;/width&gt;
+                    &lt;width&gt;27&lt;/width&gt;
                     &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                     &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;
                     &lt;terminationValue&gt;0&lt;/terminationValue&gt;
@@ -4202,7 +4194,7 @@ https://fpgasoftware.intel.com/eula.-->
                     &lt;name&gt;s0_axi4lite_araddr&lt;/name&gt;
                     &lt;role&gt;araddr&lt;/role&gt;
                     &lt;direction&gt;Input&lt;/direction&gt;
-                    &lt;width&gt;32&lt;/width&gt;
+                    &lt;width&gt;27&lt;/width&gt;
                     &lt;lowerBound&gt;0&lt;/lowerBound&gt;
                     &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;
                     &lt;terminationValue&gt;0&lt;/terminationValue&gt;
@@ -4436,19 +4428,6 @@ https://fpgasoftware.intel.com/eula.-->
                 &lt;/consumedSystemInfos&gt;
             &lt;/value&gt;
         &lt;/entry&gt;
-        &lt;entry&gt;
-            &lt;key&gt;usr_clk_0&lt;/key&gt;
-            &lt;value&gt;
-                &lt;connectionPointName&gt;usr_clk_0&lt;/connectionPointName&gt;
-                &lt;suppliedSystemInfos/&gt;
-                &lt;consumedSystemInfos&gt;
-                    &lt;entry&gt;
-                        &lt;key&gt;CLOCK_RATE&lt;/key&gt;
-                        &lt;value&gt;0&lt;/value&gt;
-                    &lt;/entry&gt;
-                &lt;/consumedSystemInfos&gt;
-            &lt;/value&gt;
-        &lt;/entry&gt;
     &lt;/connPtSystemInfos&gt;
 &lt;/systemInfosDefinition&gt;</ipxact:value>
         </ipxact:parameter>
@@ -4554,10 +4533,10 @@ https://fpgasoftware.intel.com/eula.-->
       <altera:interface_mapping altera:name="s0_axil_rst_n" altera:internal="emif_ph2_inst.s0_axil_rst_n" altera:type="reset" altera:dir="end">
         <altera:port_mapping altera:name="s0_axi4lite_rst_n" altera:internal="s0_axi4lite_rst_n"></altera:port_mapping>
       </altera:interface_mapping>
-      <altera:interface_mapping altera:name="usr_async_clk_0" altera:internal="emif_ph2_inst.usr_async_clk_0"></altera:interface_mapping>
-      <altera:interface_mapping altera:name="usr_clk_0" altera:internal="emif_ph2_inst.usr_clk_0" altera:type="clock" altera:dir="start">
-        <altera:port_mapping altera:name="usr_clk_0" altera:internal="usr_clk_0"></altera:port_mapping>
+      <altera:interface_mapping altera:name="usr_async_clk_0" altera:internal="emif_ph2_inst.usr_async_clk_0" altera:type="clock" altera:dir="end">
+        <altera:port_mapping altera:name="usr_async_clk_0" altera:internal="usr_async_clk_0"></altera:port_mapping>
       </altera:interface_mapping>
+      <altera:interface_mapping altera:name="usr_clk_0" altera:internal="emif_ph2_inst.usr_clk_0"></altera:interface_mapping>
       <altera:interface_mapping altera:name="usr_rst_n_0" altera:internal="emif_ph2_inst.usr_rst_n_0" altera:type="reset" altera:dir="start">
         <altera:port_mapping altera:name="usr_rst_n_0" altera:internal="usr_rst_n_0"></altera:port_mapping>
       </altera:interface_mapping>
