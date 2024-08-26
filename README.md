@@ -41,17 +41,6 @@ Install LiteX by following the instructions provided on the LiteX Wiki:
 
 [LiteX Installation Instructions](https://github.com/enjoy-digital/litex/wiki/Installation)
 
-[LiteX AXI Verilog Test](https://github.com/enjoy-digital/litex_verilog_axi_test) must also be installed:
-
-```bash
-cd gateware
-git clone --recursive https://github.com/enjoy-digital/litex_verilog_axi_test
-cd litex_verilog_axi_test
-cd verilog_axi/verilog/ && git apply ../../../verilog_axi_adapter_rd.patch
-cd ../../
-pip3 install --user -e .
-```
-
 #### [> Installing the RISC-V toolchain for the Soft-CPU:
 
 To install the RISC-V toolchain, follow the manual installation steps or use the instructions from

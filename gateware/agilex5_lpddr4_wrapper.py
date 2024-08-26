@@ -18,16 +18,10 @@ from litex.gen import *
 from litex.soc.interconnect import axi
 from litex.soc.interconnect.csr import *
 
-from verilog_axi.axi.axi_adapter import AXIAdapter
-
 from gateware.axi_l2_cache import AXI_l2_cache
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
-    def __init__(self, platform, pads,
-            data_width          = 32,
-            with_crossbar       = False,
-            direct_axiinterface = True,
-            with_l2_cache       = False):
+    def __init__(self, platform, pads, data_width=32, with_crossbar=False):
 
         self.bus      = axi.AXIInterface(
             data_width    = data_width,
@@ -40,12 +34,6 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             r_user_width  = 64,
         )
 
-        assert not (direct_axiinterface and with_l2_cache)
-
-        if with_crossbar:
-            from verilog_axi.axi.axi_crossbar import AXICrossbar
-            self.axi_crossbar = AXICrossbar(platform)
-
         self.bus_256b = axi.AXIInterface(
             data_width    = 256,
             address_width = 32,
@@ -57,64 +45,15 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             r_user_width  = 64,
         )
 
-        if direct_axiinterface:
-            self.adapter = AXIAdapter(
-                platform = platform,
-                s_axi    = self.bus,
-                m_axi    = self.bus_256b,
-            )
-        elif with_l2_cache:
-            self.l2_cache = AXI_l2_cache(platform)
-            self.comb += [
-                self.bus.connect(self.l2_cache.sink),
-                self.l2_cache.source.connect(self.bus_256b),
-            ]
-        else:
-            bus = self.bus
-            if data_width < 64:
-                self.bus_64b = axi.AXIInterface(
-                    data_width    = 64,
-                    address_width = 32,
-                    id_width      = 7,
-                    aw_user_width = 4,
-                    w_user_width  = 64,
-                    b_user_width  = 0,
-                    ar_user_width = 4,
-                    r_user_width  = 64,
-                )
-                self.adapter32b_64b = AXIAdapter(
-                    platform = platform,
-                    s_axi    = self.bus,
-                    m_axi    = self.bus_64b,
-                )
+        if with_crossbar:
+            from verilog_axi.axi.axi_crossbar import AXICrossbar
+            self.axi_crossbar = AXICrossbar(platform)
 
-                bus = self.bus_64b
-
-            if data_width < 128:
-                self.bus_128b = axi.AXIInterface(
-                    data_width    = 128,
-                    address_width = 32,
-                    id_width      = 7,
-                    aw_user_width = 4,
-                    w_user_width  = 64,
-                    b_user_width  = 0,
-                    ar_user_width = 4,
-                    r_user_width  = 64,
-                )
-
-                self.adapter64b_128b = AXIAdapter(
-                    platform = platform,
-                    s_axi    = bus,
-                    m_axi    = self.bus_128b,
-                )
-
-                bus = self.bus_128b
-
-            self.adapter128b_256b = AXIAdapter(
-                platform = platform,
-                s_axi    = bus,
-                m_axi    = self.bus_256b,
-            )
+        self.l2_cache = AXI_l2_cache(platform)
+        self.comb += [
+            self.bus.connect(self.l2_cache.sink),
+            self.l2_cache.source.connect(self.bus_256b),
+        ]
 
         self.cal_done = Signal()
         self.platform = platform
