@@ -20,8 +20,14 @@ from litex.soc.interconnect.csr import *
 
 from verilog_axi.axi.axi_adapter import AXIAdapter
 
+from gateware.axi_l2_cache import AXI_l2_cache
+
 class Agilex5LPDDR4Wrapper(LiteXModule):
-    def __init__(self, platform, pads, data_width=32, with_crossbar=False, direct_axiinterface=True):
+    def __init__(self, platform, pads,
+            data_width          = 32,
+            with_crossbar       = False,
+            direct_axiinterface = True,
+            with_l2_cache       = False):
 
         self.bus      = axi.AXIInterface(
             data_width    = data_width,
@@ -33,6 +39,8 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             ar_user_width = 4,
             r_user_width  = 64,
         )
+
+        assert not (direct_axiinterface and with_l2_cache)
 
         if with_crossbar:
             from verilog_axi.axi.axi_crossbar import AXICrossbar
@@ -55,6 +63,12 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
                 s_axi    = self.bus,
                 m_axi    = self.bus_256b,
             )
+        elif with_l2_cache:
+            self.l2_cache = AXI_l2_cache(platform)
+            self.comb += [
+                self.bus.connect(self.l2_cache.sink),
+                self.l2_cache.source.connect(self.bus_256b),
+            ]
         else:
             bus = self.bus
             if data_width < 64:
