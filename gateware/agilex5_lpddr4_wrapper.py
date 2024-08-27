@@ -111,11 +111,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             o_usr_rst_n_o_reset_n         = Open(),
 
             # AXIL Driver Clk/Rst (Calibration).
-            i_axil_driver_clk_i_clk       = ClockSignal("sys"),
+            i_axil_driver_clk_i_clk       = ClockSignal("lpddr_cfg"),
             i_axil_driver_rst_n_i_reset_n = self.local_rst_n,
 
             # MEM AXI Lite Clk/Rst (Calibration).
-            i_s0_axil_clk_i_clk           = ClockSignal("sys"),
+            i_s0_axil_clk_i_clk           = ClockSignal("lpddr_cfg"),
             i_s0_axil_rst_n_i_reset_n     = self.local_rst_n,
 
             # MEM Cal Done.
