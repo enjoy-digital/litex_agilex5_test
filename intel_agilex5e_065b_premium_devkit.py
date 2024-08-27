@@ -26,8 +26,8 @@ from litescope import LiteScopeAnalyzer
 
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
-from gateware.porRGMIIPLL.porRGMIIPLL import PorRGMIIPLL
-from gateware.mainPLL.mainPLL import MainPLL
+from gateware.por_rgmii_pll.por_rgmii_pll import PorRGMIIPLL
+from gateware.main_pll.main_pll import MainPLL
 
 # CRG ----------------------------------------------------------------------------------------------
 

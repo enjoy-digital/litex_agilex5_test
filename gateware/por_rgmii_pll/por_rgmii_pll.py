@@ -62,7 +62,7 @@ class PorRGMIIPLL(LiteXModule):
     def do_finalize(self):
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
-        ip_name = "porRGMIIPLL"
+        ip_name = "por_rgmii_pll"
         ip_file = os.path.join(curr_dir, ip_name + ".ip")
         self.platform.add_ip(ip_file)
 
