@@ -27,23 +27,22 @@ from litescope import LiteScopeAnalyzer
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
 from gateware.porRGMIIPLL.porRGMIIPLL import PorRGMIIPLL
+from gateware.mainPLL.mainPLL import MainPLL
 
 # CRG ----------------------------------------------------------------------------------------------
 
 class _CRG(LiteXModule):
     def __init__(self, platform, sys_clk_freq, with_lpddr=True, with_ethernet=False):
-        self.rst       = Signal()
-        self.cd_sys    = ClockDomain()
-        self.cd_por    = ClockDomain()
-        self.cd_lpddr  = ClockDomain()
-        self.lpddr_rst = Signal()
+        self.rst          = Signal()
+        self.cd_sys       = ClockDomain()
+        self.cd_por       = ClockDomain()
+        self.lpddr_rst    = Signal()
 
         # # #
 
         # Clk / Rst
         clk100        = platform.request("clk100")
         rst_n         = platform.request("user_btn", 0)
-
 
         # Power on reset
         por_count = Signal(16, reset=2**16-1)
@@ -53,19 +52,24 @@ class _CRG(LiteXModule):
         self.sync.por += If(~por_done, por_count.eq(por_count - 1))
         self.specials += AsyncResetSynchronizer(self.cd_por, ~rst_n),
 
-        # Clocking
-        self.comb     += self.cd_sys.clk.eq(clk100)
-        self.specials += AsyncResetSynchronizer(self.cd_sys, ~por_done | self.rst | self.lpddr_rst)
+        # PLL
+        self.mainPLL = MainPLL(platform, clk100, ~por_done)
+        self.comb += self.cd_sys.clk.eq(self.mainPLL.clk220m),
+
+        self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | self.rst | self.lpddr_rst),
         if with_lpddr:
-            #self.comb     += self.cd_sys.clk.eq(ClockSignal("lpddr_usr"))
-            #self.specials += AsyncResetSynchronizer(self.cd_sys, ResetSignal("lpddr_usr"))
             # LPDDR4
-            lpddr_refclk    = platform.request("lpddr_refclk")
-            lpddr_refclk_se = Signal()
+            self.cd_lpddr     = ClockDomain()
+            self.cd_lpddr_cfg = ClockDomain()
+            lpddr_refclk      = platform.request("lpddr_refclk")
+            lpddr_refclk_se   = Signal()
             self.specials += DifferentialInput(lpddr_refclk.p, lpddr_refclk.n, lpddr_refclk_se)
+            # LPDDR4 core Clk/Reset
             self.comb     += self.cd_lpddr.clk.eq(lpddr_refclk_se)
             self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
-        #else:
+            # LPDDR4 configuration interface Clk/Reset
+            self.comb     += self.cd_lpddr_cfg.clk.eq(self.mainPLL.clk100m)
+            self.specials += AsyncResetSynchronizer(self.cd_lpddr_cfg, ~self.mainPLL.locked | self.rst)
 
         if with_ethernet:
             pll_ref_clk    = platform.request("hvio6d_clk125")
@@ -76,7 +80,7 @@ class _CRG(LiteXModule):
 # BaseSoC ------------------------------------------------------------------------------------------
 
 class BaseSoC(SoCCore):
-    def __init__(self, sys_clk_freq=100e6,
+    def __init__(self, sys_clk_freq=220e6,
         with_analyzer   = False,
         with_ethernet   = False,
         eth_ip          = "192.168.1.50",
@@ -196,7 +200,7 @@ class BaseSoC(SoCCore):
 def main():
     from litex.build.parser import LiteXArgumentParser
     parser = LiteXArgumentParser(platform=Platform, description="LiteX SoC on LiteX SoC on Agilex5E 065B.")
-    parser.add_target_argument("--sys-clk-freq",    default=100e6, type=float, help="System clock frequency.")
+    parser.add_target_argument("--sys-clk-freq",    default=220e6, type=float, help="System clock frequency.")
     parser.add_target_argument("--with-analyzer",   action="store_true",       help="Enable liteScope to probe LPDDR4 AXI.")
     sdopts = parser.target_group.add_mutually_exclusive_group()
     sdopts.add_argument("--with-spi-sdcard",        action="store_true",       help="Enable SPI-mode SDCard support.")
