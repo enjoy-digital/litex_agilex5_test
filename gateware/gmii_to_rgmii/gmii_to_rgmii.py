@@ -127,8 +127,8 @@ class GMIIToRGMII(LiteXModule):
         self.rx       = ClockDomainsRenamer("eth_rx")(GMIIToRGMIIRX(pads))
         self.sink, self.source = self.tx.sink, self.rx.source
 
-        if hasattr(pads, "mdc"):
-            self.mdio = LiteEthPHYMDIO(pads)
+        #if hasattr(pads, "mdc"):
+        #    self.mdio = LiteEthPHYMDIO(pads)
 
         # # #
 
@@ -139,11 +139,11 @@ class GMIIToRGMII(LiteXModule):
         self.ip_params.update(
             # Clk/Reset.
             # ----------
-            i_pll_250m_tx_clock_clk     = ClockSignal("rgmii_clk250"),
-            i_pll_125m_tx_clock_clk     = ClockSignal("rgmii_clk125"),
-            i_pll_25m_clock_clk         = 0,
-            i_pll_2_5m_clock_clk        = 0,
-            i_locked_pll_250m_tx_export = ~ResetSignal("rgmii_clk250"),
+            #i_pll_250m_tx_clock_clk     = ClockSignal("rgmii_clk250"),
+            #i_pll_125m_tx_clock_clk     = ClockSignal("rgmii_clk125"),
+            i_pll_25m_clock_clk         = ClockSignal("rgmii_clk25"),
+            i_pll_2_5m_clock_clk        = ClockSignal("rgmii_clk2_5"),
+            i_locked_pll_tx_export      = ~ResetSignal("rgmii_clk25"),
             i_peri_reset_reset          = ClockSignal("sys"),           # used by submodules after CDC
             i_peri_clock_clk            = ResetSignal("sys"),           # mac speed synchro between clock domains
 

@@ -31,7 +31,7 @@ class MainPLL(LiteXModule):
 
         # # #
 
-        self.specials += Instance("mainPLL",
+        self.specials += Instance("main_pll",
             # Input Clk/Reset.
             i_refclk     = clock_pad,
             i_rst        = reset_pad,

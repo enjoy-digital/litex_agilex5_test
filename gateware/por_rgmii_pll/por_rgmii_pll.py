@@ -35,7 +35,7 @@ class PorRGMIIPLL(LiteXModule):
 
         locked = Signal()
 
-        self.specials += Instance("porRGMIIPLL",
+        self.specials += Instance("por_rgmii_pll",
             # Input Clk/Reset.
             i_refclk     = clock_pad,
             i_rst        = reset_pad,
