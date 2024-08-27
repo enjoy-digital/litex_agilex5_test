@@ -106,7 +106,7 @@ class BaseSoC(SoCCore):
                 data_width    = data_width,
                 with_crossbar = with_crossbar)
 
-            self.comb += self.crg.lpddr_rst.eq(self.lpddr.cal_done)
+            self.comb += self.crg.lpddr_rst.eq(~self.lpddr.cal_done)
 
             # Add SDRAM region.
             main_ram_region = SoCRegion(
