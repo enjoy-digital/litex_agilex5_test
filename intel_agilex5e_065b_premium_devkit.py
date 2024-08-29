@@ -26,13 +26,18 @@ from litescope import LiteScopeAnalyzer
 
 from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
 from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
+from gateware.intel_agilex_pll import AgilexPLL
 from gateware.por_rgmii_pll.por_rgmii_pll import PorRGMIIPLL
 from gateware.main_pll.main_pll import MainPLL
 
 # CRG ----------------------------------------------------------------------------------------------
 
 class _CRG(LiteXModule):
-    def __init__(self, platform, sys_clk_freq, with_lpddr=True, with_ethernet=False):
+    def __init__(self, platform, sys_clk_freq,
+        with_lpddr         = True,
+        with_ethernet      = False ,
+        with_iopll_wrapper = False,
+        ):
         self.rst          = Signal()
         self.cd_sys       = ClockDomain()
         self.cd_por       = ClockDomain()
@@ -49,10 +54,24 @@ class _CRG(LiteXModule):
         self.specials += Instance("altera_agilex_config_reset_release_endpoint", o_conf_reset = ninit_done)
 
         # PLL
-        self.mainPLL = MainPLL(platform, clk100, ninit_done | ~rst_n)
-        self.comb += self.cd_sys.clk.eq(self.mainPLL.clk220m),
+        clk100m = Signal()
+        clk220m = Signal()
+        if not with_iopll_wrapper:
+            self.mainPLL = MainPLL(platform, clk100, ninit_done | ~rst_n)
+            self.comb += clk220m.eq(self.mainPLL.clk220m),
+        else:
+            self.mainPLL = AgilexPLL()
+            self.comb += self.mainPLL.reset.eq(ninit_done | ~rst_n)
+            self.mainPLL.register_clkin(clk100, 100e6)
 
+            self.comb += clk220m.eq(self.mainPLL.clko[1])
+
+        self.comb += self.cd_sys.clk.eq(clk220m),
         self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | self.rst | self.lpddr_rst),
+
+        platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
+        platform.add_period_constraint(clk100, 1e9/100e6)
+
         if with_lpddr:
             # LPDDR4
             self.cd_lpddr     = ClockDomain()
@@ -68,8 +87,13 @@ class _CRG(LiteXModule):
 
             # LPDDR4 configuration interface Clk/Reset
             lpddr_cfg_rst = Signal()
-            self.comb     += [
-                self.cd_lpddr_cfg.clk.eq(self.mainPLL.clk100m),
+            if not with_iopll_wrapper:
+                self.comb += clk100m.eq(self.mainPLL.clk100m),
+            else:
+                self.comb += clk100m.eq(self.mainPLL.clko[0])
+
+            self.comb += [
+                self.cd_lpddr_cfg.clk.eq(clk100m),
                 self.cd_lpddr_cfg.rst.eq(~lpddr_cfg_rst)
             ]
             self.specials += [
@@ -82,12 +106,11 @@ class _CRG(LiteXModule):
                     o_dout      = lpddr_cfg_rst,
                 ),
             ]
+            platform.add_period_constraint(self.cd_lpddr_cfg.clk, 1e9/100e6)
 
         if with_ethernet:
             pll_ref_clk    = platform.request("hvio6d_clk125")
             self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
-
-        platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
 
 # BaseSoC ------------------------------------------------------------------------------------------
 
