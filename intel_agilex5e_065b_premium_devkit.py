@@ -29,6 +29,7 @@ from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
 from gateware.intel_agilex_pll import AgilexPLL
 from gateware.por_rgmii_pll.por_rgmii_pll import PorRGMIIPLL
 from gateware.main_pll.main_pll import MainPLL
+from gateware.agilex_rgmii import *
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -108,9 +109,9 @@ class _CRG(LiteXModule):
             ]
             platform.add_period_constraint(self.cd_lpddr_cfg.clk, 1e9/100e6)
 
-        if with_ethernet:
-            pll_ref_clk    = platform.request("hvio6d_clk125")
-            self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
+        #if with_ethernet:
+        #    pll_ref_clk    = platform.request("hvio6d_clk125")
+        #    self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
 
 # BaseSoC ------------------------------------------------------------------------------------------
 
@@ -219,7 +220,8 @@ class BaseSoC(SoCCore):
 
         # Ethernet ---------------------------------------------------------------------------------
         if with_ethernet:
-            self.ethphy = GMIIToRGMII(platform,
+            #self.ethphy = GMIIToRGMII(platform,
+            self.ethphy = LiteEthPHYRGMII(platform,
                 clock_pads = self.platform.request("eth_clocks", 2),
                 pads       = self.platform.request("eth", 2))
             self.add_ethernet(phy=self.ethphy, dynamic_ip=eth_dynamic_ip, local_ip=eth_ip, remote_ip=remote_ip)
