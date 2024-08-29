@@ -45,15 +45,11 @@ class _CRG(LiteXModule):
         rst_n         = platform.request("user_btn", 0)
 
         # Power on reset
-        por_count = Signal(16, reset=2**16-1)
-        por_done  = Signal()
-        self.comb += por_done.eq(por_count == 0)
-        self.comb += self.cd_por.clk.eq(clk100)
-        self.sync.por += If(~por_done, por_count.eq(por_count - 1))
-        self.specials += AsyncResetSynchronizer(self.cd_por, ~rst_n),
+        ninit_done = Signal()
+        self.specials += Instance("altera_agilex_config_reset_release_endpoint", o_conf_reset = ninit_done)
 
         # PLL
-        self.mainPLL = MainPLL(platform, clk100, ~por_done)
+        self.mainPLL = MainPLL(platform, clk100, ninit_done | ~rst_n)
         self.comb += self.cd_sys.clk.eq(self.mainPLL.clk220m),
 
         self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | self.rst | self.lpddr_rst),
@@ -65,11 +61,27 @@ class _CRG(LiteXModule):
             lpddr_refclk_se   = Signal()
             self.specials += DifferentialInput(lpddr_refclk.p, lpddr_refclk.n, lpddr_refclk_se)
             # LPDDR4 core Clk/Reset
-            self.comb     += self.cd_lpddr.clk.eq(lpddr_refclk_se)
-            self.specials += AsyncResetSynchronizer(self.cd_lpddr, ~por_done | self.rst)
+            self.comb     += [
+                self.cd_lpddr.clk.eq(lpddr_refclk_se),
+                self.cd_lpddr.rst.eq(ninit_done)
+            ]
+
             # LPDDR4 configuration interface Clk/Reset
-            self.comb     += self.cd_lpddr_cfg.clk.eq(self.mainPLL.clk100m)
-            self.specials += AsyncResetSynchronizer(self.cd_lpddr_cfg, ~self.mainPLL.locked | self.rst)
+            lpddr_cfg_rst = Signal()
+            self.comb     += [
+                self.cd_lpddr_cfg.clk.eq(self.mainPLL.clk100m),
+                self.cd_lpddr_cfg.rst.eq(~lpddr_cfg_rst)
+            ]
+            self.specials += [
+                Instance("altera_std_synchronizer_nocut",
+                    p_depth     = 3,
+                    p_rst_value = 0,
+                    i_clk       = ClockSignal("sys"),
+                    i_reset_n   = Constant(1, 1),
+                    i_din       = ~ninit_done & self.mainPLL.locked & ~self.rst,
+                    o_dout      = lpddr_cfg_rst,
+                ),
+            ]
 
         if with_ethernet:
             pll_ref_clk    = platform.request("hvio6d_clk125")
