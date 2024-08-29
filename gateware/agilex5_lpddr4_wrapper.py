@@ -60,7 +60,6 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
         self._status = CSRStatus(description="EMIF LDDR4 Status.", fields=[
             CSRField("cal_done",   size=1, offset=0, description="EMIF LPDDR4 calibration done."),
-            CSRField("ninit_done", size=1, offset=1, description="Global init done."),
         ])
 
         self._control = CSRStorage(description="EMIF LPDDR4 Control.", fields=[
@@ -77,15 +76,10 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # # #
 
         # Signals.
-        # Warning: nINIT_DONE is low after INIT, and high before!
-        self.ninit_done  = Signal()
         self.axi_r_ready = Signal()
         self.local_rst_n = Signal()
 
-        self.comb += [
-            self._status.fields.cal_done.eq(self.cal_done),
-            self._status.fields.ninit_done.eq(self.ninit_done),
-        ]
+        self.comb += self._status.fields.cal_done.eq(self.cal_done)
 
         self.comb += If(self._control.fields.ready == 0,
             self.axi_r_ready.eq(1),
@@ -103,7 +97,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             # EMIF Module reference clock.
             # ----------------------------
             i_ref_clk_i_clk               = ClockSignal("lpddr"),
-            i_core_init_n_i_reset_n       = ~self.ninit_done,
+            i_core_init_n_i_reset_n       = ~ResetSignal("lpddr"),
 
             # EMIF Module usr clk input.
             # ---------------------------
@@ -112,11 +106,11 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
             # AXIL Driver Clk/Rst (Calibration).
             i_axil_driver_clk_i_clk       = ClockSignal("lpddr_cfg"),
-            i_axil_driver_rst_n_i_reset_n = self.local_rst_n,
+            i_axil_driver_rst_n_i_reset_n = ~ResetSignal("lpddr_cfg"),
 
             # MEM AXI Lite Clk/Rst (Calibration).
             i_s0_axil_clk_i_clk           = ClockSignal("lpddr_cfg"),
-            i_s0_axil_rst_n_i_reset_n     = self.local_rst_n,
+            i_s0_axil_rst_n_i_reset_n     = ~ResetSignal("lpddr_cfg"),
 
             # MEM Cal Done.
             o_cal_done_rst_n_reset_n      = self.cal_done,
@@ -193,20 +187,6 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
 
     def do_finalize(self):
         self.specials += Instance("ed_synth", **self.ip_params)
-
-        self.specials += [
-            Instance("altera_agilex_config_reset_release_endpoint",
-                o_conf_reset = self.ninit_done,
-            ),
-            Instance("altera_std_synchronizer_nocut",
-                p_depth     = 3,
-                p_rst_value = 0,
-                i_clk       = ClockSignal("sys"),
-                i_reset_n   = Constant(1, 1),
-                i_din       = ~self.ninit_done & ~self._control.fields.reset,
-                o_dout      = self.local_rst_n,
-            ),
-        ]
 
         curr_dir = os.path.abspath(os.path.dirname(__file__))
 
