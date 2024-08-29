@@ -88,7 +88,7 @@ class LiteEthPHYRGMIIRX(LiteXModule):
 
         rx_ctl_ibuf    = Signal()
         rx_ctl_idelay  = Signal()
-        rx_ctl         = Signal()
+        rx_ctl         = Signal(2)
         rx_data_ibuf   = Signal(4)
         rx_data_idelay = Signal(4)
         rx_data        = Signal(8)
@@ -108,8 +108,8 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                 i_sreset    = Constant(0, 1),
                 i_datain    = rx_ctl_ibuf,
                 i_clk       = ClockSignal("eth_rx"),
-                o_regouthi  = rx_ctl,
-                o_regoutlo  = Open(),
+                o_regouthi  = rx_ctl[0],
+                o_regoutlo  = rx_ctl[1],
             ),
         ]
 
@@ -134,13 +134,13 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                 ),
             ]
 
-        rx_ctl_d = Signal()
+        rx_ctl_d = Signal(2)
         self.sync += rx_ctl_d.eq(rx_ctl)
 
         last = Signal()
-        self.comb += last.eq(~rx_ctl & rx_ctl_d)
+        self.comb += last.eq((rx_ctl == 0b00) & (rx_ctl_d == 0b01))
         self.sync += [
-            source.valid.eq(rx_ctl),
+            source.valid.eq(rx_ctl == 0b01),
             source.data.eq(rx_data)
         ]
         self.comb += source.last.eq(last)
