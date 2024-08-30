@@ -79,6 +79,8 @@ class LiteEthPHYRGMIIRX(LiteXModule):
     def __init__(self, pads, rx_delay=2e-9, iodelay_clk_freq=200e6):
         self.source    = source = stream.Endpoint(eth_phy_description(8))
 
+        self.rx_ctl1 = Signal()
+
         # # #
 
         assert iodelay_clk_freq in [200e6, 300e6, 400e6]
@@ -88,7 +90,7 @@ class LiteEthPHYRGMIIRX(LiteXModule):
 
         rx_ctl_ibuf    = Signal()
         rx_ctl_idelay  = Signal()
-        rx_ctl         = Signal(2)
+        rx_ctl         = Signal()
         rx_data_ibuf   = Signal(4)
         rx_data_idelay = Signal(4)
         rx_data        = Signal(8)
@@ -100,7 +102,7 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                 o_o        = rx_ctl_ibuf,
             ),
             Instance("tennm_ph2_ddio_in",
-                p_mode      = "MODE_DDR_W_DLY",
+                p_mode      = "MODE_DDR",
                 p_asclr_ena = "ASCLR_ENA_NONE",
                 p_sclr_ena  = "SCLR_ENA_NONE",
                 i_ena       = Constant(1, 1),
@@ -108,8 +110,8 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                 i_sreset    = Constant(0, 1),
                 i_datain    = rx_ctl_ibuf,
                 i_clk       = ClockSignal("eth_rx"),
-                o_regouthi  = rx_ctl[0],
-                o_regoutlo  = rx_ctl[1],
+                o_regoutlo  = rx_ctl,
+                o_regouthi  = self.rx_ctl1,
             ),
         ]
 
@@ -121,7 +123,7 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                     o_o        = rx_data_ibuf[i],
                 ),
                 Instance("tennm_ph2_ddio_in",
-                    p_mode      = "MODE_DDR_W_DLY",
+                    p_mode      = "MODE_DDR",
                     p_asclr_ena = "ASCLR_ENA_NONE",
                     p_sclr_ena  = "SCLR_ENA_NONE",
                     i_ena       = Constant(1, 1),
@@ -129,18 +131,18 @@ class LiteEthPHYRGMIIRX(LiteXModule):
                     i_sreset    = Constant(0, 1),
                     i_datain    = rx_data_ibuf[i],
                     i_clk       = ClockSignal("eth_rx"),
-                    o_regouthi  = rx_data[i],
-                    o_regoutlo  = rx_data[i+4],
+                    o_regoutlo  = rx_data[i],
+                    o_regouthi  = rx_data[i+4],
                 ),
             ]
 
         rx_ctl_d = Signal(2)
-        self.sync += rx_ctl_d.eq(rx_ctl)
+        self.sync += rx_ctl_d.eq(rx_ctl[0])
 
         last = Signal()
-        self.comb += last.eq((rx_ctl == 0b00) & (rx_ctl_d == 0b01))
+        self.comb += last.eq(~rx_ctl & rx_ctl_d)
         self.sync += [
-            source.valid.eq(rx_ctl == 0b01),
+            source.valid.eq(rx_ctl_d),
             source.data.eq(rx_data)
         ]
         self.comb += source.last.eq(last)
@@ -163,7 +165,7 @@ class LiteEthPHYRGMIICRG(LiteXModule):
         tx_phase = 125e6*tx_delay*360
         assert tx_phase < 360
         self.pll = pll = RGMIIPLL(platform)
-        self.comb += pll.clkin.eq(ClockSignal("eth_rx"))
+        self.comb += pll.clkin.eq(ClockSignal("eth_refclk"))
         self.comb += self.cd_eth_tx.clk.eq(pll.eth_tx)
         self.comb += self.cd_eth_tx_delayed.clk.eq(pll.eth_tx_delayed)
 
