@@ -36,7 +36,7 @@ from gateware.agilex_rgmii import *
 class _CRG(LiteXModule):
     def __init__(self, platform, sys_clk_freq,
         with_lpddr         = True,
-        with_ethernet      = False ,
+        with_ethernet      = False,
         with_iopll_wrapper = False,
         ):
         self.rst          = Signal()
@@ -109,8 +109,11 @@ class _CRG(LiteXModule):
             ]
             platform.add_period_constraint(self.cd_lpddr_cfg.clk, 1e9/100e6)
 
-        #if with_ethernet:
-        #    pll_ref_clk    = platform.request("hvio6d_clk125")
+        if with_ethernet:
+            pll_ref_clk        = platform.request("hvio6d_clk125")
+            self.cd_eth_refclk = ClockDomain()
+            self.comb += self.cd_eth_refclk.clk.eq(pll_ref_clk)
+            self.specials += AsyncResetSynchronizer(self.cd_eth_refclk, ~por_done | ninit_done)
         #    self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
 
 # BaseSoC ------------------------------------------------------------------------------------------
@@ -224,7 +227,14 @@ class BaseSoC(SoCCore):
             self.ethphy = LiteEthPHYRGMII(platform,
                 clock_pads = self.platform.request("eth_clocks", 2),
                 pads       = self.platform.request("eth", 2))
-            self.add_ethernet(phy=self.ethphy, dynamic_ip=eth_dynamic_ip, local_ip=eth_ip, remote_ip=remote_ip)
+            self.add_ethernet(
+                phy            = self.ethphy,
+                dynamic_ip     = eth_dynamic_ip,
+                local_ip       = eth_ip,
+                remote_ip      = remote_ip,
+                software_debug = True)
+
+            self.comb += platform.request("user_btn").eq(self.ethphy.rx.rx_ctl1)
 
         # Leds -------------------------------------------------------------------------------------
         if with_led_chaser:
