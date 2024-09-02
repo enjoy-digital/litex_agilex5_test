@@ -48,15 +48,6 @@ gateware_cmds = {
     "--cpu-type=vexriscv_smp --cpu-variant=linux \
     --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
     --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
-    --with-sdcard --with-rvc --with-fpu --with-wishbone-memory",
-
-    # VexRiscv 32-bit Linux SoC with ethernet.
-    # ----------------------------------------
-    "vexriscv_eth":
-
-    "--cpu-type=vexriscv_smp --cpu-variant=linux \
-    --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
-    --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
     --with-sdcard --with-rvc --with-fpu --with-wishbone-memory --with-ethernet",
 
     # NaxRiscv 32-bit Linux SoC.
