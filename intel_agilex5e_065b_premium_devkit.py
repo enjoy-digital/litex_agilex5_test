@@ -223,6 +223,8 @@ class BaseSoC(SoCCore):
 
         # Ethernet ---------------------------------------------------------------------------------
         if with_ethernet:
+            self.add_constant("ETH_PHY_RX_CLOCK_TRANSITION") # change RX Clk transition
+
             #self.ethphy = GMIIToRGMII(platform,
             self.ethphy = LiteEthPHYRGMII(platform,
                 clock_pads = self.platform.request("eth_clocks", 2),
