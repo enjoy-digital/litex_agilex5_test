@@ -50,6 +50,15 @@ gateware_cmds = {
     --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
     --with-sdcard --with-rvc --with-fpu --with-wishbone-memory",
 
+    # VexRiscv 32-bit Linux SoC with ethernet.
+    # ----------------------------------------
+    "vexriscv_eth":
+
+    "--cpu-type=vexriscv_smp --cpu-variant=linux \
+    --dcache-width=64 --dcache-size=8192 --dcache-ways=2  --icache-width=64 \
+    --icache-size=8192 --icache-ways=2 --dtlb-size=6 --with-coherent-dma \
+    --with-sdcard --with-rvc --with-fpu --with-wishbone-memory --with-ethernet",
+
     # NaxRiscv 32-bit Linux SoC.
     # --------------------------
     "naxriscv_32":
@@ -72,8 +81,9 @@ gateware_cmds = {
     --with-sdcard --with-coherent-dma",
 }
 
-def gateware_build(cpu_type):
+def gateware_build(cpu_type, eth_ip, remote_ip):
     command = f"./intel_agilex5e_065b_premium_devkit.py --build --output-dir=build_{cpu_type} {gateware_cmds[cpu_type]}"
+    command += f" --eth-ip {eth_ip} --remote-ip {remote_ip}"
 
     ret = subprocess.run(command, shell=True)
     return ret.returncode
@@ -145,6 +155,7 @@ def linux_prepare_tftp(soc_json, tftp_root=tftp_root):
 
     # Check if linux_copy_images was called previously (ie if software was build).
     if not os.path.exists(images_dir):
+        print("idem")
         return 1
 
     # Copy files to tftp directory.
@@ -152,6 +163,7 @@ def linux_prepare_tftp(soc_json, tftp_root=tftp_root):
         try:
             shutil.copyfile(os.path.join(images_dir, filename), os.path.join(tftp_root, filename))
         except Exception as err:
+            print(err)
             return 1
     return 0
 
@@ -282,6 +294,11 @@ def main():
     # -----------------
     parser.add_argument("--rootfs",             default="ram0",      help="Location of the RootFS: ram0 or mmcblk0p2")
 
+    # Network Arguments.
+    # ------------------
+    parser.add_argument("--eth-ip",         default="192.168.1.50",  help="Ethernet/Etherbone IP address.")
+    parser.add_argument("--remote-ip",      default="192.168.1.100", help="Remote IP address of TFTP server.")
+
     # Build Arguments.
     # ----------------
     parser.add_argument("--build-gateware", action="store_true", help="Build gateware.")
@@ -298,7 +315,7 @@ def main():
 
     if args.build_gateware:
         assert args.config is not None
-        if gateware_build(args.config):
+        if gateware_build(args.config, args.eth_ip, args.remote_ip):
             print("Gateware build failed")
             return
         soc_json = f"build_{args.config}/soc.json"
