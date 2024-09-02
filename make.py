@@ -64,7 +64,7 @@ gateware_cmds = {
     "naxriscv_32":
 
     "--cpu-type=naxriscv --xlen=32 \
-    --with-sdcard --with-rvc --with-fpu --with-coherent-dma",
+    --with-sdcard --with-rvc --with-fpu --with-coherent-dma --with-ethernet",
 
     # VexiiRiscv 32-bit Linux SoC.
     # ----------------------------
