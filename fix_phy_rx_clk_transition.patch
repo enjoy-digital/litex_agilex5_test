@@ -1,0 +1,27 @@
+diff --git a/litex/soc/software/bios/main.c b/litex/soc/software/bios/main.c
+index 3a86cca36..f226d5a58 100644
+--- a/litex/soc/software/bios/main.c
++++ b/litex/soc/software/bios/main.c
+@@ -184,6 +184,22 @@ __attribute__((__used__)) int main(int i, char **c)
+     printf("--========== \e[1mInitialization\e[0m ============--\n");
+ #ifdef CSR_ETHMAC_BASE
+ 	eth_init();
++
++#ifdef ETH_PHY_RX_CLOCK_TRANSITION
++	int mdio_reg;
++	/* select PAGE 2 */
++	mdio_write(0, 22, 2);
++	/* write page 2, register 21 bit 5 ( RGMIITimingReceive Control) to low (Receive clock
++	 * transition when data transitions)
++	 */
++	mdio_reg = mdio_read(0, 21) & (~(1 << 5));
++	mdio_write(0, 21, mdio_reg);
++	/* select PAGE 0 */
++	mdio_write(0, 22, 0);
++	/* apply software reset (page 0, register 0, bit 15) */
++	mdio_reg = mdio_read(0, 0) | (1 << 15);
++	mdio_write(0, 0, mdio_reg);
++#endif
+ #endif
+ 
+ 	/* Initialize and test DRAM */
