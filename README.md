@@ -56,6 +56,16 @@ Clone the project repository with all its submodules using the following command
 
 ```bash git clone git@github.com:enjoy-digital/litex_agilex_test.git --recursive ```
 
+#### [> Ethernet fix
+
+Go to LiteX repository to apply `fix_phy_rx_clk_transition.patch`
+
+```bash
+cd /LITEX_TOOLS_DIR/litex
+patch -p1 < /somewhere/litex_agilex_test/fix_phy_rx_clk_transition.patch
+# Re-install litex in ~/.local
+pip3 install --user -e .
+```
 
 [> Build the Gateware
 ---------------------
