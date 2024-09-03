@@ -62,14 +62,14 @@ gateware_cmds = {
     "vexiiriscv_32":
 
     "--cpu-type=vexiiriscv --vexii-args=\"--xlen=32\" --cpu-variant=linux \
-    --with-sdcard --with-coherent-dma",
+    --with-sdcard --with-coherent-dma --with-ethernet",
 
     # VexiiRiscv 64-bit Linux SoC.
     # ----------------------------
     "vexiiriscv_64":
 
     "--cpu-type=vexiiriscv --vexii-args=\"--xlen=64\" --cpu-variant=linux \
-    --with-sdcard --with-coherent-dma",
+    --with-sdcard --with-coherent-dma --with-ethernet",
 }
 
 def gateware_build(cpu_type, eth_ip, remote_ip):
