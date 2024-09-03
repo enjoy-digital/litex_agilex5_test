@@ -54,6 +54,13 @@ class _CRG(LiteXModule):
         ninit_done = Signal()
         self.specials += Instance("altera_agilex_config_reset_release_endpoint", o_conf_reset = ninit_done)
 
+        por_count = Signal(16, reset=2**16-1)
+        por_done  = Signal()
+        self.comb += por_done.eq(por_count == 0)
+        self.comb += self.cd_por.clk.eq(clk100)
+        self.sync.por += If(~por_done, por_count.eq(por_count - 1))
+        self.specials += AsyncResetSynchronizer(self.cd_por, ~rst_n | ninit_done)
+
         # PLL
         clk100m = Signal()
         clk220m = Signal()
@@ -68,7 +75,7 @@ class _CRG(LiteXModule):
             self.comb += clk220m.eq(self.mainPLL.clko[1])
 
         self.comb += self.cd_sys.clk.eq(clk220m),
-        self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | self.rst | self.lpddr_rst),
+        self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | ~por_done | self.rst | self.lpddr_rst),
 
         platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
         platform.add_period_constraint(clk100, 1e9/100e6)
@@ -101,9 +108,9 @@ class _CRG(LiteXModule):
                 Instance("altera_std_synchronizer_nocut",
                     p_depth     = 3,
                     p_rst_value = 0,
-                    i_clk       = ClockSignal("sys"),
+                    i_clk       = ClockSignal("lpddr_cfg"),
                     i_reset_n   = Constant(1, 1),
-                    i_din       = ~ninit_done & self.mainPLL.locked & ~self.rst,
+                    i_din       = ~ninit_done & self.mainPLL.locked & ~self.rst & por_done,
                     o_dout      = lpddr_cfg_rst,
                 ),
             ]
@@ -234,7 +241,7 @@ class BaseSoC(SoCCore):
                 dynamic_ip     = eth_dynamic_ip,
                 local_ip       = eth_ip,
                 remote_ip      = remote_ip,
-                software_debug = True)
+                software_debug = False)
 
             self.comb += platform.request("user_btn").eq(self.ethphy.rx.rx_ctl1)
 
