@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #
-# This file is part of LiteX-Boards.
+# This file is part of LiteX-Agilex5-Test
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
@@ -19,17 +19,15 @@ from intel_agilex5e_065b_premium_devkit_platform import Platform, _sdcard_io
 
 from litex.soc.integration.soc      import *
 from litex.soc.integration.soc_core import *
-from litex.soc.integration.builder import *
-from litex.soc.cores.led import LedChaser
+from litex.soc.integration.builder  import *
+from litex.soc.cores.led            import LedChaser
 
 from litescope import LiteScopeAnalyzer
 
-from gateware.agilex5_lpddr4_wrapper import Agilex5LPDDR4Wrapper
-from gateware.gmii_to_rgmii.gmii_to_rgmii import GMIIToRGMII
-from gateware.intel_agilex_pll import AgilexPLL
-from gateware.por_rgmii_pll.por_rgmii_pll import PorRGMIIPLL
-from gateware.main_pll.main_pll import MainPLL
-from gateware.agilex_rgmii import *
+from gateware.agilex5_lpddr4_wrapper      import Agilex5LPDDR4Wrapper
+from gateware.intel_agilex_pll            import AgilexPLL
+from gateware.main_pll.main_pll           import MainPLL
+from gateware.agilex_rgmii                import *
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -47,8 +45,8 @@ class _CRG(LiteXModule):
         # # #
 
         # Clk / Rst
-        clk100        = platform.request("clk100")
-        rst_n         = platform.request("user_btn", 0)
+        clk100 = platform.request("clk100")
+        rst_n  = platform.request("user_btn", 0)
 
         # Power on reset
         ninit_done = Signal()
@@ -74,7 +72,7 @@ class _CRG(LiteXModule):
 
             self.comb += clk220m.eq(self.mainPLL.clko[1])
 
-        self.comb += self.cd_sys.clk.eq(clk220m),
+        self.comb += self.cd_sys.clk.eq(clk220m)
         self.specials += AsyncResetSynchronizer(self.cd_sys, ~self.mainPLL.locked | ~por_done | self.rst | self.lpddr_rst),
 
         platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
@@ -87,6 +85,7 @@ class _CRG(LiteXModule):
             lpddr_refclk      = platform.request("lpddr_refclk")
             lpddr_refclk_se   = Signal()
             self.specials += DifferentialInput(lpddr_refclk.p, lpddr_refclk.n, lpddr_refclk_se)
+
             # LPDDR4 core Clk/Reset
             self.comb     += [
                 self.cd_lpddr.clk.eq(lpddr_refclk_se),
@@ -121,7 +120,6 @@ class _CRG(LiteXModule):
             self.cd_eth_refclk = ClockDomain()
             self.comb += self.cd_eth_refclk.clk.eq(pll_ref_clk)
             self.specials += AsyncResetSynchronizer(self.cd_eth_refclk, ~por_done | ninit_done)
-        #    self.rgmii_pll = PorRGMIIPLL(platform, pll_ref_clk, ~rst_n)
 
 # BaseSoC ------------------------------------------------------------------------------------------
 

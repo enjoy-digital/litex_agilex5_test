@@ -1,5 +1,5 @@
 #
-# This file is part of LiteX-Boards.
+# This file is part of LiteX-Agilex5-Test
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
