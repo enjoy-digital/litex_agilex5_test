@@ -43,6 +43,8 @@ support for the following board peripherals will be added:
 | VexiiRiscv-32-bit  | [soc.json](https://github.com/user-attachments/files/16851016/soc.json)   | [sof](https://github.com/user-attachments/files/16851010/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [tftpboot](https://github.com/user-attachments/files/16851017/tftpboot_vexiiriscv_32.zip)    | [fit.rpt](https://github.com/user-attachments/files/16851007/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 39,458 |  162  |   2  |
 | VexiiRiscv-64-bit  | [soc.json](https://github.com/user-attachments/files/16851184/soc.json)   | [sof](https://github.com/user-attachments/files/16851178/intel_agilex5e_065b_premium_devkit_platform.sof.zip) | [tftpboot](https://github.com/user-attachments/files/16851185/tftpboot_vexiiriscv_64.zip)    | [fit.rpt](https://github.com/user-attachments/files/16851174/intel_agilex5e_065b_premium_devkit_platform.fit.rpt.txt) | 39,655 |  165  |   8  |
 
+**Note:** RAMs used by LiteEth seems not correctly inferred as BRAM. This improvement will be done in future.
+
 [> Getting started
 ------------------
 
