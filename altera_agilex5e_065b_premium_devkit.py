@@ -15,7 +15,7 @@ from litex.build.io import DifferentialInput
 
 from litex.gen import *
 
-from intel_agilex5e_065b_premium_devkit_platform import Platform, _sdcard_io
+from altera_agilex5e_065b_premium_devkit_platform import Platform, _sdcard_io
 
 from litex.soc.integration.soc      import *
 from litex.soc.integration.soc_core import *
@@ -24,10 +24,10 @@ from litex.soc.cores.led            import LedChaser
 
 from litescope import LiteScopeAnalyzer
 
-from gateware.agilex5_lpddr4_wrapper      import Agilex5LPDDR4Wrapper
-from gateware.intel_agilex_pll            import AgilexPLL
-from gateware.main_pll.main_pll           import MainPLL
-from gateware.agilex_rgmii                import *
+from gateware.main_pll.main_pll       import MainPLL
+from gateware.agilex5_lpddr4_wrapper  import Agilex5LPDDR4Wrapper
+from gateware.agilex5_pll             import Agilex5PLL
+from gateware.agilex5_rgmii           import *
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ class _CRG(LiteXModule):
             self.mainPLL = MainPLL(platform, clk100, ninit_done | ~rst_n)
             self.comb += clk220m.eq(self.mainPLL.clk220m),
         else:
-            self.mainPLL = AgilexPLL()
+            self.mainPLL = Agilex5PLL()
             self.comb += self.mainPLL.reset.eq(ninit_done | ~rst_n)
             self.mainPLL.register_clkin(clk100, 100e6)
 
@@ -267,7 +267,7 @@ def main():
 
     parser.set_defaults(synth_tool="quartus_syn")
     parser.set_defaults(bus_standard="axi")
-    parser.set_defaults(output_dir="build/intel_agilex5e_065b_premium_devkit_platform")
+    parser.set_defaults(output_dir="build/altera_agilex5e_065b_premium_devkit_platform")
 
     # soc.json default path
     args = parser.parse_args()

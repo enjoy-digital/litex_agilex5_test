@@ -73,7 +73,7 @@ gateware_cmds = {
 }
 
 def gateware_build(cpu_type, eth_ip, remote_ip):
-    command = f"./intel_agilex5e_065b_premium_devkit.py --build --output-dir=build_{cpu_type} {gateware_cmds[cpu_type]}"
+    command = f"./altera_agilex5e_065b_premium_devkit.py --build --output-dir=build_{cpu_type} {gateware_cmds[cpu_type]}"
     command += f" --eth-ip {eth_ip} --remote-ip {remote_ip}"
 
     ret = subprocess.run(command, shell=True)
@@ -313,7 +313,7 @@ def main():
 
     # soc.json
     if soc_json is None:
-        soc_json = "build/intel_agilex5e_065b_premium_devkit_platform/soc.json"
+        soc_json = "build/altera_agilex5e_065b_premium_devkit_platform/soc.json"
 
     if args.prepare_only:
         args.clean        = False

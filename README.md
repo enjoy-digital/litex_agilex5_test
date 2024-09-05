@@ -3,8 +3,8 @@
                / /__/ / __/ -_)>  </___/ __ / _ `/ / / -_) \ //__ \/___// / / -_|_-</ __/
               /____/_/\__/\__/_/|_|   /_/ |_\_, /_/_/\__/_\_\/____/    /_/  \__/___/\__/
                                            /___/
-                        Initial Test/Support of LiteX on Intel Agilex5 FPGAs.
-                             Developed by Enjoy-Digital for Intel.
+                        Initial Test/Support of LiteX on Altera Agilex5 FPGAs.
+                             Developed by Enjoy-Digital for Altera.
 
 [> Intro
 --------
@@ -86,7 +86,7 @@ pip3 install --user -e .
 **Basic mode (vexriscv CPU, BRAM):**
 
 ```bash
-./intel_agilex5e_065b_premium_devkit.py --build --integrated-main-ram-size=1024
+./altera_agilex5e_065b_premium_devkit.py --build --integrated-main-ram-size=1024
 ```
 
 <p align="center"><img src="doc/litex_bios_main_ram_bram.png"></p>
@@ -94,7 +94,7 @@ pip3 install --user -e .
 **DR mode (vexriscv CPU, DDR):**
 
 ```bash
-./intel_agilex5e_065b_premium_devkit.py --build
+./altera_agilex5e_065b_premium_devkit.py --build
 ```
 
 <p align="center"><img src="doc/litex_bios_main_ram_lpddr.png"></p>

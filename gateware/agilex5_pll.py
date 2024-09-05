@@ -16,9 +16,9 @@ from litex.gen import *
 from litex.soc.cores.clock.common import *
 from litex.soc.cores.clock.intel_common import *
 
-# Intel / StratixV --------------------------------------------------------------------------------
+# Altera / Agilex5 ---------------------------------------------------------------------------------
 
-class AgilexPLL(IntelClocking):
+class Agilex5PLL(IntelClocking):
     nclkouts_max          = 7
     n_div_range           = (1, 110+1)
     m_div_range           = (4, 320+1)

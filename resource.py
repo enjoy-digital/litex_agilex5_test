@@ -34,7 +34,7 @@ def extract_info(file_path):
     print(f"DSPs: {dsp_blocks}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Extract information from Intel Quartus report file.")
+    parser = argparse.ArgumentParser(description="Extract information from Altera Quartus report file.")
     parser.add_argument('file', type=str, help="Path to the report file")
     args = parser.parse_args()
 
