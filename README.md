@@ -133,7 +133,8 @@ This repository provides a script, called `make.py`, that can build the gateware
 
 To run the script, use the following command:
 ```bash
-./make.py --config=CONFIG --build-gateware --build --generate-dtb [--rootfs=xxxx] [--soc-json=somewhere/soc.json]
+./make.py --config=CONFIG --build-gateware --build --generate-dtb --copy-images [--prepare-tftp] [--rootfs=xxxx] [--soc-json=somewhere/soc.json] \
+    [--eth-ip] [--remote-ip]
 ```
 
 **Options**
@@ -146,8 +147,12 @@ To run the script, use the following command:
 - `--build-gateware`: builds first the gateware. The (`--config` argument is required when using this option
 - `--build`: clones, configures and builds the root filesystem image, the bootloader and the kernel using *buildroot*
 - `--generate-dtb`: converts the *soc.json* to *soc.dts* and produces the *soc.dtb*
+- `--copy-images`: copy boot images (devicetree, boot.json, ...) from *images* to *build_CPU_VERSION/images*
+- `--prepare-tftp`: copy images required by a netboot from *images* to */tftpboot/* directory
 - `--rootfs` (optional, default: *ram0*): specifies the root filesystem. The user can select between a ramdisk (*ram0*) or the second SDCard partition (*mmcblk0p2*)
 - `--soc-json`: provides the path to the *soc.json*.This option is only required when `--build-gateware` is not used
+- `--eth-ip`: configure SoC IP address (default: *192.168.1.50*)
+- `--remote-ip`: specify host computer IP address (default: *192.168.1.100*)
 
 [> Boot Linux from Serial
 -------------------------
@@ -178,3 +183,16 @@ located in *images* sub-directory. To write this image to the SDCard, use the fo
  ```
 
  **WARNING: using `dd` with the wrong device may erase the hard driver content. Ensure you have correctly identified the SDCard device before executing this command.**
+
+[> Boot Linux from Network (tftp)
+---------------------------------
+
+Once both the gateware and software have been successfully built (with `--copy-images --prepare-tftp`), */tftpboot/* directory contains *boot.json*, *opensbi.bin*, *rootfs.cpio* and *soc.dtb* files.
+
+To boot using `netboot` use the following command:
+```bash
+litex_term /dev/ttyUSB1
+```
+
+*NOTE:* if host computer is configured with an IP different than *192.168.1.100*, `--remote-ip` must be provided to change default value. If local network isn't *192.168.1.xx* both `--eth-ip` and `--remote-ip` must
+be provided to change default values.
