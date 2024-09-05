@@ -80,14 +80,16 @@ patch -p1 < /somewhere/litex_agilex_test/fix_phy_rx_clk_transition.patch
 pip3 install --user -e .
 ```
 
-[> Build the Gateware
----------------------
+[> Build the Basic SoC
+----------------------
 
 ### [> Build Commands
 
-- `--with-spi-sdcard`: enable SDCARD support in SPI mode (can't be used at the same time as `--with-sdcard`)
-- `--with-sdcard`: enable SDCARD support in SDCARD mode (can't be used at the same time as `--with-spi-sdcard`)
-- `--with-ethernet`: enable ethernet support. `--eth-ip` may be used to change default board IP and `--remote-ip` must be
+
+- `--cpu-type`       : Allow selecting LiteX CPU (ex vexriscv, vexriscv_smp, picorv32, etc...)
+- `--with-spi-sdcard`: Enable SDCARD support in SPI mode (can't be used at the same time as `--with-sdcard`)
+- `--with-sdcard`    : Enable SDCARD support in SDCARD mode (can't be used at the same time as `--with-spi-sdcard`)
+- `--with-ethernet`  : Enable ethernet support. `--eth-ip` may be used to change default board IP and `--remote-ip` must be
   adapted to the host computer IP
 
 ### [> Standard Build
@@ -122,8 +124,8 @@ methods, please refer to the
 [Load Aplication Code To CPU](https://github.com/enjoy-digital/litex/wiki/Load-Application-Code-To-CPU) page on the LiteX
 wiki. This resource will give you a comprehensive understanding of how to load and execute application code on your CPU.
 
-[> Build the Linux Image
-------------------------
+[> Build the Linux SoCs and Images
+----------------------------------
 
 This repository provides a script, called `make.py`, that can build the gateware and the software components (using *buildroot* for software).
 
