@@ -239,6 +239,7 @@ class BaseSoC(SoCCore):
                 dynamic_ip     = eth_dynamic_ip,
                 local_ip       = eth_ip,
                 remote_ip      = remote_ip,
+                full_memory_we = True,
                 software_debug = False)
 
             self.comb += platform.request("user_btn").eq(self.ethphy.rx.rx_ctl1)
