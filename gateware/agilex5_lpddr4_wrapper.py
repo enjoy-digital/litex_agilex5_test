@@ -18,6 +18,8 @@ from litex.gen import *
 from litex.soc.interconnect import axi
 from litex.soc.interconnect.csr import *
 
+from gateware.agilex5_common import generate_quartus_ip
+
 # Agilex5 LPDDR4 Wrapper ---------------------------------------------------------------------------
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
@@ -145,12 +147,13 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         self.add_sources(platform=platform)
 
     def add_sources(self, platform):
+        ip_name  = "ed_synth"
+        curr_dir = os.path.abspath(os.path.dirname(__file__))
+
         # Paths/Files.
-        curr_dir  = os.path.abspath(os.path.dirname(__file__))
-        ip_dir    = os.path.join(curr_dir, "ip", "ed_synth")
-        ip_src    = os.path.join(ip_dir, "ed_synth_emif_ph2_inst_template.ip")
-        ip_dst    = os.path.join(ip_dir, "ed_synth_emif_ph2_inst.ip")
-        qsys_file = os.path.join(curr_dir, "ed_synth.qsys")
+        ip_src    = os.path.join(curr_dir, f"ip/{ip_name}/{ip_name}_emif_ph2_inst_template.ip")
+        ip_dst    = os.path.join(curr_dir, f"ip/{ip_name}/{ip_name}_emif_ph2_inst.ip")
+        qsys_file = os.path.join(curr_dir, f"{ip_name}.qsys")
 
         # Avoid hardcoded path to QORS file.
         copyfile(ip_src, ip_dst)
@@ -159,14 +162,5 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # Add IP to project.
         platform.add_ip(qsys_file)
         platform.add_ip(ip_dst)
-        platform.add_ip(os.path.join(curr_dir, "ip/ed_synth/ed_synth_axil_driver_0.ip"))
-
-        # Synthetize IP. CHECKME/FIXME: Avoid doing it here but move the the build if possible.
-        if which("qsys-edit") is None:
-            msg = "Unable to find Quartus toolchain, please:\n"
-            msg += "- Add Quartus toolchain to your $PATH."
-            raise OSError(msg)
-
-        ret = subprocess.run(f"qsys-generate --synthesis {qsys_file}", shell=True)
-        if ret.returncode != 0:
-            raise OSError("Error occured during Quartus's script execution.")
+        platform.add_ip(os.path.join(curr_dir, f"ip/{ip_name}/{ip_name}_axil_driver_0.ip"))
+        generate_quartus_ip(platform, "ed_synth", curr_dir, qsys_file)

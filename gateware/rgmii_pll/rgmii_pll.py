@@ -13,6 +13,8 @@ from migen import *
 
 from litex.gen import *
 
+from gateware.agilex5_common import generate_quartus_ip
+
 # RGMII PLL ----------------------------------------------------------------------------------------
 
 class RGMIIPLL(LiteXModule):
@@ -38,30 +40,10 @@ class RGMIIPLL(LiteXModule):
             o_outclk_0 = self.eth_tx,
             o_outclk_1 = self.eth_tx_delayed,
         )
+        self.add_sources(platform=platform)
 
-    def do_finalize(self):
-
+    def add_sources(self, platform):
+        ip_name  = "rgmii_pll"
         curr_dir = os.path.abspath(os.path.dirname(__file__))
-        ip_name = "rgmii_pll"
-        ip_file = os.path.join(curr_dir, ip_name + ".ip")
-        self.platform.add_ip(ip_file)
-
-        if which("quartus_ipgenerate") is None:
-            msg = "Unable to find Quartus toolchain, please:\n"
-            msg += "- Add Quartus toolchain to your $PATH."
-            raise OSError(msg)
-
-        # To works correctly quartus_ipgenerate needs two steps
-
-        # 1. generates a project
-        command = f"--generate_project_ip_files  {ip_name}"
-        ret = subprocess.run(f"quartus_ipgenerate {command}", shell=True)
-        if ret.returncode != 0:
-            raise OSError("Error occured during Quartus's script execution.")
-
-        # 2. generates the IP files
-        command = f"--generate_ip_file --synthesis=verilog --clear_ip_generation_dirs --ip_file={ip_file} {ip_name} --set=family=\"Agilex 5\""
-
-        ret = subprocess.run(f"quartus_ipgenerate {command}", shell=True)
-        if ret.returncode != 0:
-            raise OSError("Error occured during Quartus's script execution.")
+        ip_file  = os.path.join(curr_dir, ip_name + ".ip")
+        generate_quartus_ip(self.platform, ip_name, curr_dir, ip_file)
