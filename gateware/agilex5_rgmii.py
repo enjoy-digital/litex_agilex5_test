@@ -1,12 +1,12 @@
 #
-# This file is part of LiteX.
+# This file is part of LiteX-Agilex5-Test.
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-# See.
-# https://www.intel.com/content/www/us/en/docs/programmable/683130/22-3/fpga-gmii-to-rgmii-converter-core-interface.html
+# See:
+# - https://www.intel.com/content/www/us/en/docs/programmable/683130/22-3/fpga-gmii-to-rgmii-converter-core-interface.html
 
 from migen import *
 from migen.genlib.resetsync import AsyncResetSynchronizer

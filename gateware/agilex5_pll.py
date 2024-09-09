@@ -1,13 +1,13 @@
 #
-# This file is part of LiteX.
+# This file is part of LiteX-Agilex5-Test.
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-# See.
-# https://cdrdv2-public.intel.com/813919/ds-813918-813919.pdf (section Switching Characteristics)
-# https://cdrdv2-public.intel.com/813672/ug-813671-813672.pdf (section 5)
+# See:
+# - https://cdrdv2-public.intel.com/813919/ds-813918-813919.pdf (section Switching Characteristics)
+# - https://cdrdv2-public.intel.com/813672/ug-813671-813672.pdf (section 5)
 
 from migen import *
 
