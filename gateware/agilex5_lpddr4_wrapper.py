@@ -66,8 +66,8 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
         # ---------------------------------------
         self.l2_cache = AXIL2Cache(platform)
         self.comb += [
-            self.bus.connect(self.l2_cache.sink),        # FIXME: naming.
-            self.l2_cache.source.connect(self.bus_256b), # FIXME: naming.
+            self.bus.connect(self.l2_cache.s_axi),
+            self.l2_cache.m_axi.connect(self.bus_256b),
         ]
 
         # EMIF LPDDR4 IP Core.

@@ -19,106 +19,98 @@ from litex.soc.interconnect import axi
 
 class AXIL2Cache(LiteXModule):
     def __init__(self, platform):
-        self.sink     = axi.AXIInterface(data_width= 32, address_width=32, id_width=4)
-        self.source   = axi.AXIInterface(data_width=256, address_width=32, id_width=4)
+        self.s_axi = s_axi = axi.AXIInterface(data_width= 32, address_width=32, id_width=4)
+        self.m_axi = m_axi = axi.AXIInterface(data_width=256, address_width=32, id_width=4)
 
         # AXI Cache Core Instance.
         self.specials += Instance("l2_cache",
-            # Clk / Reset
-            i_clk_i = ClockSignal("sys"),
-            i_rst_i = ResetSignal("sys"),
+            # Clk / Rst.
+            i_clk_i             = ClockSignal("sys"),
+            i_rst_i             = ResetSignal("sys"),
 
             # Debug.
-            i_dbg_mode_i    = Constant(0, 1),
+            i_dbg_mode_i        = Constant(0, 1),
 
-            # Sink AXI
-            # --------
+            # AXI Slave Interface.
+            # --------------------
 
-            # AXI aw.
-            i_inport_awid_i     = self.sink.aw.id,
-            i_inport_awaddr_i   = self.sink.aw.addr,
-            i_inport_awlen_i    = self.sink.aw.len,
-            i_inport_awburst_i  = self.sink.aw.burst,
-            i_inport_awvalid_i  = self.sink.aw.valid,
-            o_inport_awready_o  = self.sink.aw.ready,
-            i_inport_awsize_i   = self.sink.aw.size,
-            # missing lock, prot, user, qos
+            # AW (no lock, prot, user, qos).
+            i_inport_awid_i     = s_axi.aw.id,
+            i_inport_awaddr_i   = s_axi.aw.addr,
+            i_inport_awlen_i    = s_axi.aw.len,
+            i_inport_awburst_i  = s_axi.aw.burst,
+            i_inport_awvalid_i  = s_axi.aw.valid,
+            o_inport_awready_o  = s_axi.aw.ready,
+            i_inport_awsize_i   = s_axi.aw.size,
 
-            # AXI w.
-            i_inport_wdata_i    = self.sink.w.data,
-            i_inport_wstrb_i    = self.sink.w.strb,
-            i_inport_wlast_i    = self.sink.w.last,
-            i_inport_wvalid_i   = self.sink.w.valid,
-            o_inport_wready_o   = self.sink.w.ready,
-            # missing user
+            # W (no user).
+            i_inport_wdata_i    = s_axi.w.data,
+            i_inport_wstrb_i    = s_axi.w.strb,
+            i_inport_wlast_i    = s_axi.w.last,
+            i_inport_wvalid_i   = s_axi.w.valid,
+            o_inport_wready_o   = s_axi.w.ready,
 
-            # AXI ar.
-            i_inport_arid_i     = self.sink.ar.id,
-            i_inport_araddr_i   = self.sink.ar.addr,
-            i_inport_arlen_i    = self.sink.ar.len,
-            i_inport_arburst_i  = self.sink.ar.burst,
-            i_inport_arvalid_i  = self.sink.ar.valid,
-            o_inport_arready_o  = self.sink.ar.ready,
-            i_inport_arsize_i   = self.sink.ar.size,
-            # missing lock, prot, user, qos
+            # AR (no lock, prot, user, qos).
+            i_inport_arid_i     = s_axi.ar.id,
+            i_inport_araddr_i   = s_axi.ar.addr,
+            i_inport_arlen_i    = s_axi.ar.len,
+            i_inport_arburst_i  = s_axi.ar.burst,
+            i_inport_arvalid_i  = s_axi.ar.valid,
+            o_inport_arready_o  = s_axi.ar.ready,
+            i_inport_arsize_i   = s_axi.ar.size,
 
-            # AXI r.
-            o_inport_rdata_o    = self.sink.r.data,
-            o_inport_rresp_o    = self.sink.r.resp,
-            o_inport_rlast_o    = self.sink.r.last,
-            i_inport_rready_i   = self.sink.r.ready,
-            o_inport_rvalid_o   = self.sink.r.valid,
-            # missing user, id
+            # R (no user, id).
+            o_inport_rdata_o    = s_axi.r.data,
+            o_inport_rresp_o    = s_axi.r.resp,
+            o_inport_rlast_o    = s_axi.r.last,
+            i_inport_rready_i   = s_axi.r.ready,
+            o_inport_rvalid_o   = s_axi.r.valid,
 
-            # AXI b.
-            i_inport_bready_i   = self.sink.b.ready,
-            o_inport_bid_o      = self.sink.b.id,
-            o_inport_bresp_o    = self.sink.b.resp,
-            o_inport_bvalid_o   = self.sink.b.valid,
+            # B.
+            i_inport_bready_i   = s_axi.b.ready,
+            o_inport_bid_o      = s_axi.b.id,
+            o_inport_bresp_o    = s_axi.b.resp,
+            o_inport_bvalid_o   = s_axi.b.valid,
 
-            # Source AXI
-            # --------
+            # AXI Master Interface.
+            # ---------------------
 
-            # AXI aw.
-            o_outport_awid_o    = self.source.aw.id,
-            o_outport_awaddr_o  = self.source.aw.addr,
-            o_outport_awlen_o   = self.source.aw.len,
-            o_outport_awburst_o = self.source.aw.burst,
-            o_outport_awvalid_o = self.source.aw.valid,
-            i_outport_awready_i = self.source.aw.ready,
-            # missing size, lock, prot, user, qos
+            # AW (no size, lock, prot, user, qos).
+            o_outport_awid_o    = m_axi.aw.id,
+            o_outport_awaddr_o  = m_axi.aw.addr,
+            o_outport_awlen_o   = m_axi.aw.len,
+            o_outport_awburst_o = m_axi.aw.burst,
+            o_outport_awvalid_o = m_axi.aw.valid,
+            i_outport_awready_i = m_axi.aw.ready,
 
-            # AXI w.
-            o_outport_wdata_o   = self.source.w.data,
-            o_outport_wstrb_o   = self.source.w.strb,
-            o_outport_wlast_o   = self.source.w.last,
-            o_outport_wvalid_o  = self.source.w.valid,
-            i_outport_wready_i  = self.source.w.ready,
-            # missing user
+            # W (no user).
+            o_outport_wdata_o   = m_axi.w.data,
+            o_outport_wstrb_o   = m_axi.w.strb,
+            o_outport_wlast_o   = m_axi.w.last,
+            o_outport_wvalid_o  = m_axi.w.valid,
+            i_outport_wready_i  = m_axi.w.ready,
 
-            # AXI ar.
-            o_outport_arid_o    = self.source.ar.id,
-            o_outport_araddr_o  = self.source.ar.addr,
-            o_outport_arlen_o   = self.source.ar.len,
-            o_outport_arburst_o = self.source.ar.burst,
-            o_outport_arvalid_o = self.source.ar.valid,
-            i_outport_arready_i = self.source.ar.ready,
-            # missing size, lock, prot, user, qos
+            # AR (no size, lock, prot, user, qos).
+            o_outport_arid_o    = m_axi.ar.id,
+            o_outport_araddr_o  = m_axi.ar.addr,
+            o_outport_arlen_o   = m_axi.ar.len,
+            o_outport_arburst_o = m_axi.ar.burst,
+            o_outport_arvalid_o = m_axi.ar.valid,
+            i_outport_arready_i = m_axi.ar.ready,
 
-            # AXI r.
-            i_outport_rid_i     = self.source.r.id,
-            i_outport_rdata_i   = self.source.r.data,
-            i_outport_rresp_i   = self.source.r.resp,
-            i_outport_rlast_i   = self.source.r.last,
-            o_outport_rready_o  = self.source.r.ready,
-            i_outport_rvalid_i  = self.source.r.valid,
-            # missing user
+            # R (no user).
+            i_outport_rid_i     = m_axi.r.id,
+            i_outport_rdata_i   = m_axi.r.data,
+            i_outport_rresp_i   = m_axi.r.resp,
+            i_outport_rlast_i   = m_axi.r.last,
+            o_outport_rready_o  = m_axi.r.ready,
+            i_outport_rvalid_i  = m_axi.r.valid,
 
-            # AXI b.
-            o_outport_bready_o  = self.source.b.ready,
-            i_outport_bid_i     = self.source.b.id,
-            i_outport_bresp_i   = self.source.b.resp,
-            i_outport_bvalid_i  = self.source.b.valid,
+            # B.
+            o_outport_bready_o  = m_axi.b.ready,
+            i_outport_bid_i     = m_axi.b.id,
+            i_outport_bresp_i   = m_axi.b.resp,
+            i_outport_bvalid_i  = m_axi.b.valid,
         )
         self.add_sources(platform=platform)
 
