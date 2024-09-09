@@ -33,7 +33,7 @@ from gateware.agilex5_rgmii           import *
 
 class _CRG(LiteXModule):
     def __init__(self, platform, sys_clk_freq,
-        with_lpddr         = True,
+        with_lpddr4        = True,
         with_ethernet      = False,
         with_iopll_wrapper = False,
         ):
@@ -78,7 +78,7 @@ class _CRG(LiteXModule):
         platform.add_period_constraint(self.cd_sys.clk, 1e9/sys_clk_freq)
         platform.add_period_constraint(clk100, 1e9/100e6)
 
-        if with_lpddr:
+        if with_lpddr4:
             # LPDDR4
             self.cd_lpddr     = ClockDomain()
             self.cd_lpddr_cfg = ClockDomain()
@@ -125,65 +125,42 @@ class _CRG(LiteXModule):
 
 class BaseSoC(SoCCore):
     def __init__(self, sys_clk_freq=220e6,
-        with_analyzer   = False,
-        with_ethernet   = False,
-        eth_ip          = "192.168.1.50",
-        remote_ip       = None,
-        eth_dynamic_ip  = False,
-        with_led_chaser = True,
-        with_spi_sdcard = False,
-        with_sdcard     = False,
+        with_ethernet        = False,
+        eth_ip               = "192.168.1.50",
+        remote_ip            = None,
+        eth_dynamic_ip       = False,
+        with_led_chaser      = True,
+        with_spi_sdcard      = False,
+        with_sdcard          = False,
+        with_lpddr4_analyzer = False,
         **kwargs):
+        # Platform ---------------------------------------------------------------------------------
         platform = Platform()
 
+        # Parameters -------------------------------------------------------------------------------
+        with_lpddr4 = (kwargs.get("integrated_main_ram_size", 0) == 0)
+
         # CRG --------------------------------------------------------------------------------------
-        with_lpddr   = (kwargs.get("integrated_main_ram_size", 0) == 0)
-        #with_lpddr = True
-        # According to ref design lpddr usr_clk is 116.625e6 (ie same frequency as refclk)
-        #sys_clk_freq = {True: 116.625e6, False: sys_clk_freq}[with_lpddr]
-        self.crg     = _CRG(platform, sys_clk_freq, with_lpddr, with_ethernet)
+        self.crg = _CRG(platform, sys_clk_freq, with_lpddr4, with_ethernet)
 
         # SoCCore ----------------------------------------------------------------------------------
         SoCCore.__init__(self, platform, sys_clk_freq, ident="LiteX SoC on Agilex5E 065B", **kwargs)
 
         # LPDDR4 -----------------------------------------------------------------------------------
-        if with_lpddr:
+        if with_lpddr4:
+            # Add LPDDR4 IP.
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
             self.comb += self.crg.lpddr_rst.eq(~self.lpddr.cal_done)
 
-            # Add SDRAM region.
+            # Add LPDDR4 region.
             main_ram_region = SoCRegion(
                 origin = self.mem_map.get("main_ram", None),
                 size   = 1 * GB,
                 mode   = "rwx")
             self.bus.add_region("main_ram", main_ram_region)
+
+            # Connect LPDDR4 IP to SoC.
             self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
-
-            if with_analyzer:
-                main_ram_bus = self.lpddr.bus_256b
-                analyzer_signals_w = [
-                    main_ram_bus.aw,
-                    main_ram_bus.w,
-                    main_ram_bus.b,
-                ]
-                analyzer_signals_r = [
-                    main_ram_bus.ar,
-                    main_ram_bus.r,
-                ]
-
-                self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
-                    depth        = 128,
-                    clock_domain = "sys",
-                    register     = True,
-                    csr_csv      = "analyzer_w.csv"
-                )
-
-                self.analyzer_r = LiteScopeAnalyzer(analyzer_signals_r,
-                    depth        = 128,
-                    clock_domain = "sys",
-                    register     = True,
-                    csr_csv      = "analyzer_r.csv"
-                )
 
         # SDCard -----------------------------------------------------------------------------------
         if with_spi_sdcard or with_sdcard:
@@ -195,9 +172,7 @@ class BaseSoC(SoCCore):
 
         # Ethernet ---------------------------------------------------------------------------------
         if with_ethernet:
-            self.add_constant("ETH_PHY_RX_CLOCK_TRANSITION") # change RX Clk transition
-
-            #self.ethphy = GMIIToRGMII(platform,
+            self.add_constant("ETH_PHY_RX_CLOCK_TRANSITION") # Change RX Clk transition.
             self.ethphy = LiteEthPHYRGMII(platform,
                 clock_pads = self.platform.request("eth_clocks", 2),
                 pads       = self.platform.request("eth", 2))
@@ -216,6 +191,32 @@ class BaseSoC(SoCCore):
             self.leds = LedChaser(
                 pads         = platform.request_all("user_led"),
                 sys_clk_freq = sys_clk_freq)
+
+        # Analyzer ---------------------------------------------------------------------------------
+        if with_lpddr4_analyzer:
+              main_ram_bus = self.lpddr.bus_256b
+              analyzer_signals_w = [
+                  main_ram_bus.aw,
+                  main_ram_bus.w,
+                  main_ram_bus.b,
+              ]
+              analyzer_signals_r = [
+                  main_ram_bus.ar,
+                  main_ram_bus.r,
+              ]
+              self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
+                  depth        = 128,
+                  clock_domain = "sys",
+                  register     = True,
+                  csr_csv      = "analyzer_w.csv"
+              )
+              self.analyzer_r = LiteScopeAnalyzer(analyzer_signals_r,
+                  depth        = 128,
+                  clock_domain = "sys",
+                  register     = True,
+                  csr_csv      = "analyzer_r.csv"
+              )
+
 
 # Build --------------------------------------------------------------------------------------------
 
