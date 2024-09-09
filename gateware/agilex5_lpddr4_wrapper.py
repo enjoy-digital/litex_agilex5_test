@@ -141,7 +141,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             io_mem_mem_dqs_c              = pads.dqs_n,
             io_mem_mem_dmi                = pads.dmi,
             i_oct_oct_rzqin               = pads.rzq,
-            )
+        )
         self.add_sources(platform=platform)
 
     def add_sources(self, platform):
