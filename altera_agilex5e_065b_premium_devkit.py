@@ -133,7 +133,6 @@ class BaseSoC(SoCCore):
         with_led_chaser = True,
         with_spi_sdcard = False,
         with_sdcard     = False,
-        with_crossbar   = False,
         **kwargs):
         platform = Platform()
 
@@ -149,11 +148,7 @@ class BaseSoC(SoCCore):
 
         # LPDDR4 -----------------------------------------------------------------------------------
         if with_lpddr:
-            data_width = {True: 64, False: 32}[hasattr(self.cpu, "add_memory_buses") and with_crossbar]
-            self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"),
-                data_width    = data_width,
-                with_crossbar = with_crossbar)
-
+            self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
             self.comb += self.crg.lpddr_rst.eq(~self.lpddr.cal_done)
 
             # Add SDRAM region.
@@ -162,35 +157,7 @@ class BaseSoC(SoCCore):
                 size   = 1 * GB,
                 mode   = "rwx")
             self.bus.add_region("main_ram", main_ram_region)
-
-            if with_crossbar:
-                self.lpddr.set_master_region(self.bus.regions["main_ram"])
-                # Add CPU's direct memory buses (if not already declared) --------------------------
-                if hasattr(self.cpu, "add_memory_buses"):
-                    self.cpu.add_memory_buses(
-                        address_width = 32,
-                        data_width    = data_width,
-                    )
-                if len(self.cpu.memory_buses):
-                    for mem_bus in self.cpu.memory_buses:
-                        self.lpddr.axi_crossbar.add_slave(s_axi=mem_bus)
-
-                self.main_ram_axi = axi.AXIInterface(
-                    data_width    = data_width,
-                    address_width = 32,
-                    id_width      = 7,
-                    aw_user_width = 4,
-                    w_user_width  = 64,
-                    b_user_width  = 0,
-                    ar_user_width = 4,
-                    r_user_width  = 64,
-                )
-
-                self.bus.add_slave(name="main_ram", slave=self.main_ram_axi)
-
-                self.lpddr.axi_crossbar.add_slave(s_axi  = self.main_ram_axi)
-            else:
-                self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
+            self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
 
             if with_analyzer:
                 main_ram_bus = self.lpddr.bus_256b
