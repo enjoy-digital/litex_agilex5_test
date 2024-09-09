@@ -1,5 +1,5 @@
 #
-# This file is part of LiteX.
+# This file is part of LiteX-Agilex5-Test.
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
@@ -18,11 +18,12 @@ from litex.gen import *
 from litex.soc.interconnect import axi
 from litex.soc.interconnect.csr import *
 
-from gateware.axi_l2_cache import AXI_l2_cache
+from gateware.axi_l2_cache import AXIL2Cache
+
+# Agilex5 LPDDR4 Wrapper ---------------------------------------------------------------------------
 
 class Agilex5LPDDR4Wrapper(LiteXModule):
     def __init__(self, platform, pads, data_width=32, with_crossbar=False):
-
         self.bus      = axi.AXIInterface(
             data_width    = data_width,
             address_width = 32,
@@ -33,7 +34,6 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             ar_user_width = 4,
             r_user_width  = 64,
         )
-
         self.bus_256b = axi.AXIInterface(
             data_width    = 256,
             address_width = 32,
@@ -49,7 +49,7 @@ class Agilex5LPDDR4Wrapper(LiteXModule):
             from verilog_axi.axi.axi_crossbar import AXICrossbar
             self.axi_crossbar = AXICrossbar(platform)
 
-        self.l2_cache = AXI_l2_cache(platform)
+        self.l2_cache = AXIL2Cache(platform)
         self.comb += [
             self.bus.connect(self.l2_cache.sink),
             self.l2_cache.source.connect(self.bus_256b),

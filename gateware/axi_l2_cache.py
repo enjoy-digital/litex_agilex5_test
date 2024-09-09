@@ -1,49 +1,29 @@
 #!/usr/bin/env python3
 
 #
-# This file is part of LiteX.
+# This file is part of LiteX-Agilex5-Test.
 #
 # Copyright (c) 2024 Enjoy-Digital <enjoy-digital.fr>
 #
 # SPDX-License-Identifier: BSD-2-Clause
+#
+# LiteX wrapper around UltraEmbedded's AXI Cache core.
 
 import os
-
-from migen import *
 
 from litex.gen import *
 
 from litex.soc.interconnect import axi
-from litex.soc.interconnect.csr import *
 
-class AXI_l2_cache(LiteXModule):
+# AXI L2 Cache -------------------------------------------------------------------------------------
+
+class AXIL2Cache(LiteXModule):
     def __init__(self, platform):
-        self.sink     = axi.AXIInterface(
-            data_width    = 32,
-            address_width = 32,
-            id_width      = 4,
-            aw_user_width = 0,
-            w_user_width  = 0,
-            b_user_width  = 0,
-            ar_user_width = 0,
-            r_user_width  = 0,
-        )
-        self.source   = axi.AXIInterface(
-            data_width    = 256,
-            address_width = 32,
-            id_width      = 4,
-            aw_user_width = 0,
-            w_user_width  = 0,
-            b_user_width  = 0,
-            ar_user_width = 0,
-            r_user_width  = 0,
-        )
+        self.sink     = axi.AXIInterface(data_width= 32, address_width=32, id_width=4)
+        self.source   = axi.AXIInterface(data_width=256, address_width=32, id_width=4)
 
-        self.platform  = platform
-
-        self.ip_params = dict()
-
-        self.ip_params.update(
+        # AXI Cache Core Instance.
+        self.specials += Instance("l2_cache",
             # Clk / Reset
             i_clk_i = ClockSignal("sys"),
             i_rst_i = ResetSignal("sys"),
@@ -140,22 +120,11 @@ class AXI_l2_cache(LiteXModule):
             i_outport_bresp_i   = self.source.b.resp,
             i_outport_bvalid_i  = self.source.b.valid,
         )
+        self.add_sources(platform=platform)
 
-    def do_finalize(self):
-        self.specials += Instance("l2_cache", **self.ip_params)
-
-        sdir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "core_axi_cache")
-
-        # Test core_axi_cache present / clone it.
-        if not os.path.exists(sdir):
-            os.system(f"git clone https://github.com/ultraembedded/core_axi_cache {sdir}")
-
-        rtl_dir = os.path.join(sdir, "src_v")
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_inport.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_outport.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_core.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_axi_input.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_data_ram.v"))
-        self.platform.add_source(os.path.join(rtl_dir, "l2_cache_tag_ram.v"))
-
+    def add_sources(self, platform):
+        # If core_axi_cache is not already present, clone it.
+        if not os.path.exists("core_axi_cache"):
+            os.system("git clone https://github.com/ultraembedded/core_axi_cache")
+        rtl_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "core_axi_cache", "src_v")
+        platform.add_source_dir(path=rtl_dir)
