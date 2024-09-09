@@ -22,12 +22,13 @@ from litex.soc.integration.soc_core import *
 from litex.soc.integration.builder  import *
 from litex.soc.cores.led            import LedChaser
 
-from litescope import LiteScopeAnalyzer
-
 from gateware.main_pll.main_pll       import MainPLL
 from gateware.agilex5_lpddr4_wrapper  import Agilex5LPDDR4Wrapper
+from gateware.axi_l2_cache            import AXIL2Cache
 from gateware.agilex5_pll             import Agilex5PLL
 from gateware.agilex5_rgmii           import *
+
+from litescope import LiteScopeAnalyzer
 
 # CRG ----------------------------------------------------------------------------------------------
 
@@ -152,6 +153,9 @@ class BaseSoC(SoCCore):
             self.lpddr = Agilex5LPDDR4Wrapper(platform, pads=platform.request("lpddr4"))
             self.comb += self.crg.lpddr_rst.eq(~self.lpddr.cal_done)
 
+            # Add AXI L2 Cache.
+            self.l2_cache = AXIL2Cache(platform)
+
             # Add LPDDR4 region.
             main_ram_region = SoCRegion(
                 origin = self.mem_map.get("main_ram", None),
@@ -159,8 +163,9 @@ class BaseSoC(SoCCore):
                 mode   = "rwx")
             self.bus.add_region("main_ram", main_ram_region)
 
-            # Connect LPDDR4 IP to SoC.
-            self.bus.add_slave(name="main_ram", slave=self.lpddr.bus)
+            # Connect L2 Cache and LPDDR4 IP to SoC: SoC -> L2 Cache -> LPDDR4.
+            self.bus.add_slave(name="main_ram", slave=self.l2_cache.s_axi)
+            self.comb += self.l2_cache.m_axi.connect(self.lpddr.bus)
 
         # SDCard -----------------------------------------------------------------------------------
         if with_spi_sdcard or with_sdcard:
@@ -194,15 +199,14 @@ class BaseSoC(SoCCore):
 
         # Analyzer ---------------------------------------------------------------------------------
         if with_lpddr4_analyzer:
-              main_ram_bus = self.lpddr.bus_256b
               analyzer_signals_w = [
-                  main_ram_bus.aw,
-                  main_ram_bus.w,
-                  main_ram_bus.b,
+                  self.lpddr.bus.aw,
+                  self.lpddr.bus.w,
+                  self.lpddr.bus.b,
               ]
               analyzer_signals_r = [
-                  main_ram_bus.ar,
-                  main_ram_bus.r,
+                  self.lpddr.bus.ar,
+                  self.lpddr.bus.r,
               ]
               self.analyzer_w = LiteScopeAnalyzer(analyzer_signals_w,
                   depth        = 128,
