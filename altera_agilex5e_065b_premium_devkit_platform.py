@@ -13,42 +13,42 @@ from litex.build.generic_platform  import Pins, IOStandard, Subsignal, Misc
 
 _io = [
 
-    # Clk
-    ("clk100",        0, Pins("D8"),    IOStandard("3.3-V LVCMOS")), # SI5332 OUT4
-    ("sys_clk100",    0, Pins("BF111"), IOStandard("3.3-V LVCMOS")), # SI5332 OUT5
-    ("hvio6d_clk125", 0, Pins("A23"),   IOStandard("1.8-V LVCMOS")), # SI5518A OUT1 (for RGMII)
+    # Clk.
+    ("clk100", 0, Pins("D8"),    IOStandard("3.3-V LVCMOS")), # SI5332 OUT4.
+    ("clk100", 1, Pins("BF111"), IOStandard("3.3-V LVCMOS")), # SI5332 OUT5.
+    ("clk125", 0, Pins("A23"),   IOStandard("1.8-V LVCMOS")), # SI5518A OUT1 (for RGMII).
 
-    # Serial
+    # Serial.
     ("serial", 0,
         Subsignal("rx", Pins("CJ2")),
         Subsignal("tx", Pins("CK4")),
         IOStandard("3.3-V LVCMOS"),
     ),
 
-    # Leds
+    # Leds.
     ("user_led", 0, Pins("BM59"), IOStandard("1.1 V")),
     ("user_led", 1, Pins("BH59"), IOStandard("1.1 V")),
     ("user_led", 2, Pins("BH62"), IOStandard("1.1 V")),
     ("user_led", 3, Pins("BK59"), IOStandard("1.1 V")),
 
-    # Switches
+    # Switches.
     ("user_sw", 0, Pins("CH12"), IOStandard("3.3-V LVCMOS")),
     ("user_sw", 1, Pins("BU22"), IOStandard("3.3-V LVCMOS")),
     ("user_sw", 2, Pins("BW19"), IOStandard("3.3-V LVCMOS")),
     ("user_sw", 3, Pins("BH28"), IOStandard("3.3-V LVCMOS")),
 
-    # Buttons
+    # Buttons.
     ("user_btn", 0, Pins("BK31"), IOStandard("3.3-V LVCMOS")),
     ("user_btn", 1, Pins("BP22"), IOStandard("3.3-V LVCMOS")),
     ("user_btn", 2, Pins("BK28"), IOStandard("3.3-V LVCMOS")),
     ("user_btn", 3, Pins("BR22"), IOStandard("3.3-V LVCMOS")),
 
-    # LPDDR4
+    # LPDDR4.
     ("lpddr_refclk", 0,
         Subsignal("p", Pins("BW78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
         Subsignal("n", Pins("CA78"), IOStandard("1.1V TRUE DIFFERENTIAL SIGNALING")),
     ),
-    ("lpddr4", 0, # FIXME: IOStandard
+    ("lpddr4", 0, # FIXME: Add IOStandard.
         Subsignal("clk_p",   Pins("BM81")),
         Subsignal("clk_n",   Pins("BP81")),
         Subsignal("cke",     Pins("BR81")),
@@ -67,13 +67,13 @@ _io = [
         Subsignal("rzq",     Pins("BH89")),
     ),
 
-    # SGMII Clock (88E2110 SGMII Enet1)
+    # SGMII Clock (88E2110 SGMII Enet1).
     ("eth_clocks", 0,
         Subsignal("p", Pins("AT120"), IOStandard("CURRENT MODE LOGIC (CML)")),
         Subsignal("n", Pins("AT115"), IOStandard("CURRENT MODE LOGIC (CML)")),
     ),
 
-    # SGMII Ethernet (88E2110 SGMII Enet1)
+    # SGMII Ethernet (88E2110 SGMII Enet1).
     ("eth", 0,
         Subsignal("int_n", Pins("BK118")),
         Subsignal("rst_n", Pins("BM118")),
@@ -85,7 +85,7 @@ _io = [
         Subsignal("tx_n",  Pins("AL126")),
     ),
 
-    # SGMII Ethernet (88E2110 SGMII Enet2)
+    # SGMII Ethernet (88E2110 SGMII Enet2).
     ("eth", 1,
         Subsignal("int_n", Pins("F24")),
         Subsignal("rst_n", Pins("F27")),
@@ -97,7 +97,7 @@ _io = [
         Subsignal("tx_n",  Pins("A73")),
     ),
 
-    # RGMII Ethernet (88E1512 RGMII)
+    # RGMII Ethernet (88E1512 RGMII).
     ("eth_clocks", 2,
         Subsignal("tx", Pins("B14")),
         Subsignal("rx", Pins("B23")),
@@ -115,7 +115,7 @@ _io = [
         IOStandard("1.8-V LVCMOS"),
     ),
 
-    # SFP
+    # SFP.
     ("sfp", 0,
         Subsignal("clk_p", Pins("BC29")),
         Subsignal("clk_n", Pins("BC25")),
@@ -143,6 +143,7 @@ _io = [
         IOStandard("3.3-V LVCMOS"),
     ),
 
+    # QSFP.
     ("qsfp", 0,
         Subsignal("clk_p",  Pins("BB120")),
         Subsignal("clk_n",  Pins("BB115")),
@@ -277,41 +278,44 @@ _connectors = [
     ),
 ]
 
-def sdcard_io():
+def sdcard_io(connector="j9"):
     return [
-        # SDCard: https://github.com/gsteiert/a5e2pmod
+        # Custom SDCard/PMOD board developed by Greg Steiert for the extension connector of the board.
+        # Available on GitHub at: https://github.com/gsteiert/a5e2pmod
         ("spisdcard", 0,
-            Subsignal("clk",  Pins(f"j9:7")),
-            Subsignal("mosi", Pins(f"j9:3")),
-            Subsignal("cs_n", Pins(f"j9:1")),
-            Subsignal("miso", Pins(f"j9:5")),
+            Subsignal("clk",  Pins(f"{connector}:7")),
+            Subsignal("mosi", Pins(f"{connector}:3")),
+            Subsignal("cs_n", Pins(f"{connector}:1")),
+            Subsignal("miso", Pins(f"{connector}:5")),
             IOStandard("3.3-V LVCMOS"),
         ),
         ("sdcard", 0,
-            Subsignal("data", Pins(f"j9:5 j9:2 j9:4 j9:1")),
-            Subsignal("cmd",  Pins(f"j9:3")),
-            Subsignal("clk",  Pins(f"j9:7")),
-            Subsignal("det",  Pins(f"j9:6")),
+            Subsignal("data", Pins(f"{connector}:5 {connector}:2 {connector}:4 {connector}:1")),
+            Subsignal("cmd",  Pins(f"{connector}:3")),
+            Subsignal("clk",  Pins(f"{connector}:7")),
+            Subsignal("det",  Pins(f"{connector}:6")),
             IOStandard("3.3-V LVCMOS"),
         ),
     ]
-_sdcard_io = sdcard_io() # SDCARD on J9.
+
+_sdcard_io = sdcard_io(connector="j9")
 
 # Platform -----------------------------------------------------------------------------------------
 
 class Platform(AlteraPlatform):
+    create_rbf         = False
     default_clk_name   = "clk100"
     default_clk_period = 1e9/100e6
 
     def __init__(self, toolchain="quartus"):
         AlteraPlatform.__init__(self, "A5ED065BB32AE6SR0", _io, _connectors, toolchain=toolchain)
-        self.create_rbf = False
         self.add_platform_command("set_global_assignment -name PWRMGT_VOLTAGE_OUTPUT_FORMAT \"LINEAR FORMAT\"")
         self.add_platform_command("set_global_assignment -name PWRMGT_LINEAR_FORMAT_N \"-12\"")
         self.add_platform_command("set_global_assignment -name ENABLE_INTERMEDIATE_SNAPSHOTS \"ON\"")
         self.add_platform_command("set_global_assignment -name DEVICE_INITIALIZATION_CLOCK  \"OSC_CLK_1_125MHZ\"")
 
-
     def do_finalize(self, fragment):
         AlteraPlatform.do_finalize(self, fragment)
-        self.add_period_constraint(self.lookup_request("clk100", loose=True), 1e9/100e6)
+        self.add_period_constraint(self.lookup_request("clk100", 0, loose=True), 1e9/100e6)
+        self.add_period_constraint(self.lookup_request("clk100", 1, loose=True), 1e9/100e6)
+        self.add_period_constraint(self.lookup_request("clk125", 0, loose=True), 1e9/125e6)

@@ -116,7 +116,7 @@ class _CRG(LiteXModule):
             platform.add_period_constraint(self.cd_lpddr_cfg.clk, 1e9/100e6)
 
         if with_ethernet:
-            pll_ref_clk        = platform.request("hvio6d_clk125")
+            pll_ref_clk        = platform.request("clk125")
             self.cd_eth_refclk = ClockDomain()
             self.comb += self.cd_eth_refclk.clk.eq(pll_ref_clk)
             self.specials += AsyncResetSynchronizer(self.cd_eth_refclk, ~por_done | ninit_done)
