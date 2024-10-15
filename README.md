@@ -37,6 +37,11 @@ support for the following board peripherals will be added:
 [> Getting started
 ------------------
 
+#### [> Quartus Prime Pro Edition Design Software:
+
+- [quartus Prime Pro 24.2](https://www.intel.com/content/www/us/en/software-kit/826843/intel-quartus-prime-pro-edition-design-software-version-24-2-for-linux.html). **NOTE: 24.1 has a known issue with LPDDR4 EMIF IP.**
+- [agilex no cost license details](https://www.intel.com/content/www/us/en/content-details/819593/agilex-5-e-series-no-cost-license.html)
+
 #### [> Installing LiteX:
 
 Install LiteX by following the instructions provided on the LiteX Wiki:
