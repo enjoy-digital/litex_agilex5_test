@@ -118,5 +118,5 @@ class AXIL2Cache(LiteXModule):
         # If core_axi_cache is not already present, clone it.
         if not os.path.exists("core_axi_cache"):
             os.system("git clone https://github.com/ultraembedded/core_axi_cache")
-        rtl_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "core_axi_cache", "src_v")
+        rtl_dir = os.path.join(os.path.abspath("core_axi_cache"), "src_v")
         platform.add_source_dir(path=rtl_dir)
